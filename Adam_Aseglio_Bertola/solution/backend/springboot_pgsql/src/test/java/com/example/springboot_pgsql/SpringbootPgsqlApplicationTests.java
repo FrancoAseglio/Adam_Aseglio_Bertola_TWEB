@@ -1,10 +1,10 @@
-package com.example.demo;
+package com.example.springboot_pgsql;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class SpringbootPgsqlApplicationTests {
 
     @Test
     void contextLoads() {
