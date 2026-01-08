@@ -1,0 +1,25 @@
+SUMMARY OF INDEX CREATION ERRORS
+
+MongoDB failed to create UNIQUE compound indexes because duplicate key
+values already exist in the data.
+
+- Collection: favorites
+  Index: { username, id } (UNIQUE)
+  Duplicate key found: (username = "---karma---", id = 21)
+
+- Collection: ratings
+  Index: { username, anime_id } (UNIQUE)
+  Duplicate key found: (username = "Doopelsdoo", anime_id = 59459)
+
+These errors are not caused by a bug in MongoDB or in the data loader.
+The dataset violates the assumed functional dependencies:
+- (username, id) uniquely identifies a favorite
+- (username, anime_id) uniquely identifies a rating
+
+The duplicate documents are not necessarily identical and may differ
+in other fields, so they were not removed by generic deduplication.
+
+MongoDB correctly enforces uniqueness constraints and refuses to create
+UNIQUE indexes when existing data violates them. This behavior is
+equivalent to adding a UNIQUE constraint to inconsistent data in a
+relational database.
