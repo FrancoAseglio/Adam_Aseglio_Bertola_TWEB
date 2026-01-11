@@ -6,11 +6,11 @@ const logger       = require('morgan');
 const cors         = require('cors');
 
 // Routers
-const favoritesRouter       = require('./routes/favorites');
+// const favoritesRouter       = require('./routes/favorites');
 const ratingsRouter         = require('./routes/ratings');
-const statsRouter           = require('./routes/stats');
+// const statsRouter           = require('./routes/stats');
 const profilesRouter        = require('./routes/profiles');
-const recommendationsRouter = require('./routes/recommendations');
+// const recommendationsRouter = require('./routes/recommendations');
 
 const app = express();
 
@@ -48,11 +48,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 // Routes
-app.use('/api/favorites',       favoritesRouter);
+// app.use('/api/favorites',       favoritesRouter);
 app.use('/api/ratings',         ratingsRouter);
-app.use('/api/stats',           statsRouter);
+// app.use('/api/stats',           statsRouter);
 app.use('/api/profiles',        profilesRouter);
-app.use('/api/recommendations', recommendationsRouter);
+// app.use('/api/recommendations', recommendationsRouter);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
