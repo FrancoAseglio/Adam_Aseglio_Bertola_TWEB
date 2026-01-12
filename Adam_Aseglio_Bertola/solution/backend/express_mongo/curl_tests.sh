@@ -28,4 +28,17 @@ curl http://localhost:3002/api/recommendations/3269 | jq
 curl http://localhost:3002/api/recommendations/99999 | jq
 # Invalid MAL ID (expect 400)
 curl http://localhost:3002/api/recommendations/invalid | jq
+# ===========================================================================
+#                                 STATS
+# ===========================================================================
+# Global statistics
+curl http://localhost:3002/api/stats/global | jq
+# User statistics
+curl http://localhost:3002/api/stats/user/CKK2 | jq
+# Non-existent user (expect 404)
+curl http://localhost:3002/api/stats/user/non_existent_user | jq
+# Anime statistics (One Piece)
+curl http://localhost:3002/api/stats/anime/21 | jq
+# Non-existent anime (expect 404)
+curl http://localhost:3002/api/stats/anime/99999999 | jq
 
