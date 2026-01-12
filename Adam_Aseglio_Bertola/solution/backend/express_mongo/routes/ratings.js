@@ -43,7 +43,10 @@ router.get('/:username', async (req, res) => {
     const ratings = await getUserRatings(req.params.username);
     res.json(ratings);
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching ratings', error: error.message });
+    res.status(500).json({ 
+      message: 'Error fetching ratings', 
+      error  : error.message 
+    });
   }
 });
 

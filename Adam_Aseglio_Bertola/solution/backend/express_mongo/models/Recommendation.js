@@ -15,8 +15,6 @@ const recommendationSchema = new mongoose.Schema({
   timestamps: false
 });
 
-recommendationSchema.index({ mal_id: 1 });
-
 const Recommendation = mongoose.model('Recommendation', recommendationSchema);
 
 module.exports = Recommendation;

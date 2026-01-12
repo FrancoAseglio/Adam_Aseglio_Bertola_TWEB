@@ -10,7 +10,7 @@ const cors         = require('cors');
 const ratingsRouter         = require('./routes/ratings');
 // const statsRouter           = require('./routes/stats');
 const profilesRouter        = require('./routes/profiles');
-// const recommendationsRouter = require('./routes/recommendations');
+const recommendationsRouter = require('./routes/recommendations');
 
 const app = express();
 
@@ -26,7 +26,7 @@ const swaggerOptions = {
       description: 'MongoDB backend API for anime data, favorites, ratings, and user profiles',
     },
     servers: [
-      { url: 'http://localhost:3002', description: 'Development server' }
+      { url: 'http://localhost:3002', description: 'MongoDB backend server' }
     ],
   },
   apis: [path.join(__dirname, 'routes/*.js')],
@@ -52,7 +52,7 @@ app.use(cookieParser());
 app.use('/api/ratings',         ratingsRouter);
 // app.use('/api/stats',           statsRouter);
 app.use('/api/profiles',        profilesRouter);
-// app.use('/api/recommendations', recommendationsRouter);
+app.use('/api/recommendations', recommendationsRouter);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {

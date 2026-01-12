@@ -19,3 +19,13 @@ curl http://localhost:3002/api/ratings/potatoaris | jq
 curl http://localhost:3002/api/ratings/Folktal3wtb | jq
 # GET "no-ratings" and "non-existent" user
 curl http://localhost:3002/api/ratings/non_existent_user | jq
+# ===========================================================================
+#                             RECOMMENDATIONS
+# ===========================================================================
+# Get recommendations (Full Metal Alchemist)
+curl http://localhost:3002/api/recommendations/3269 | jq
+# No recommendations available
+curl http://localhost:3002/api/recommendations/99999 | jq
+# Invalid MAL ID (expect 400)
+curl http://localhost:3002/api/recommendations/invalid | jq
+
