@@ -41,4 +41,20 @@ curl http://localhost:3002/api/stats/user/non_existent_user | jq
 curl http://localhost:3002/api/stats/anime/21 | jq
 # Non-existent anime (expect 404)
 curl http://localhost:3002/api/stats/anime/99999999 | jq
-
+# ===========================================================================
+#                               FAVORITES
+# ===========================================================================
+# Get all favorites for a user
+curl http://localhost:3002/api/favorites/CKK2 | jq
+# Add favorite anime (One Piece)
+curl -X POST http://localhost:3002/api/favorites \
+  -H "Content-Type: application/json" \
+  -d '{"username":"CKK2", "id":21}' | jq
+# Try duplicate (expect 409)
+curl -X POST http://localhost:3002/api/favorites \
+  -H "Content-Type: application/json" \
+  -d '{"username":"CKK2", "id":21}' | jq
+# Remove favorite anime (One Piece)
+curl -X DELETE http://localhost:3002/api/favorites/CKK2/21 | jq
+# Try remove non-existent (expect 404)
+curl -X DELETE http://localhost:3002/api/favorites/CKK2/99999 | jq

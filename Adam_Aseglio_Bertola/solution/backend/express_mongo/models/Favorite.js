@@ -7,11 +7,6 @@ const favoriteSchema = new mongoose.Schema({
     trim:     true,
     index:    true
   },
-  fav_type: {
-    type:     String,
-    required: true,
-    trim:     true
-  },
   id: {
     type:     Number,
     required: true,
