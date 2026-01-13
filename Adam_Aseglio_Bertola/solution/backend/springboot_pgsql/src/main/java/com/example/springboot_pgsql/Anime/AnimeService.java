@@ -1,7 +1,8 @@
-package com.example.springboot_pgsql;
+package com.example.springboot_pgsql.Anime;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 @Service

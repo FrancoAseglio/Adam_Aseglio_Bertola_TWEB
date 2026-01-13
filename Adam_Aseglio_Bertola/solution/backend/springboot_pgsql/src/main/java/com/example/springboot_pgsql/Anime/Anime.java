@@ -1,4 +1,4 @@
-package com.example.springboot_pgsql;
+package com.example.springboot_pgsql.Anime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
