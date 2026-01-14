@@ -129,7 +129,7 @@ class PostgreSQLLoader:
             name TEXT,
             given_name TEXT,
             family_name TEXT,
-            birthday TEXT,
+            birthday DATE,
             favorites INTEGER,
             relevant_location TEXT
         );
