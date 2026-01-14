@@ -4,10 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
-/**
- * Service layer for CharacterAnimeWork business logic.
- * Handles data operations for character-anime relationships.
- */
 @Service
 public class CharacterAnimeWorkService {
     private final CharacterAnimeWorkRepository repository;

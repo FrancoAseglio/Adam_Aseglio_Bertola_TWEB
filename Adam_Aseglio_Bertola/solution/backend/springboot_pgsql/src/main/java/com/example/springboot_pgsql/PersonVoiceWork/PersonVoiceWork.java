@@ -1,6 +1,6 @@
 package com.example.springboot_pgsql.PersonVoiceWork;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "person_voice_works")
@@ -22,7 +22,6 @@ public class PersonVoiceWork {
     private String role;
     private String language;
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

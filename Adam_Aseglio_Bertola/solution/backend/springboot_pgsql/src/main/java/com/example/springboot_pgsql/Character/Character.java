@@ -1,11 +1,8 @@
 package com.example.springboot_pgsql.Character;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 
-/**
- * Entity class representing an anime character.
- * Maps to the 'characters' table in the database.
- */
 @Entity
 @Table(name = "characters")
 public class Character {
@@ -25,7 +22,6 @@ public class Character {
     @JsonProperty("image_url")
     private String imageUrl;
 
-    // Getters and Setters
     public Integer getCharacterMalId() { return characterMalId; }
     public void setCharacterMalId(Integer characterMalId) { this.characterMalId = characterMalId; }
 
@@ -47,4 +43,3 @@ public class Character {
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
 }
-

@@ -6,6 +6,8 @@ import java.util.List;
 
 
 @RestController
+@RequestMapping("/api/person-voice-work")
+@CrossOrigin(origins = "http://localhost:3001")
 public class PersonVoiceWorkController {
 
     private final PersonVoiceWorkService personVoiceWorkService;
@@ -20,5 +22,8 @@ public class PersonVoiceWorkController {
         return personVoiceWorkService.findAll();
     }
 
-
+    @PostMapping
+    public PersonVoiceWork createVoiceWork(@RequestBody PersonVoiceWork voiceWork) {
+        return personVoiceWorkService.save(voiceWork);
+    }
 }

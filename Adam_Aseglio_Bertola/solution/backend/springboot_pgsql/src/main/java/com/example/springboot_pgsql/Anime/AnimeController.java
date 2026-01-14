@@ -3,11 +3,11 @@ package com.example.springboot_pgsql.Anime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
-@RequestMapping("/anime")
+@RequestMapping("/api/anime")
+@CrossOrigin(origins = "http://localhost:3001")
 public class AnimeController {
 
     private final AnimeService animeService;

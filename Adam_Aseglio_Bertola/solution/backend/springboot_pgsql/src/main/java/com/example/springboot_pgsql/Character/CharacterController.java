@@ -7,15 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-
 import java.util.List;
 
-/**
- * REST Controller for Character endpoints.
- * Base URL: /api/characters
- * Provides operations for retrieving and searching anime characters.
- */
+
 @RestController
+@RequestMapping("/api/characters")
+@CrossOrigin(origins = "http://localhost:3001")
 public class CharacterController {
 
     private final CharacterService characterService;
@@ -43,3 +40,39 @@ public class CharacterController {
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+    
+ 
+    @PostMapping
+    public ResponseEntity<?> addCharacter(@RequestBody java.util.Map<String, String> characterData) {
+        try {
+            String name = characterData.get("name");
+            String image = characterData.get("image");
+            String about = characterData.get("about");
+            
+            Character character = characterService.addCharacter(name, image, about);
+            return ResponseEntity.status(HttpStatus.CREATED).body(character);
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode())
+                .body(java.util.Map.of("error", e.getReason()));
+        } catch (Exception e) {
+            e.printStackTrace(); 
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(java.util.Map.of("error", "An error occurred while adding the character: " + e.getMessage()));
+        }
+    }
+    
+ 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> removeCharacter(@PathVariable Integer id) {
+        try {
+            characterService.removeCharacter(id);
+            return ResponseEntity.ok(java.util.Map.of("message", "Character removed successfully"));
+        } catch (ResponseStatusException e) {
+            return ResponseEntity.status(e.getStatusCode())
+                .body(java.util.Map.of("error", e.getReason()));
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(java.util.Map.of("error", "An error occurred while removing the character"));
+        }
+    }
+}

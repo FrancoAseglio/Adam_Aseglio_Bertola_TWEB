@@ -4,11 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-/**
- * Entity class representing an anime series/movie.
- * Maps to the 'details' table in the database.
- * Contains comprehensive information about anime including title, episodes, ratings, and more.
- */
+
 @Entity
 @Table(name = "details")
 public class Anime {
@@ -59,7 +55,6 @@ public class Anime {
     private String background;
     private String season;
 
-    // 'year' is a reserved word in some SQL dialects (H2). Map it to a safe column name.
     @Column(name = "release_year")
     private Integer year;
 
@@ -82,7 +77,6 @@ public class Anime {
     @JsonProperty("image_url")
     private String imageUrl;
 
-    // Getters and Setters
     public Integer getMalId() { return malId; }
     public void setMalId(Integer malId) { this.malId = malId; }
 

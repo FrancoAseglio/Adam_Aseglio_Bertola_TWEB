@@ -1,11 +1,6 @@
 package com.example.springboot_pgsql.CharacterAnimeWork;
 import jakarta.persistence.*;
 
-/**
- * Entity class representing the relationship between characters and anime.
- * Maps to the 'character_anime_works' table in the database.
- * Tracks which characters appear in which anime and their roles.
- */
 @Entity
 @Table(name = "character_anime_works")
 public class CharacterAnimeWork {
@@ -22,7 +17,6 @@ public class CharacterAnimeWork {
 
     private String role;
 
-    // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
