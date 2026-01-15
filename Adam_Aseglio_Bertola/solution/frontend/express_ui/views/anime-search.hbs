@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>Search Anime</h1>
+
+    <form action="/anime/search" method="GET">
+        <input type="text" name="title" placeholder="Enter anime title..." value="{{query}}" required>
+        <button type="submit">Search</button>
+    </form>
+
+    {{#if query}}
+        {{#if results}}
+            {{#if results.length}}
+                <h2>Search Results for "{{query}}" ({{pagination.totalItems}} found)</h2>
+                
+                <pre>{{json results}}</pre>
+
+                {{#if pagination}}
+                <div>
+                    <p>Page {{pagination.currentPage}} of {{pagination.totalPages}}</p>
+                    {{#if pagination.hasPrevPage}}
+                    <a href="/anime/search?title={{searchTitle}}&page={{subtract pagination.currentPage 1}}">Previous</a>
+                    {{/if}}
+                    {{#if pagination.hasNextPage}}
+                    <a href="/anime/search?title={{searchTitle}}&page={{add pagination.currentPage 1}}">Next</a>
+                    {{/if}}
+                </div>
+                {{/if}}
+            {{else}}
+                <h2>No Results Found</h2>
+                <p>No anime found matching "{{query}}"</p>
+            {{/if}}
+        {{else}}
+            <h2>No Results Found</h2>
+            <p>Try searching with different keywords.</p>
+        {{/if}}
+    {{else}}
+        <p>Enter a title to search for anime</p>
+    {{/if}}
+
+    <br>
+    <a href="/">← Back to Home</a>
+</body>
+</html>
