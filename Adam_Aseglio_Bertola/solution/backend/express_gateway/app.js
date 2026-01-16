@@ -5,9 +5,7 @@ const cookieParser = require('cookie-parser');
 const logger       = require('morgan');
 const cors         = require('cors');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var animeApiRouter = require('./routes/anime-api');
+
 // Routers
 const animeApiRouter           = require('./routes/anime-api');
 const favoritesApiRouter       = require('./routes/favorites-api');
@@ -53,10 +51,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/anime', animeApiRouter);
+
+
 // Routes
+app.use('/api/anime',           animeApiRouter);
 app.use('/api/characters',      charactersApiRouter);
 app.use('/api/people',          peopleApiRouter);
 app.use('/api/anime',           animeApiRouter);
