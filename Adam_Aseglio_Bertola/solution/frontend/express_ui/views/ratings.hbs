@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    
+    {{#if ratings}}
+        <p>Total ratings: {{ratings.length}}</p>
+        <pre>{{json ratings}}</pre>
+    {{else}}
+        <p>No ratings found for this user.</p>
+    {{/if}}
+    
+    <br>
+    <a href="/">← Back to Home</a>
+</body>
+</html>
