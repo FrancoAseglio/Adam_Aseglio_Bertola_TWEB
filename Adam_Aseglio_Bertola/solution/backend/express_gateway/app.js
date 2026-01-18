@@ -5,10 +5,10 @@ const cookieParser = require('cookie-parser');
 const logger       = require('morgan');
 const cors         = require('cors');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var animeApiRouter = require('./routes/anime-api');
-// Routers
+// Base router
+const indexRouter              = require('./routes/index');
+
+// API Routers
 const animeApiRouter           = require('./routes/anime-api');
 const favoritesApiRouter       = require('./routes/favorites-api');
 const ratingsApiRouter         = require('./routes/ratings-api');
@@ -53,10 +53,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+// Base route
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/api/anime', animeApiRouter);
-// Routes
+
+// API Routes
 app.use('/api/characters',      charactersApiRouter);
 app.use('/api/people',          peopleApiRouter);
 app.use('/api/anime',           animeApiRouter);
