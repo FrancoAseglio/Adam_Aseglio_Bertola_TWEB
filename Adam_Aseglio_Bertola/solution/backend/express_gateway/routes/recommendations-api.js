@@ -1,23 +1,63 @@
 const express = require('express');
-const router = express.Router();
+const router  = express.Router();
+const axios   = require('axios');
 
-const MOCK_ENRICHED_DATA = [
-  {
-    recommendation_mal_id: 51009,
-    title: "Jujutsu Kaisen 2nd Season",
-    score: 8.73,
-    image_url: "https://cdn.myanimelist.net/images/anime/1792/138022.jpg",
-    synopsis: "The year is 2006, and the halls of Tokyo Prefectural Jujutsu High School echo...",
-    status: "Finished Airing",
-    genres: "['Action', 'Supernatural']",
-    type: "TV",
-    episodes: 23,
-    studios: "['MAPPA']"
+const BACKEND_MONGO_URL  = 'http://localhost:3002/api';
+const BACKEND_SPRING_URL = 'http://localhost:8080/api';
+
+/**
+ * @swagger
+ * /api/recommendations/{malId}:
+ *   get:
+ *     summary: Get recommendations for an anime
+ *     description: Retrieves all recommended anime for a specific anime with full details (MongoDB backend)
+ *     tags: [Recommendations]
+ *     parameters:
+ *       - in: path
+ *         name: malId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: MyAnimeList ID of the anime
+ *         example: 3269
+ *     responses:
+ *       200:
+ *         description: List of recommendations with details
+ *       500:
+ *         description: Server error
+ */
+router.get('/:malId', async (req, res) => {
+  try {
+    const malId           = req.params.malId;
+    const response        = await axios.get(`${BACKEND_MONGO_URL}/recommendations/${malId}`);
+    const recommendations = response.data;
+
+    const enrichedRecommendations = await Promise.all(
+      recommendations.map(async (rec) => {
+        try {
+          const detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/anime/${rec.recommendation_mal_id}`);
+
+          return {
+            ...rec,
+            details: detailsResponse.data
+          };
+        } catch (error) {
+
+          return {
+            ...rec,
+            details: null
+          };
+        }
+      })
+    );
+
+    res.json(enrichedRecommendations);
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error fetching recommendations', 
+      error  : error.message 
+    });
   }
-];
-
-router.get('/:malId', (req, res) => {
-  res.status(200).json(MOCK_ENRICHED_DATA);
 });
 
 module.exports = router;
