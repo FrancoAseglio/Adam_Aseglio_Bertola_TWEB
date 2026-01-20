@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    
+    {{#if profileData}}
+        <h2>{{username}}'s Profile</h2>
+        <pre>{{json profileData}}</pre>
+    {{else}}
+        <p>Profile not found.</p>
+    {{/if}}
+    
+    <br>
+    <a href="/">← Back to Home</a>
+</body>
+</html>

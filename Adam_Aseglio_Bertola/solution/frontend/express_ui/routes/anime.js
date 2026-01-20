@@ -35,4 +35,21 @@ router.get('/search', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const animeResponse = await axios.get(`${GATEWAY_URL}/anime/${req.params.id}`);
+    
+    res.render('anime-detail', {
+      layout: false,
+      title: `Anime ${req.params.id}`,
+      anime: animeResponse.data
+    });
+  } catch (error) {
+    res.status(404).render('error', {
+      message: 'Anime not found',
+      error: { status: 404, stack: error.message }
+    });
+  }
+});
+
 module.exports = router;

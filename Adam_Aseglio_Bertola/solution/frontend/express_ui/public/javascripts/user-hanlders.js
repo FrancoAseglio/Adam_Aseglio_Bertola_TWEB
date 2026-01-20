@@ -1,3 +1,9 @@
+async function getUserProfile() {
+  const username = document.getElementById('profileUsername').value;
+  if (!username) return alert('Please enter a username');
+  window.location.href = `/profile/${encodeURIComponent(username)}`;
+}
+
 async function getUserFavorites() {
   const username = document.getElementById('favUsername').value;
   if (!username) return alert('Please enter a username');
