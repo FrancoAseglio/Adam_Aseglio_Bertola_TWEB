@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    
+    {{#if anime}}
+        <h2>{{anime.title}}</h2>
+        <pre>{{json anime}}</pre>
+    {{else}}
+        <p>Anime not found.</p>
+    {{/if}}
+    
+    <br>
+    <a href="/">← Back to Home</a>
+</body>
+</html>
