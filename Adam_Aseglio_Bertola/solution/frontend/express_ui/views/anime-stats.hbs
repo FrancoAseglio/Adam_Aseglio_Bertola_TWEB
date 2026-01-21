@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    
+    {{#if stats}}
+        <p>Statistics for Anime ID: {{animeId}}</p>
+        <pre>{{json stats}}</pre>
+    {{else}}
+        <p>No statistics found for this anime.</p>
+    {{/if}}
+    
+    <br>
+    <a href="/">← Back to Home</a>
+</body>
+</html>

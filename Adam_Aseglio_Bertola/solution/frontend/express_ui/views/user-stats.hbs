@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    
+    {{#if userStats}}
+        <p>Statistics for user: {{username}}</p>
+        <pre>{{json userStats}}</pre>
+    {{else}}
+        <p>No statistics found for this user.</p>
+    {{/if}}
+    
+    <br>
+    <a href="/">← Back to Home</a>
+</body>
+</html>
