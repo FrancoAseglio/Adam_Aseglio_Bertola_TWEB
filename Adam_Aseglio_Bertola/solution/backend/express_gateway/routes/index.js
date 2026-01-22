@@ -1,26 +1,26 @@
 const express = require('express');
-const router = express.Router();
+const router  = express.Router();
 
+/**
+ * @swagger
+ * /:
+ *   get:
+ *     summary: Gateway Landing Page
+ *     tags: [Gateway]
+ *     responses:
+ *       200:
+ *         description: Successfully rendered the gateway template
+ *       500:
+ *         description: Server error
+ */
 router.get('/', function(req, res) {
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <title>Gateway Server</title>
-      <style>
-        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
-        h1 { color: #333; }
-        p { color: #666; }
-        a { color: #007bff; text-decoration: none; }
-      </style>
-    </head>
-    <body>
-      <h1>🚪 Express Gateway / Middleware</h1>
-      <p>Questo è il server gateway del progetto. Non dovresti essere qui.</p>
-      <p><a href="http://localhost:3000">→ Vai al Frontend (localhost:3000)</a></p>
-    </body>
-    </html>
-  `);
+  res.render('index', {
+    pageTitle  : "Gateway Server",
+    heading    : "🚪 Express Gateway / Middleware",
+    message    : "This is the project's gateway server. You aren't supposed to be here.",
+    frontendUrl: "http://localhost:3000",
+    linkText   : "Go to Frontend"
+  });
 });
 
 module.exports = router;
