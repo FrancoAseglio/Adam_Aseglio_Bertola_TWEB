@@ -9,7 +9,10 @@ import org.springframework.http.HttpStatus;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * Service layer for Character business logic.
+ * Handles data operations and business rules for anime characters.
+ */
 @Service
 public class CharacterService {
     private final CharacterRepository characterRepository;
@@ -44,6 +47,15 @@ public class CharacterService {
     }
     
 
+    /**
+     * Add a new character to the database.
+     * 
+     * @param name Character name (required)
+     * @param image Character image URL (required)
+     * @param about Character description (required)
+     * @return The created Character entity
+     * @throws ResponseStatusException if validation fails or character already exists
+     */
     public Character addCharacter(String name, String image, String about) {
         if (name == null || name.trim().isEmpty()) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Character name is required");
@@ -82,7 +94,13 @@ public class CharacterService {
         return characterRepository.save(character);
     }
     
-   
+   /**
+     * Remove a character from the database.
+     * Only allows removal of characters with ID >= 282285 (custom added characters).
+     * 
+     * @param characterId The character MAL ID
+     * @throws ResponseStatusException if character not found or ID is below minimum
+     */
     public void removeCharacter(Integer characterId) {
         // Prevent deletion of original characters (IDs < 282285)
         if (characterId < 282285) {

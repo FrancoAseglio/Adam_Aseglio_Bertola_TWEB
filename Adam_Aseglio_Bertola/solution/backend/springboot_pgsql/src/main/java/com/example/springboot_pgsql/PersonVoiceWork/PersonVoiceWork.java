@@ -2,6 +2,11 @@ package com.example.springboot_pgsql.PersonVoiceWork;
 
 import jakarta.persistence.*;
 
+/**
+ * Entity class representing voice acting work by a person.
+ * Maps to the 'person_voice_works' table in the database.
+ * Tracks which voice actors voiced which characters in which anime.
+ */
 @Entity
 @Table(name = "person_voice_works")
 public class PersonVoiceWork {

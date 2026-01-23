@@ -7,7 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-
+/**
+ * Service layer for Person business logic.
+ * Handles data operations and business rules for people (voice actors, staff).
+ */
 @Service
 public class PersonService {
     private final PersonRepository personRepository;
