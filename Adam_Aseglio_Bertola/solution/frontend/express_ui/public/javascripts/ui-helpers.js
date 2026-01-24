@@ -9,9 +9,7 @@
 function searchProfile(event) {
   event.preventDefault();
   const username = document.getElementById('usernameSearch').value.trim();
-  if (username) {
-    window.location.href = `/profile/${encodeURIComponent(username)}`;
-  }
+  if (username) window.location.href = `/profile/${encodeURIComponent(username)}`;
 }
 
 /**
@@ -20,9 +18,7 @@ function searchProfile(event) {
 function init() {
   console.log('Anime Data System initialized');
   const resultsEl = document.getElementById('results');
-  if (resultsEl) {
-    resultsEl.style.display = 'none';
-  }
+  if (resultsEl) resultsEl.style.display = 'none';
 }
 
 /**

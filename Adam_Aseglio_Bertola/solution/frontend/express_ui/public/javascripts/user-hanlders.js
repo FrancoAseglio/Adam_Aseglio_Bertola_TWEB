@@ -70,22 +70,14 @@ async function getUserStats() {
  */
 async function addFavoriteFromForm() {
   const username = value('addFavUsername');
-  const itemId = value('addFavItemId');
-  const favType = 'anime'; // Default to anime type
+  const itemId   = value('addFavItemId');
+  const favType  = 'anime';
 
-  if (!username) {
-    return alert('Please enter a username');
-  }
-
-  if (!itemId) {
-    return alert('Please enter an item ID');
-  }
+  if (!username) return alert('Please enter a username');
+  if (!itemId)   return alert('Please enter an item ID');
 
   try {
-    // Call the favorite handler function
     await addFavorite(username, itemId, favType);
-
-    // Clear form inputs on success
     document.getElementById('addFavUsername').value = '';
     document.getElementById('addFavItemId').value = '';
   } catch (error) {
@@ -103,21 +95,13 @@ async function addFavoriteFromForm() {
  */
 async function removeFavoriteFromForm() {
   const username = value('removeFavUsername');
-  const itemId = value('removeFavItemId');
+  const itemId   = value('removeFavItemId');
 
-  if (!username) {
-    return alert('Please enter a username');
-  }
-
-  if (!itemId) {
-    return alert('Please enter an item ID');
-  }
+  if (!username) return alert('Please enter a username');
+  if (!itemId)   return alert('Please enter an item ID');
 
   try {
-    // Call the favorite handler function
     await removeFavorite(username, itemId);
-
-    // Clear form inputs on success
     document.getElementById('removeFavUsername').value = '';
     document.getElementById('removeFavItemId').value = '';
   } catch (error) {
@@ -135,27 +119,16 @@ async function removeFavoriteFromForm() {
  * @returns {Promise<void>}
  */
 async function addCharacterFromForm() {
-  const name = value('addCharName');
+  const name  = value('addCharName');
   const image = value('addCharImage');
   const about = value('addCharAbout');
 
-  if (!name) {
-    return alert('Please enter a character name');
-  }
-
-  if (!image) {
-    return alert('Please enter an image URL');
-  }
-
-  if (!about) {
-    return alert('Please enter a character description');
-  }
+  if (!name)  return alert('Please enter a character name');
+  if (!image) return alert('Please enter an image URL');
+  if (!about) return alert('Please enter a character description');
 
   try {
-    // Call the character handler function
     await addCharacter(name, image, about);
-
-    // Clear form inputs on success
     document.getElementById('addCharName').value = '';
     document.getElementById('addCharImage').value = '';
     document.getElementById('addCharAbout').value = '';
@@ -174,15 +147,10 @@ async function addCharacterFromForm() {
 async function removeCharacterFromForm() {
   const characterId = value('removeCharId');
 
-  if (!characterId) {
-    return alert('Please enter a character ID');
-  }
+  if (!characterId) return alert('Please enter a character ID');
 
   try {
-    // Call the character handler function
     await removeCharacter(characterId);
-
-    // Clear form inputs on success
     document.getElementById('removeCharId').value = '';
   } catch (error) {
     console.error('Error in removeCharacterFromForm:', error);
