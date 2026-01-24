@@ -3,6 +3,10 @@ package com.example.springboot_pgsql.Person;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
+/**
+ * Entity class representing a person (voice actor, staff, etc.).
+ * Maps to the 'person_details' table in the database.
+ */
 @Entity
 @Table(name = "person_details")
 public class Person {

@@ -4,6 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+/**
+ * Service layer for PersonVoiceWork business logic.
+ * Handles data operations for voice acting assignments.
+ */
 @Service
 public class PersonVoiceWorkService {
     private final PersonVoiceWorkRepository repository;

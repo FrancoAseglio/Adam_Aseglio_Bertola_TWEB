@@ -3,6 +3,10 @@ package com.example.springboot_pgsql.Character;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+/**
+ * Entity class representing an anime character.
+ * Maps to the 'characters' table in the database.
+ */
 @Entity
 @Table(name = "characters")
 public class Character {

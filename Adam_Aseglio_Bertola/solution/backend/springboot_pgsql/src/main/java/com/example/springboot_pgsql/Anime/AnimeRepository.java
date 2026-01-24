@@ -6,6 +6,10 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 
+/**
+ * Repository interface for Anime data access using Spring Data JPA.
+ * Matches the style of other repositories in the project (e.g., CharacterRepository).
+ */
 @Repository
 public interface AnimeRepository extends JpaRepository<Anime, Integer> {
     List<Anime> findByTitleContainingIgnoreCase(String title);
