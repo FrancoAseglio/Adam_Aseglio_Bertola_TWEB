@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="317abb48-691f-4550-9677-6f4011036277" name="Changes" comment="" />
+    <list default="true" id="317abb48-691f-4550-9677-6f4011036277" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/javascripts/user-hanlders.js" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/javascripts/user-hanlders.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/index.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/index.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/layout.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/layout.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/stats.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/stats.hbs" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +57,7 @@
       <workItem from="1769248628683" duration="12000" />
       <workItem from="1769248643108" duration="12000" />
       <workItem from="1769248827317" duration="10000" />
+      <workItem from="1769248839477" duration="1251000" />
     </task>
     <servers />
   </component>
