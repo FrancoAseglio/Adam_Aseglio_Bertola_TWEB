@@ -1,21 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="317abb48-691f-4550-9677-6f4011036277" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/javascripts/user-hanlders.js" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/javascripts/user-hanlders.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/characters.js" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/characters.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/anime-detail.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/anime-detail.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/character-detail.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/character-detail.hbs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/index.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/index.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/layout.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/layout.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/stats.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/stats.hbs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="1071" />
+    <option name="fileBasedEmbeddingIndicesEnabled" value="true" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
   </component>
   <component name="ProjectColorInfo">{
   &quot;customColor&quot;: &quot;&quot;,
@@ -26,24 +36,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;Node.js.www.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lorenzo/OneDrive/Desktop/Adam_Aseglio_Bertola_TWEB&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "Node.js.www.executor": "Run",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "RunOnceActivity.typescript.service.memoryLimit.init": "true",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "frontExpress",
+    "javascript.preferred.runtime.type.id": "node",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/Lorenzo/OneDrive/Desktop/Adam_Aseglio_Bertola_TWEB",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RecapSpentCounter">
+    <option name="endsOfQuotaMs" value="1771666145308" />
+    <option name="spentUsd" value="0.01337255" />
+  </component>
+  <component name="RecapUselessUpdatesCounter">
+    <option name="suspendCountdown" value="6" />
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.29346.143" />
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.29346.242" />
       </set>
     </attachedChunks>
   </component>
@@ -58,10 +83,19 @@
       <workItem from="1769248643108" duration="12000" />
       <workItem from="1769248827317" duration="10000" />
       <workItem from="1769248839477" duration="1251000" />
+      <workItem from="1769350906775" duration="2641000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="github-copilot-workspace">
+    <instructionFileLocations>
+      <option value=".github/instructions" />
+    </instructionFileLocations>
+    <promptFileLocations>
+      <option value=".github/prompts" />
+    </promptFileLocations>
   </component>
 </project>

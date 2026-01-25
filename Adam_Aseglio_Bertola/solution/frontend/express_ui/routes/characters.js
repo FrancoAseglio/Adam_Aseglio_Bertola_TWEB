@@ -22,4 +22,21 @@ router.get('/search', async (req, res) => {
   }
 });
 
+router.get('/:id', async (req, res) => {
+  try {
+    const characterResponse = await axios.get(`${GATEWAY_URL}/characters/${req.params.id}`);
+    
+    res.render('character-detail', {
+      layout: false,
+      title: `Character ${req.params.id}`,
+      character: characterResponse.data
+    });
+  } catch (error) {
+    res.status(404).render('error', {
+      message: 'Character not found',
+      error: { status: 404, stack: error.message }
+    });
+  }
+});
+
 module.exports = router;
