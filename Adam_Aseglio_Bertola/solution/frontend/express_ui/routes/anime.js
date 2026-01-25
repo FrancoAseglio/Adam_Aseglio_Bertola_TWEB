@@ -52,4 +52,23 @@ router.get('/:id', async (req, res) => {
   }
 });
 
+router.get('/top/all', async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 20;
+    const response = await axios.get(`${GATEWAY_URL}/anime/top/all`, { params: { limit } });
+
+    res.render('anime-top', {
+      layout: false,
+      title: `Top ${limit} Rated Anime`,
+      results: response.data,
+      limit: limit
+    });
+  } catch (error) {
+    res.status(500).render('error', {
+      message: 'Error fetching top anime',
+      error: { status: 500, stack: error.message }
+    });
+  }
+});
+
 module.exports = router;
