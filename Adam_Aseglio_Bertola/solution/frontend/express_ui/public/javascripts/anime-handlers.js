@@ -55,6 +55,18 @@ async function getTopAnime() {
 }
 
 /**
+ * Search anime for viewing statistics
+ * Reads from: statsSearchQuery input field
+ * Redirects to: /stats/search?title=query
+ * @returns {void} Redirects to anime stats search page
+ */
+async function searchAnimeStats() {
+  const query = value('statsSearchQuery');
+  if (!query) return alert('Please enter an anime title to search');
+  window.location.href = `/stats/search?title=${encodeURIComponent(query)}`;
+}
+
+/**
  * Search anime to view statistics
  * Reads from: statsAnimeId input field
  * Redirects to: /stats/search?title=query to show search results

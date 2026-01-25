@@ -47,6 +47,39 @@ router.get('/user/:username', async (req, res) => {
   }
 });
 
+// Route for searching anime to view statistics
+router.get('/search', async (req, res) => {
+  const query = req.query.title;
+
+  if (!query) {
+    return res.render('anime-stats-search', {
+      layout: false,
+      title: 'Search Anime Statistics',
+      query: '',
+      results: null
+    });
+  }
+
+  try {
+    const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params: { title: query } });
+    
+    res.render('anime-stats-search', {
+      layout: false,
+      title: `Search Results - ${query}`,
+      query: query,
+      results: response.data
+    });
+  } catch (error) {
+    res.render('anime-stats-search', {
+      layout: false,
+      title: 'Search Anime Statistics',
+      query: query,
+      results: [],
+      error: 'Error searching for anime'
+    });
+  }
+});
+
 // Route for getting anime statistics
 router.get('/anime/:animeId', async (req, res) => {
   try {
