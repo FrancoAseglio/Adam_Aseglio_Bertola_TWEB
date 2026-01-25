@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="317abb48-691f-4550-9677-6f4011036277" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/javascripts/anime-handlers.js" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/javascripts/anime-handlers.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/stats.js" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/stats.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/index.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/index.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/anime.js" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/anime.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -58,10 +57,10 @@
 }</component>
   <component name="RecapSpentCounter">
     <option name="endsOfQuotaMs" value="1771666145308" />
-    <option name="spentUsd" value="0.01337255" />
+    <option name="spentUsd" value="0.02205655" />
   </component>
   <component name="RecapUselessUpdatesCounter">
-    <option name="suspendCountdown" value="6" />
+    <option name="suspendCountdown" value="4" />
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -82,7 +81,7 @@
       <workItem from="1769248827317" duration="10000" />
       <workItem from="1769248839477" duration="1251000" />
       <workItem from="1769350906775" duration="2641000" />
-      <workItem from="1769375523472" duration="377000" />
+      <workItem from="1769375523472" duration="1519000" />
     </task>
     <servers />
   </component>
