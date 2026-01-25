@@ -7,7 +7,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-
+/**
+ * REST Controller for Person endpoints.
+ * Base URL: /api/people
+ * Provides operations for retrieving and searching people (voice actors, staff).
+ */
 @RestController
 @RequestMapping("/api/people")
 @CrossOrigin(origins = "http://localhost:3001")

@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 
+/**
+ * Service layer for Anime business logic.
+ * Handles data operations and business rules for anime series and movies.
+ */
 @Service
 public class AnimeService {
     private final AnimeRepository animeRepository;

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+    <h1>{{title}}</h1>
+    
+    {{#if recommendations}}
+        <p>Total recommendations: {{recommendations.length}}</p>
+        <pre>{{json recommendations}}</pre>
+    {{else}}
+        <p>No recommendations found for this anime.</p>
+    {{/if}}
+    
+    <br>
+    <a href="/">← Back to Home</a>
+</body>
+</html>

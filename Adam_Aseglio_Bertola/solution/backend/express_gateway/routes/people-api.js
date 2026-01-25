@@ -1,25 +1,40 @@
 const express = require('express');
-const router = express.Router();
+const router  = express.Router();
+const axios   = require('axios');
 
-const MOCK_PERSON_DATA = {
-  mal_id: 1,
-  name: "Tomokazu Sugita",
-  given_name: "智和",
-  family_name: "杉田",
-  birthday: "1980-10-11T00:00:00+00:00",
-  website_url: null,
-  image_url: "https://cdn.myanimelist.net/images/voiceactors/3/54687.jpg",
-  favorites: 85203,
-  about: "Tomokazu Sugita is a Japanese voice actor and author who is most well-known for his role as Gintoki Sakata in Gintama.",
-  alternate_names: "['Sugita Tomokazu']"
-};
+const BACKEND_SPRING_URL = 'http://localhost:8080/api';
 
-router.get('/:id', (req, res) => {
-  const { id } = req.params;
-  res.json({
-    ...MOCK_PERSON_DATA,
-    mal_id: parseInt(id) || id
-  });
+/**
+ * @swagger
+ * /api/people/{id}:
+ *   get:
+ *     summary: Get person by ID (Spring Boot/PostgreSQL backend)
+ *     tags: [People]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Person ID
+ *     responses:
+ *       200:
+ *         description: Person details
+ *       404:
+ *         description: Person not found
+ *       500:
+ *         description: Server error
+ */
+router.get('/:id', async (req, res) => {
+  try {
+    const response = await axios.get(`${BACKEND_SPRING_URL}/people/${req.params.id}`);
+    res.json(response.data);
+  } catch (error) {
+    res.status(error.response?.status || 500).json({
+      message: 'Error fetching person',
+      error  : error.message
+    });
+  }
 });
 
 module.exports = router;

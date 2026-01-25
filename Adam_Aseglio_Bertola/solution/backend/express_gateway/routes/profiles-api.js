@@ -1,67 +1,171 @@
 const express = require('express');
-const router = express.Router();
+const router  = express.Router();
+const axios   = require('axios');
 
-const MOCK_PROFILE_BASE = {
-  "_id": "6964ffe0b353cfdb752a8638",
-  "username": "CKK2",
-  "gender": null,
-  "birthday": null,
-  "location": "United States",
-  "joined": "Dec 1, 2018",
-  "watching": 3,
-  "completed": 182,
-  "on_hold": 15,
-  "dropped": 0,
-  "plan_to_watch": 405,
-  "userRatings": 605,
-  "userFavorites": 0
-};
+const BACKEND_MONGO_URL  = 'http://localhost:3002/api';
+const BACKEND_SPRING_URL = 'http://localhost:8080/api';
 
-router.get('/:username/full', (req, res) => {
-  res.json({
-    profile: MOCK_PROFILE_BASE,
-    favorites: [
-      {
-        id: 21,
-        fav_type: "anime",
-        details: {
-          title: "One Piece",
-          image_url: "https://cdn.myanimelist.net/images/anime/6/73245.jpg",
-          score: 8.73
+/**
+ * @swagger
+ * /api/profiles/{username}/full:
+ *   get:
+ *     summary: Get complete user profile with favorites and ratings
+ *     tags: [Profiles]
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Username
+ *     responses:
+ *       200:
+ *         description: Complete profile data
+ *       500:
+ *         description: Server error
+ */
+router.get('/:username/full', async (req, res) => {
+  try {
+    const profileResponse = await axios.get(`${BACKEND_MONGO_URL}/profiles/${req.params.username}/stats`);
+    const profile         = profileResponse.data;
+
+    const favoritesResponse = await axios.get(`${BACKEND_MONGO_URL}/favorites/${req.params.username}`);
+    const favorites         = favoritesResponse.data;
+
+    const typeEndpoints = {
+      'anime'    : 'anime',
+      'character': 'characters',
+      'people'   : 'people'
+    };
+
+    const enrichedFavorites = await Promise.all(
+      favorites.slice(0, 10).map(async (fav) => {
+        try {
+          let detailsResponse;
+          const endpoint = typeEndpoints[fav.fav_type];
+          
+          if (endpoint) detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/${endpoint}/${fav.id}`);
+          
+          return {
+            ...fav,
+            details: detailsResponse ? detailsResponse.data : null
+          };
+        } catch (error) {
+          console.error(`Error fetching details for ${fav.fav_type} ${fav.id}:`, error.message);
+          
+          return {
+            ...fav,
+            details: null
+          };
         }
-      },
-      {
-        id: 40,
-        fav_type: "character",
-        details: {
-          name: "Luffy Monkey D.",
-          image_url: "https://cdn.myanimelist.net/images/characters/9/310307.jpg"
+      })
+    );
+
+    const ratingsResponse = await axios.get(`${BACKEND_MONGO_URL}/ratings/${req.params.username}`);
+    const ratings         = ratingsResponse.data.slice(0, 20);
+
+    const enrichedRatings = await Promise.all(
+      ratings.map(async (rating) => {
+        try {
+          const animeResponse = await axios.get(`${BACKEND_SPRING_URL}/anime/${rating.anime_id}`);
+
+          return {
+            ...rating,
+            animeDetails: animeResponse.data
+          };
+        } catch (error) {
+          console.error(`Error fetching anime details for ${rating.anime_id}:`, error.message);
+          
+          return {
+            ...rating,
+            animeDetails: null
+          };
         }
-      }
-    ],
-    ratings: [
-      {
-        anime_id: 40748,
-        status: "completed",
-        score: 9,
-        animeDetails: {
-          title: "Jujutsu Kaisen",
-          image_url: "https://cdn.myanimelist.net/images/anime/1171/109222.jpg"
-        }
-      }
-    ]
-  });
+      })
+    );
+
+    res.json({
+      profile  : profile,
+      favorites: enrichedFavorites,
+      ratings  : enrichedRatings
+    });
+  } catch (error) {
+    res.status(error.response?.status || 500).json({
+      message: 'Error fetching profile',
+      error  : error.message
+    });
+  }
 });
 
-router.get('/:username/stats', (req, res) => {
-  res.json(MOCK_PROFILE_BASE);
+/**
+ * @swagger
+ * /api/profiles/{username}/stats:
+ *   get:
+ *     summary: Get user profile with statistics
+ *     tags: [Profiles]
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Username
+ *     responses:
+ *       200:
+ *         description: Profile data with statistics
+ *       500:
+ *         description: Server error
+ */
+router.get('/:username/stats', async (req, res) => {
+  try {
+    const response = await axios.get(`${BACKEND_MONGO_URL}/profiles/${req.params.username}/stats`);
+    
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error fetching profile stats', 
+      error  : error.message 
+    });
+  }
 });
 
-router.put('/:username/preferences', (req, res) => {
-  res.json({
-    message: "Preferences updated successfully",
-    updatedFields: req.body
-  });
+/**
+ * @swagger
+ * /api/profiles/{username}/preferences:
+ *   put:
+ *     summary: Update user profile preferences
+ *     tags: [Profiles]
+ *     parameters:
+ *       - in: path
+ *         name: username
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Username
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             description: User preferences to update
+ *     responses:
+ *       200:
+ *         description: Updated profile preferences
+ *       500:
+ *         description: Server error
+ */
+router.put('/:username/preferences', async (req, res) => {
+  try {
+    const response = await axios.put(`${BACKEND_MONGO_URL}/profiles/${req.params.username}/preferences`, req.body);
+    
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error updating preferences', 
+      error  : error.message 
+    });
+  }
 });
 
 module.exports = router;

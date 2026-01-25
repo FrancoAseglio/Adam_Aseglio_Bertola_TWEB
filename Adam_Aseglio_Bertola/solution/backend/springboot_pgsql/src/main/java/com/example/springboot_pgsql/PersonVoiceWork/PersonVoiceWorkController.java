@@ -4,7 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
-
+/**
+ * REST Controller for PersonVoiceWork endpoints.
+ * Base URL: /api/person-voice-work
+ * Provides operations for retrieving voice acting assignments.
+ */
 @RestController
 @RequestMapping("/api/person-voice-work")
 @CrossOrigin(origins = "http://localhost:3001")

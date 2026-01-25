@@ -9,7 +9,11 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
-
+/**
+ * REST Controller for Character endpoints.
+ * Base URL: /api/characters
+ * Provides operations for retrieving and searching anime characters.
+ */
 @RestController
 @RequestMapping("/api/characters")
 @CrossOrigin(origins = "http://localhost:3001")

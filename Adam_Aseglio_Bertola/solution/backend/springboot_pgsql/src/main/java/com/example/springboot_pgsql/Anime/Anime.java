@@ -4,7 +4,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
-
+/**
+ * Entity class representing an anime series/movie.
+ * Maps to the 'details' table in the database.
+ * Contains comprehensive information about anime including title, episodes, ratings, and more.
+ */
 @Entity
 @Table(name = "details")
 public class Anime {

@@ -40,6 +40,10 @@ const swaggerSpec = swaggerJSDoc(swaggerOptions);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.get('/docs', (req, res) => res.redirect('/api-docs'));
 
+// HBS views engine modules
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');                 
+
 // Middleware
 app.use(logger('dev'));
 app.use(cors({

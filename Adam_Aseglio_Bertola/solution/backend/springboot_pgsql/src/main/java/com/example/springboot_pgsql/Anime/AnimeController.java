@@ -5,6 +5,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+/**
+ * REST Controller for Anime endpoints.
+ * Base URL: /api/anime
+ * Provides operations for retrieving, searching, and filtering anime by various criteria.
+ */
 @RestController
 @RequestMapping("/api/anime")
 @CrossOrigin(origins = "http://localhost:3001")
