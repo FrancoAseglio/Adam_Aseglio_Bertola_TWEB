@@ -34,7 +34,7 @@ router.get('/:id', async (req, res) => {
   } catch (error) {
     res.status(404).render('error', {
       message: 'Character not found',
-      error: { status: 404, stack: error.messile.readage }
+      error: { status: 404, stack: error.message }
     });
   }
 });
