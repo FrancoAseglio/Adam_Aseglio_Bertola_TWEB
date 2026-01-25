@@ -93,3 +93,15 @@ async function searchCharacter() {
   if (!query) return alert('Please enter a character name');
   window.location.href = `/characters/search?name=${encodeURIComponent(query)}`;
 }
+
+/**
+ * Get detailed information for a specific character by ID
+ * Reads from: characterId input field
+ * Redirects to: /characters/:id
+ * @returns {void} Redirects to character detail page
+ */
+async function getCharacterDetail() {
+  const id = value('characterId');
+  if (!id) return alert('Please enter a character ID');
+  window.location.href = `/characters/${encodeURIComponent(id)}`;
+}
