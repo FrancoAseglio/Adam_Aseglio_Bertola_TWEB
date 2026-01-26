@@ -71,4 +71,22 @@ router.get('/top/all', async (req, res) => {
   }
 });
 
+router.get('/genre/:genre', async (req, res) => {
+  try {
+    const response = await axios.get(`${GATEWAY_URL}/anime/genre/${req.params.genre}`);
+
+    res.render('anime-genre', {
+      layout: false,
+      title: `${req.params.genre} Anime`,
+      results: response.data,
+      genre: req.params.genre
+    });
+  } catch (error) {
+    res.status(500).render('error', {
+      message: 'Error fetching anime by genre',
+      error: { status: 500, stack: error.message }
+    });
+  }
+});
+
 module.exports = router;
