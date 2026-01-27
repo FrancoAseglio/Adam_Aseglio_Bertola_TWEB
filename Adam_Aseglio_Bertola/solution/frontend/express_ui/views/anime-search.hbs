@@ -130,42 +130,34 @@
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                     {{#each results}}
                     <div class="col">
-                        <div class="card anime-card h-100">
-                            <a href="/anime/{{this.animeMalId}}">
-                                {{#if this.imageUrl}}
-                                <img src="{{this.imageUrl}}" alt="{{this.title}}" class="card-img-top" 
-                                     style="height:300px;object-fit:cover" 
-                                     onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
-                                {{else}}
-                                <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" 
-                                     alt="{{this.title}}" class="card-img-top" style="height:300px;object-fit:cover">
+                        <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/anime/{{this.mal_id}}'">
+                            {{#if this.imageUrl}}
+                            <img src="{{this.imageUrl}}" alt="{{this.title}}" class="card-img-top" 
+                                 style="height:300px;object-fit:cover" 
+                                 onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+                            {{else}}
+                            <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" 
+                                 alt="{{this.title}}" class="card-img-top" style="height:300px;object-fit:cover">
+                            {{/if}}
+                            <div class="card-body">
+                                <h6 class="card-title text-primary">{{this.title}}</h6>
+                                {{#if this.type}}
+                                <p class="card-text small text-muted mb-1"><strong>Type:</strong> {{this.type}}</p>
                                 {{/if}}
-                                <div class="card-body">
-                                    <h6 class="card-title text-primary">{{this.title}}</h6>
-                                    <p class="card-text small text-muted mb-1"><strong>ID:</strong> {{this.animeMalId}}</p>
-                                    {{#if this.type}}
-                                    <p class="card-text small text-muted mb-1"><strong>Type:</strong> {{this.type}}</p>
-                                    {{/if}}
-                                    {{#if this.episodes}}
-                                    <p class="card-text small text-muted mb-1"><strong>Episodes:</strong> {{this.episodes}}</p>
-                                    {{/if}}
-                                    {{#if this.score}}
-                                    <p class="card-text small text-muted mb-1">
-                                        <strong>Score:</strong> 
-                                        <span class="badge {{#if (gt this.score 8)}}bg-success{{else if (gt this.score 7)}}bg-info{{else}}bg-secondary{{/if}}">
-                                            ⭐ {{this.score}}
-                                        </span>
-                                    </p>
-                                    {{/if}}
-                                    {{#if this.genres}}
-                                    <p class="card-text small text-muted mb-1"><strong>Genres:</strong> {{formatList this.genres}}</p>
-                                    {{/if}}
-                                </div>
-                            </a>
-                            <div class="card-footer bg-white border-top">
-                                <a href="/recommendations/{{this.animeMalId}}" class="btn btn-sm btn-outline-primary w-100">
-                                    💡 Recommendations
-                                </a>
+                                {{#if this.episodes}}
+                                <p class="card-text small text-muted mb-1"><strong>Episodes:</strong> {{this.episodes}}</p>
+                                {{/if}}
+                                {{#if this.score}}
+                                <p class="card-text small text-muted mb-1">
+                                    <strong>Score:</strong> 
+                                    <span class="badge {{#if (gt this.score 8)}}bg-success{{else if (gt this.score 7)}}bg-info{{else}}bg-secondary{{/if}}">
+                                        ⭐ {{this.score}}
+                                    </span>
+                                </p>
+                                {{/if}}
+                                {{#if this.genres}}
+                                <p class="card-text small text-muted mb-1"><strong>Genres:</strong> {{formatList this.genres}}</p>
+                                {{/if}}
                             </div>
                         </div>
                     </div>

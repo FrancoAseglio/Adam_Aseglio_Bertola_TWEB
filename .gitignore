@@ -47,7 +47,8 @@ data/processed/*
 
 # IDE specific
 .vscode/
-.idea/
+**/.idea/
+*.idea/workspace.xml
 *.swp
 *.swo
 *~

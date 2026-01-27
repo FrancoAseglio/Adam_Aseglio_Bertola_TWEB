@@ -38,24 +38,34 @@ router.get('/search', async (req, res) => {
     const itemsPerPage = 20;
     let allResults = [];
 
-    // Se c'è title, cerca per titolo
+    // Determina quale endpoint chiamare in base ai filtri
     if (title) {
+      // Se c'è title, cerca per titolo
       const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params: { title } });
       allResults = response.data;
-    }
-    // Se ci sono genres, cerca per primo genere e poi filtra
-    else if (selectedGenres.length > 0) {
+    } else if (selectedGenres.length > 0) {
+      // Se ci sono solo genres, cerca per primo genere
       const response = await axios.get(`${GATEWAY_URL}/anime/genre/${selectedGenres[0]}`);
       allResults = response.data;
-    }
-    // Se c'è limit (top rated), prendi i top
-    else if (limit) {
-      const response = await axios.get(`${GATEWAY_URL}/anime/top/all`, { params: { limit: limit || 50 } });
+    } else if (limit) {
+      // Se c'è solo limit (top rated), prendi i top
+      const response = await axios.get(`${GATEWAY_URL}/anime/top/all`, { params: { limit: parseInt(limit) } });
+      allResults = response.data;
+    } else {
+      // Fallback: cerca tutto
+      const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params: { title: '' } });
       allResults = response.data;
     }
 
     // Applica filtri client-side
     let filteredResults = allResults;
+
+    // Se limit è specificato con altri filtri, prendi solo i top N dopo il filtering
+    if (limit && (title || selectedGenres.length > 0)) {
+      // Ordina per score prima di limitare
+      filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
+      filteredResults = filteredResults.slice(0, parseInt(limit));
+    }
 
     // Filtra per TUTTI i generi selezionati (AND logic)
     if (selectedGenres.length > 0) {
@@ -96,6 +106,12 @@ router.get('/search', async (req, res) => {
       filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
     }
 
+    // Normalizza snake_case in camelCase per il frontend
+    filteredResults = filteredResults.map(anime => ({
+      ...anime,
+      imageUrl: anime.image_url
+    }));
+
     // Paginazione
     const totalItems = filteredResults.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -132,23 +148,6 @@ router.get('/search', async (req, res) => {
     res.status(500).render('error', {
       message: 'Error searching anime',
       error: { status: 500, stack: error.message }
-    });
-  }
-});
-
-router.get('/:id', async (req, res) => {
-  try {
-    const animeResponse = await axios.get(`${GATEWAY_URL}/anime/${req.params.id}`);
-    
-    res.render('anime-detail', {
-      layout: false,
-      title: `Anime ${req.params.id}`,
-      anime: animeResponse.data
-    });
-  } catch (error) {
-    res.status(404).render('error', {
-      message: 'Anime not found',
-      error: { status: 404, stack: error.message }
     });
   }
 });
@@ -233,6 +232,29 @@ router.get('/genre/:genre', async (req, res) => {
     res.status(500).render('error', {
       message: 'Error fetching anime by genre',
       error: { status: 500, stack: error.message }
+    });
+  }
+});
+
+// This route must be LAST because /:id catches all paths
+router.get('/:id', async (req, res) => {
+  try {
+    const animeResponse = await axios.get(`${GATEWAY_URL}/anime/${req.params.id}`);
+    const anime = animeResponse.data;
+    
+    if (anime.image_url) {
+      anime.imageUrl = anime.image_url;
+    }
+    
+    res.render('anime-detail', {
+      layout: false,
+      title: anime.title || `Anime ${req.params.id}`,
+      anime: anime
+    });
+  } catch (error) {
+    res.status(404).render('error', {
+      message: 'Anime not found',
+      error: { status: 404, stack: error.message }
     });
   }
 });
