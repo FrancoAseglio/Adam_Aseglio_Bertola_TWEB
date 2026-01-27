@@ -31,68 +31,80 @@
         <div class="row">
             {{#each favorites}}
             <div class="col-md-6 col-lg-4">
-                <div class="favorite-card">
-                    {{#if this.details}}
-                        {{#if (eq this.fav_type "anime")}}
-                            <!-- Anime Details -->
-                            {{#if this.details.image_url}}
-                            <img src="{{this.details.image_url}}" alt="{{this.details.title}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 12px;">
-                            {{/if}}
-                            <a href="/anime/{{this.id}}" class="anime-title d-block mb-2">{{this.details.title}}</a>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="type-badge">{{this.details.type}}</span>
-                                <div>
-                                    {{#if this.details.score}}
-                                    <span class="score-badge">⭐ {{this.details.score}}</span>
+                {{#if this.details}}
+                    {{#if (eq this.fav_type "anime")}}
+                        <a href="/anime/{{this.id}}" style="text-decoration: none; color: inherit;">
+                            <div class="favorite-card" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                                <!-- Anime Details -->
+                                {{#if this.details.image_url}}
+                                <img src="{{this.details.image_url}}" alt="{{this.details.title}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 12px;">
+                                {{/if}}
+                                <div class="anime-title d-block mb-2">{{this.details.title}}</div>
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="type-badge">{{this.details.type}}</span>
+                                    <div>
+                                        {{#if this.details.score}}
+                                        <span class="score-badge">⭐ {{this.details.score}}</span>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                                {{#if this.details.genres}}
+                                <p class="text-muted mb-2"><small>{{formatList this.details.genres}}</small></p>
+                                {{/if}}
+                                {{#if this.details.episodes}}
+                                <p class="text-muted mb-0"><small>Episodes: {{this.details.episodes}}</small></p>
+                                {{/if}}
+                            </div>
+                        </a>
+                    {{else if (eq this.fav_type "character")}}
+                        <a href="/characters/{{this.id}}" style="text-decoration: none; color: inherit;">
+                            <div class="favorite-card" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                                <!-- Character Details -->
+                                <div class="anime-title d-block mb-2">{{this.details.name}}</div>
+                                {{#if this.details.name_kanji}}
+                                <p class="text-muted mb-2"><small>{{this.details.name_kanji}}</small></p>
+                                {{/if}}
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="type-badge">Character</span>
+                                    {{#if this.details.favorites}}
+                                    <span class="score-badge">❤️ {{this.details.favorites}}</span>
                                     {{/if}}
                                 </div>
-                            </div>
-                            {{#if this.details.genres}}
-                            <p class="text-muted mb-2"><small>{{formatList this.details.genres}}</small></p>
-                            {{/if}}
-                            {{#if this.details.episodes}}
-                            <p class="text-muted mb-0"><small>Episodes: {{this.details.episodes}}</small></p>
-                            {{/if}}
-                        {{else if (eq this.fav_type "character")}}
-                            <!-- Character Details -->
-                            <a href="/characters/{{this.id}}" class="anime-title d-block mb-2">{{this.details.name}}</a>
-                            {{#if this.details.name_kanji}}
-                            <p class="text-muted mb-2"><small>{{this.details.name_kanji}}</small></p>
-                            {{/if}}
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="type-badge">Character</span>
-                                {{#if this.details.favorites}}
-                                <span class="score-badge">❤️ {{this.details.favorites}}</span>
+                                {{#if this.details.image_url}}
+                                <img src="{{this.details.image_url}}" alt="{{this.details.name}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;">
                                 {{/if}}
                             </div>
-                            {{#if this.details.image_url}}
-                            <img src="{{this.details.image_url}}" alt="{{this.details.name}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;">
-                            {{/if}}
-                        {{else if (eq this.fav_type "people")}}
-                            <!-- People Details -->
-                            <a href="/people/{{this.id}}" class="anime-title d-block mb-2">{{this.details.givenName}} {{this.details.familyName}}</a>
-                            {{#if this.details.givenNameNative}}
-                            <p class="text-muted mb-2"><small>{{this.details.givenNameNative}} {{this.details.familyNameNative}}</small></p>
-                            {{/if}}
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="type-badge">Person</span>
-                                {{#if this.details.favorites}}
-                                <span class="score-badge">❤️ {{this.details.favorites}}</span>
+                        </a>
+                    {{else if (eq this.fav_type "people")}}
+                        <a href="/people/{{this.id}}" style="text-decoration: none; color: inherit;">
+                            <div class="favorite-card" style="cursor: pointer; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                                <!-- People Details -->
+                                <div class="anime-title d-block mb-2">{{this.details.givenName}} {{this.details.familyName}}</div>
+                                {{#if this.details.givenNameNative}}
+                                <p class="text-muted mb-2"><small>{{this.details.givenNameNative}} {{this.details.familyNameNative}}</small></p>
+                                {{/if}}
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="type-badge">Person</span>
+                                    {{#if this.details.favorites}}
+                                    <span class="score-badge">❤️ {{this.details.favorites}}</span>
+                                    {{/if}}
+                                </div>
+                                {{#if this.details.imageUrl}}
+                                <img src="{{this.details.imageUrl}}" alt="{{this.details.givenName}} {{this.details.familyName}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;">
                                 {{/if}}
                             </div>
-                            {{#if this.details.imageUrl}}
-                            <img src="{{this.details.imageUrl}}" alt="{{this.details.givenName}} {{this.details.familyName}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;">
-                            {{/if}}
-                        {{/if}}
-                    {{else}}
+                        </a>
+                    {{/if}}
+                {{else}}
+                    <div class="favorite-card">
                         <!-- Fallback when details not available -->
                         <div class="d-flex justify-content-between align-items-center mb-2">
                             <span class="anime-id-badge">ID: {{this.id}}</span>
                             <span class="type-badge">{{this.fav_type}}</span>
                         </div>
                         <p class="text-muted mb-0"><small>Details not available</small></p>
-                    {{/if}}
-                </div>
+                    </div>
+                {{/if}}
             </div>
             {{/each}}
         </div>
