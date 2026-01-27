@@ -437,3 +437,20 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 500;
 }
 
+.not-found {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+}
+
+.not-found h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--text-primary);
+}
+
+.not-found p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+}
+
