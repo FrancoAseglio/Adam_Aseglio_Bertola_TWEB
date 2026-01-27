@@ -454,3 +454,94 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-muted);
 }
 
+/* ----- Character Pages ----- */
+.character-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.character-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-sm);
+}
+
+.character-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.character-image-container {
+  width: 100%;
+  height: 350px;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.character-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.character-card .card-body {
+  padding: 1.25rem;
+}
+
+.character-card .card-title {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.character-card .card-text {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* Character Detail Page */
+.character-detail-image {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+}
+
+.character-detail-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.info-card-detail {
+  background: var(--bg-card);
+  padding: 1.5rem;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 1.5rem;
+}
+
+.info-card-detail h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.about-text {
+  white-space: pre-line;
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+
