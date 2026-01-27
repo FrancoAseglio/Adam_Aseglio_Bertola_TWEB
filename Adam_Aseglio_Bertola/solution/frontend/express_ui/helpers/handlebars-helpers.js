@@ -107,6 +107,18 @@ function registerHelpers() {
       .filter(item => item.length > 0)
       .join(', ');
   });
+
+  /**
+   * Check if array includes a value
+   * @param {Array} array - Array to search in
+   * @param {*} value - Value to search for
+   * @returns {boolean} True if array includes value
+   * @example {{#if (includes selectedGenres this)}}selected{{/if}}
+   */
+  hbs.registerHelper('includes', function(array, value) {
+    if (!Array.isArray(array)) return false;
+    return array.includes(value);
+  });
 }
 
 module.exports = { registerHelpers };
