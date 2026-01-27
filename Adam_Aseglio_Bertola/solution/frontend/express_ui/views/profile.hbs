@@ -1,19 +1,208 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<body>
-    <h1>{{title}}</h1>
-    
-    {{#if profileData}}
-        <h2>{{username}}'s Profile</h2>
-        <pre>{{json profileData}}</pre>
-    {{else}}
-        <p>Profile not found.</p>
-    {{/if}}
-    
-    <br>
-    <a href="/">← Back to Home</a>
+<body class="bg-light">
+    <div class="header-gradient">
+        <div class="container">
+            <h1>👤 {{username}}</h1>
+            <p>User Profile</p>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <!-- Stats Row -->
+        <div class="row g-4 mb-4">
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card">
+                    <div class="stat-value">{{profile.completed}}</div>
+                    <div class="stat-label">✓ Completed</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <div class="stat-value">{{profile.watching}}</div>
+                    <div class="stat-label">▶ Watching</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                    <div class="stat-value">{{profile.userRatings}}</div>
+                    <div class="stat-label">⭐ Ratings</div>
+                </div>
+            </div>
+            <div class="col-sm-6 col-lg-3">
+                <div class="stat-card" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                    <div class="stat-value">{{profile.userFavorites}}</div>
+                    <div class="stat-label">❤ Favorites</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Stats -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card profile-stats-card shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0" style="color: white !important;"><i class="bi bi-bar-chart-fill"></i> 📊 Detailed Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row text-center">
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <p><strong>On Hold:</strong> <span class="text-primary fs-5">{{profile.onhold}}</span></p>
+                                <p><strong>Dropped:</strong> <span class="text-danger fs-5">{{profile.dropped}}</span></p>
+                            </div>
+                            <div class="col-md-4 mb-3 mb-md-0">
+                                <p><strong>Plan to Watch:</strong> <span class="text-info fs-5">{{profile.plantowatch}}</span></p>
+                                <p><strong>Total Entries:</strong> <span class="text-success fs-5">{{profile.totalentries}}</span></p>
+                            </div>
+                            <div class="col-md-4">
+                                <p><strong>Days Watched:</strong> <span class="text-warning fs-5">{{profile.dayswatched}}</span></p>
+                                <p><strong>Mean Score:</strong> <span class="text-purple fs-5">{{profile.meanscore}}</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Favorites Section -->
+        {{#if favorites}}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0">❤️ Favorites (Top {{favorites.length}})</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            {{#each favorites}}
+                            <div class="col-md-6 col-lg-4">
+                                <div class="anime-card h-100">
+                                    {{#if this.details}}
+                                        {{#if (eq this.fav_type "anime")}}
+                                            <a href="/anime/{{this.id}}" class="text-decoration-none text-dark">
+                                                <h6 class="mb-2">🎬 {{this.details.title}}</h6>
+                                                <p class="mb-1 text-muted small"><strong>Type:</strong> {{this.details.type}}</p>
+                                                {{#if this.details.score}}
+                                                <p class="mb-0"><span class="badge bg-warning text-dark">⭐ {{this.details.score}}</span></p>
+                                                {{/if}}
+                                            </a>
+                                        {{else if (eq this.fav_type "character")}}
+                                            <a href="/characters/{{this.id}}" class="text-decoration-none text-dark">
+                                                <h6 class="mb-2">👤 {{this.details.name}}</h6>
+                                                <p class="mb-1 text-muted small"><strong>Type:</strong> Character</p>
+                                                {{#if this.details.favorites}}
+                                                <p class="mb-0"><span class="badge bg-danger">❤️ {{this.details.favorites}} favorites</span></p>
+                                                {{/if}}
+                                            </a>
+                                        {{else if (eq this.fav_type "people")}}
+                                            <a href="/people/{{this.id}}" class="text-decoration-none text-dark">
+                                                <h6 class="mb-2">⭐ {{this.details.givenName}} {{this.details.familyName}}</h6>
+                                                <p class="mb-1 text-muted small"><strong>Type:</strong> Person</p>
+                                                {{#if this.details.favorites}}
+                                                <p class="mb-0"><span class="badge bg-danger">❤️ {{this.details.favorites}} favorites</span></p>
+                                                {{/if}}
+                                            </a>
+                                        {{/if}}
+                                    {{else}}
+                                        <h6 class="mb-2">ID: {{this.id}}</h6>
+                                        <p class="mb-0 text-muted small"><strong>Type:</strong> {{this.fav_type}}</p>
+                                    {{/if}}
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Recent Ratings Section -->
+        {{#if ratings}}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow-sm">
+                    <div class="card-header bg-warning">
+                        <h5 class="mb-0" style="color: white !important;">⭐ Recent Ratings (Last {{ratings.length}})</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-3">
+                            {{#each ratings}}
+                            <div class="col-md-6 col-lg-4 col-xl-3">
+                                <div class="card anime-card h-100 hover-lift">
+                                    {{#if this.animeDetails}}
+                                        <!-- Cover Image -->
+                                        {{#if this.animeDetails.image_url}}
+                                        <a href="/anime/{{this.anime_id}}">
+                                            <img src="{{this.animeDetails.image_url}}"
+                                                 alt="{{this.animeDetails.title}}"
+                                                 class="card-img-top"
+                                                 style="height: 280px; object-fit: cover;">
+                                        </a>
+                                        {{/if}}
+
+                                        <div class="card-body">
+                                            <!-- Clickable Anime Title -->
+                                            <a href="/anime/{{this.anime_id}}" class="text-decoration-none">
+                                                <h6 class="card-title mb-2" style="color: var(--primary-color); min-height: 2.5em;">
+                                                    {{this.animeDetails.title}}
+                                                </h6>
+                                            </a>
+
+                                            <!-- Rating Score -->
+                                            <div class="mb-2 d-flex justify-content-between align-items-center">
+                                                <span class="badge" style="background: var(--gradient-orange); font-size: 0.9rem; padding: 0.4rem 0.8rem;">
+                                                    ⭐ {{this.score}}/10
+                                                </span>
+                                                {{#if this.animeDetails.type}}
+                                                <span class="type-badge">{{this.animeDetails.type}}</span>
+                                                {{/if}}
+                                            </div>
+
+                                            <!-- Additional Info -->
+                                            {{#if this.num_watched_episodes}}
+                                            <p class="mb-0 text-muted small">
+                                                📺 Watched: {{this.num_watched_episodes}}
+                                                {{#if this.animeDetails.episodes}}/ {{this.animeDetails.episodes}}{{/if}} episodes
+                                            </p>
+                                            {{/if}}
+                                        </div>
+                                    {{else}}
+                                        <div class="card-body">
+                                            <h6 class="mb-2">Anime ID: {{this.anime_id}}</h6>
+                                            <div class="mb-0">
+                                                <span class="badge" style="background: var(--gradient-orange);">⭐ {{this.score}}/10</span>
+                                            </div>
+                                        </div>
+                                    {{/if}}
+                                </div>
+                            </div>
+                            {{/each}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        <!-- Navigation Buttons -->
+        <div class="actions">
+            <a href="/" class="back-button">🏠 Back to Home</a>
+            <a href="/favorites/{{username}}" class="refresh-button">❤️ View All Favorites</a>
+            <a href="/ratings/{{username}}" class="refresh-button">⭐ View All Ratings</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
