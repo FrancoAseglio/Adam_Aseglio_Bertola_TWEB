@@ -5,6 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="317abb48-691f-4550-9677-6f4011036277" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/backend/springboot_pgsql/src/main/java/com/example/springboot_pgsql/Anime/AnimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/backend/springboot_pgsql/src/main/java/com/example/springboot_pgsql/Anime/AnimeService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/anime.js" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/anime.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/anime-detail.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/anime-detail.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/anime-search.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/anime-search.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/stylesheets/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/favorites.js" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/favorites.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/favorites.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/favorites.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/user-stats.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/user-stats.hbs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/character-detail.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/character-detail.hbs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/error.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/error.hbs" afterDir="false" />
     </list>

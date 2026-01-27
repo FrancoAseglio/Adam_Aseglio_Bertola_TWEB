@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
+    <title>{{#if anime}}{{anime.title}}{{else}}Anime Details{{/if}}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -13,29 +13,186 @@
 <body class="bg-light">
     <div class="header-gradient primary">
         <div class="container">
-            <h1>{{title}}</h1>
+            <h1>📖 Anime Details</h1>
         </div>
     </div>
 
     <div class="container py-4">
         {{#if anime}}
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">{{anime.title}}</h5>
-                </div>
-                <div class="card-body">
-                    <pre>{{json anime}}</pre>
-                </div>
-            </div>
-        {{else}}
-            <div class="alert alert-warning">
-                <p class="mb-0">Anime not found.</p>
-            </div>
-        {{/if}}
+        <div class="card shadow-sm mb-4">
+            <div class="card-body">
+                <!-- Titles Section -->
+                <h3 class="text-primary mb-2">{{anime.title}}</h3>
+                {{#if anime.titleEnglish}}
+                <p class="text-muted mb-1" style="font-size: 0.95rem;">{{anime.titleEnglish}}</p>
+                {{/if}}
+                {{#if anime.titleJapanese}}
+                <p class="text-muted mb-3" style="font-size: 0.95rem;">{{anime.titleJapanese}}</p>
+                {{/if}}
 
-        <div class="mt-4">
-            <a href="/" class="btn btn-primary">← Back to Home</a>
+                <!-- Meta Grid - 3 items -->
+                <div class="d-flex flex-wrap gap-3 mt-3">
+                    {{#if anime.score}}
+                    <div class="text-center px-4 py-2 rounded bg-light" style="min-width: 140px;">
+                        <div class="small text-muted text-uppercase">Score</div>
+                        <div class="h5 mb-0 text-primary fw-bold">⭐ {{anime.score}}/10</div>
+                    </div>
+                    {{/if}}
+                    {{#if anime.rank}}
+                    <div class="text-center px-4 py-2 rounded bg-light" style="min-width: 140px;">
+                        <div class="small text-muted text-uppercase">Rank</div>
+                        <div class="h5 mb-0 text-success fw-bold">#{{anime.rank}}</div>
+                    </div>
+                    {{/if}}
+                    {{#if anime.favorites}}
+                    <div class="text-center px-4 py-2 rounded bg-light" style="min-width: 140px;">
+                        <div class="small text-muted text-uppercase">Favorites</div>
+                        <div class="h5 mb-0 text-danger fw-bold">❤️ {{anime.favorites}}</div>
+                    </div>
+                    {{/if}}
+                </div>
+            </div>
         </div>
+
+        <!-- Main Content with Image and Details -->
+        <div class="row">
+            <!-- Image Column -->
+            <div class="col-lg-3 col-md-4 mb-4">
+                {{#if anime.imageUrl}}
+                <img src="{{anime.imageUrl}}" alt="{{anime.title}}" class="img-fluid rounded shadow-lg w-100" 
+                     style="max-width: 350px;"
+                     onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="text-center p-5 border rounded bg-light shadow" style="display:none; width: 225px; height: 350px; align-items: center; justify-content: center;">
+                    <div class="display-1">🎬</div>
+                </div>
+                {{else}}
+                <div class="text-center p-5 border rounded bg-light shadow d-flex" style="width: 225px; height: 350px; align-items: center; justify-content: center;">
+                    <div class="display-1">🎬</div>
+                </div>
+                {{/if}}
+            </div>
+
+            <!-- Details Column -->
+            <div class="col-lg-9 col-md-8">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        {{#if anime.synopsis}}
+                        <div class="mb-4">
+                            <h4 class="border-bottom pb-2">Synopsis</h4>
+                            <p class="text-justify">{{anime.synopsis}}</p>
+                        </div>
+                        {{/if}}
+
+                        <div class="mb-4">
+                            <h4 class="border-bottom pb-2">Information</h4>
+                            <div class="row">
+                                {{#if anime.type}}
+                                <div class="col-md-6 mb-2">
+                                    <strong>Type:</strong> {{anime.type}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.episodes}}
+                                <div class="col-md-6 mb-2">
+                                    <strong>Episodes:</strong> {{anime.episodes}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.status}}
+                                <div class="col-md-6 mb-2">
+                                    <strong>Status:</strong> {{anime.status}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.airedFrom}}
+                                <div class="col-md-6 mb-2">
+                                    <strong>Aired:</strong> {{anime.airedFrom}}{{#if anime.airedTo}} to {{anime.airedTo}}{{/if}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.season}}
+                                <div class="col-md-6 mb-2">
+                                    <strong>Season:</strong> {{anime.season}}{{#if anime.year}} {{anime.year}}{{/if}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.duration}}
+                                <div class="col-md-6 mb-2">
+                                    <strong>Duration:</strong> {{anime.duration}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.rating}}
+                                <div class="col-md-6 mb-2">
+                                    <strong>Rating:</strong> {{anime.rating}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.source}}
+                                <div class="col-md-6 mb-2">
+                                    <strong>Source:</strong> {{anime.source}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.genres}}
+                                <div class="col-12 mb-2">
+                                    <strong>Genres:</strong> {{formatList anime.genres}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.themes}}
+                                <div class="col-12 mb-2">
+                                    <strong>Themes:</strong> {{formatList anime.themes}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.demographics}}
+                                <div class="col-12 mb-2">
+                                    <strong>Demographics:</strong> {{formatList anime.demographics}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.studios}}
+                                <div class="col-12 mb-2">
+                                    <strong>Studios:</strong> {{formatList anime.studios}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.producers}}
+                                <div class="col-12 mb-2">
+                                    <strong>Producers:</strong> {{formatList anime.producers}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.licensors}}
+                                <div class="col-12 mb-2">
+                                    <strong>Licensors:</strong> {{formatList anime.licensors}}
+                                </div>
+                                {{/if}}
+                                {{#if anime.scoredBy}}
+                                <div class="col-md-6 mb-2">
+                                    <strong>Scored By:</strong> {{anime.scoredBy}} users
+                                </div>
+                                {{/if}}
+                            </div>
+                        </div>
+
+                        {{#if anime.background}}
+                        <div class="mb-4">
+                            <h4 class="border-bottom pb-2">Background</h4>
+                            <p class="text-justify">{{anime.background}}</p>
+                        </div>
+                        {{/if}}
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="d-flex gap-2 mt-4">
+                    <a href="/anime/search" class="btn btn-outline-primary">← Back to Search</a>
+                    <a href="/" class="btn btn-outline-secondary">🏠 Home</a>
+                </div>
+            </div>
+        </div>
+        {{else}}
+        <div class="alert alert-warning">
+            <h4 class="alert-heading">Anime Not Found</h4>
+            <p>The requested anime could not be found.</p>
+            <hr>
+            <div class="d-flex gap-2">
+                <a href="/anime/search" class="btn btn-primary">← Back to Search</a>
+                <a href="/" class="btn btn-secondary">🏠 Home</a>
+            </div>
+        </div>
+        {{/if}}
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
