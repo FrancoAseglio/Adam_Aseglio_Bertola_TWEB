@@ -5,6 +5,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 
 /**
@@ -31,6 +33,16 @@ public class AnimeService {
 
     public List<Anime> searchByTitle(String title) {
         return animeRepository.findByTitleContainingIgnoreCase(title);
+    }
+
+    public List<String> getAllGenres() {
+        // Lista statica di tutti i generi nel dataset (ordine alfabetico)
+        return Arrays.asList(
+            "Action", "Adventure", "Avant Garde", "Award Winning", "Boys Love",
+            "Comedy", "Drama", "Ecchi", "Erotica", "Fantasy", "Girls Love",
+            "Gourmet", "Hentai", "Horror", "Mystery", "Romance", "Sci-Fi",
+            "Slice of Life", "Sports", "Supernatural", "Suspense"
+        );
     }
 
     public List<Anime> getByGenre(String genre) {

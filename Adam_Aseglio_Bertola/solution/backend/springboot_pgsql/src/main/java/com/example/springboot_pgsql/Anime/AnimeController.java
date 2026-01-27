@@ -49,6 +49,11 @@ public class AnimeController {
         return animeService.searchByTitle(title);
     }
 
+    @GetMapping("/genres")
+    public List<String> getAllGenres() {
+        return animeService.getAllGenres();
+    }
+
     @GetMapping("/genre/{genre}")
     public List<Anime> getByGenre(@PathVariable String genre) {
         return animeService.getByGenre(genre);

@@ -78,6 +78,30 @@ router.get('/top/all', async (req, res) => {
 
 /**
  * @swagger
+ * /api/anime/genres:
+ *   get:
+ *     summary: Get all unique genres from the dataset
+ *     tags: [Anime]
+ *     responses:
+ *       200:
+ *         description: List of all unique genres
+ *       500:
+ *         description: Server error
+ */
+router.get('/genres', async (req, res) => {
+  try {
+    const response = await axios.get(`${BACKEND_SPRING_URL}/anime/genres`);
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ 
+      message: 'Error fetching genres', 
+      error  : error.message 
+    });
+  }
+});
+
+/**
+ * @swagger
  * /api/anime/genre/{genre}:
  *   get:
  *     summary: Get anime by genre (Spring Boot/PostgreSQL backend)
