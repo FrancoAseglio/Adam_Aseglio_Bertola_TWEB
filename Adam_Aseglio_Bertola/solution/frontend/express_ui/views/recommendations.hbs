@@ -1,19 +1,107 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>{{title}}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<body>
-    <h1>{{title}}</h1>
-    
+
+<body class="bg-light">
+  {{#if anime}}
+  <div class="header-gradient green">
+    <div class="container">
+      <h1>💡 Recommendations</h1>
+      <p>{{anime.title}}</p>
+    </div>
+  </div>
+
+  <div class="container py-4">
+
     {{#if recommendations}}
-        <p>Total recommendations: {{recommendations.length}}</p>
-        <pre>{{json recommendations}}</pre>
+    {{#if recommendations.length}}
+    <h3 class="mb-4">Found {{#if pagination}}{{pagination.totalItems}}{{else}}{{recommendations.length}}{{/if}}
+      Recommendations</h3>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+      {{#each recommendations}}
+      <div class="col">
+        <div class="card anime-card h-100">
+          {{#if this.details}}
+          <a href="/anime/{{this.details.mal_id}}">
+            {{#if this.details.image_url}}
+            <img src="{{this.details.image_url}}" alt="{{this.details.title}}" class="card-img-top"
+              style="height:300px;object-fit:cover"
+              onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+            {{else}}
+            <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" alt="{{this.details.title}}"
+              class="card-img-top" style="height:300px;object-fit:cover">
+            {{/if}}
+            <div class="card-body">
+              <h6 class="card-title text-primary">{{this.details.title}}</h6>
+              <p class="card-text small text-muted mb-1"><strong>MAL ID:</strong> {{this.details.mal_id}}</p>
+              {{#if this.details.type}}
+              <p class="card-text small text-muted mb-1"><strong>Type:</strong> {{this.details.type}}</p>
+              {{/if}}
+              {{#if this.details.episodes}}
+              <p class="card-text small text-muted mb-1"><strong>Episodes:</strong> {{this.details.episodes}}</p>
+              {{/if}}
+              {{#if this.details.score}}
+              <p class="card-text small text-muted mb-1"><strong>Score:</strong> ⭐ {{this.details.score}}</p>
+              {{/if}}
+              {{#if this.details.genres}}
+              <p class="card-text small text-muted mb-1"><strong>Genre:</strong> {{formatList this.details.genres}}</p>
+              {{/if}}
+            </div>
+          </a>
+          {{else}}
+          <div class="card-body">
+            <h6 class="card-title text-primary">Anime #{{this.recommendation_mal_id}}</h6>
+            <p class="card-text small text-muted mb-1"><strong>MAL ID:</strong> {{this.recommendation_mal_id}}</p>
+            <p class="card-text small text-muted">(Details not available)</p>
+            <a href="/anime/{{this.recommendation_mal_id}}" class="btn btn-sm btn-outline-primary mt-2">View Details</a>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
+
+    {{> pagination}}
     {{else}}
-        <p>No recommendations found for this anime.</p>
+    <div class="text-center py-5">
+      <h2 class="text-muted">😕 No Recommendations Found</h2>
+      <p class="text-muted">There are no recommendations available for this anime yet.</p>
+    </div>
     {{/if}}
-    
-    <br>
-    <a href="/">← Back to Home</a>
+
+    <div class="actions">
+      <a href="/anime/{{anime.mal_id}}" class="back-button">← Back to Anime</a>
+      <a href="/" class="back-button">🏠 Home</a>
+    </div>
+  </div>
+  {{else}}
+  <div class="header-gradient green">
+    <div class="container">
+      <h1>💡 Recommendations</h1>
+      <p>Anime not found</p>
+    </div>
+  </div>
+  <div class="container py-4">
+    <div class="not-found">
+      <h2>⚠️ Anime Not Found</h2>
+      <p>The anime you're looking for could not be found.</p>
+    </div>
+    <div class="actions">
+      <a href="/" class="back-button">← Back to Home</a>
+    </div>
+  </div>
+  {{/if}}
 </body>
+
 </html>

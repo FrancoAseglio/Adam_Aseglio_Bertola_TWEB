@@ -1,19 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<body>
-    <h1>{{title}}</h1>
-    
-    {{#if favorites}}
-        <p>Total favorites: {{favorites.length}}</p>
-        <pre>{{json favorites}}</pre>
-    {{else}}
-        <p>No favorites found for this user.</p>
-    {{/if}}
-    
-    <br>
-    <a href="/">← Back to Home</a>
+<body class="bg-light">
+    <div class="header-gradient pink">
+        <div class="container">
+            <h1>❤️ {{username}}'s Favorites</h1>
+            <p>All favorite anime</p>
+        </div>
+    </div>
+
+    <div class="container mb-5">
+        <div class="row mb-4">
+            <div class="col-md-12">
+                <div class="alert alert-info">
+                    <strong>📊 Total Favorites:</strong> {{#if pagination}}{{pagination.totalItems}}{{else}}{{favorites.length}}{{/if}}
+                </div>
+            </div>
+        </div>
+
+        {{#if favorites}}
+        <div class="row">
+            {{#each favorites}}
+            <div class="col-md-6 col-lg-4">
+                <div class="favorite-card">
+                    {{#if this.details}}
+                        {{#if (eq this.fav_type "anime")}}
+                            <!-- Anime Details -->
+                            {{#if this.details.image_url}}
+                            <img src="{{this.details.image_url}}" alt="{{this.details.title}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 12px;">
+                            {{/if}}
+                            <a href="/anime/{{this.id}}" class="anime-title d-block mb-2">{{this.details.title}}</a>
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="type-badge">{{this.details.type}}</span>
+                                <div>
+                                    {{#if this.details.score}}
+                                    <span class="score-badge">⭐ {{this.details.score}}</span>
+                                    {{/if}}
+                                </div>
+                            </div>
+                            {{#if this.details.genres}}
+                            <p class="text-muted mb-2"><small>{{formatList this.details.genres}}</small></p>
+                            {{/if}}
+                            {{#if this.details.episodes}}
+                            <p class="text-muted mb-0"><small>Episodes: {{this.details.episodes}}</small></p>
+                            {{/if}}
+                        {{else if (eq this.fav_type "character")}}
+                            <!-- Character Details -->
+                            <a href="/characters/{{this.id}}" class="anime-title d-block mb-2">{{this.details.name}}</a>
+                            {{#if this.details.name_kanji}}
+                            <p class="text-muted mb-2"><small>{{this.details.name_kanji}}</small></p>
+                            {{/if}}
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="type-badge">Character</span>
+                                {{#if this.details.favorites}}
+                                <span class="score-badge">❤️ {{this.details.favorites}}</span>
+                                {{/if}}
+                            </div>
+                            {{#if this.details.image_url}}
+                            <img src="{{this.details.image_url}}" alt="{{this.details.name}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;">
+                            {{/if}}
+                        {{else if (eq this.fav_type "people")}}
+                            <!-- People Details -->
+                            <a href="/people/{{this.id}}" class="anime-title d-block mb-2">{{this.details.givenName}} {{this.details.familyName}}</a>
+                            {{#if this.details.givenNameNative}}
+                            <p class="text-muted mb-2"><small>{{this.details.givenNameNative}} {{this.details.familyNameNative}}</small></p>
+                            {{/if}}
+                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                <span class="type-badge">Person</span>
+                                {{#if this.details.favorites}}
+                                <span class="score-badge">❤️ {{this.details.favorites}}</span>
+                                {{/if}}
+                            </div>
+                            {{#if this.details.imageUrl}}
+                            <img src="{{this.details.imageUrl}}" alt="{{this.details.givenName}} {{this.details.familyName}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;">
+                            {{/if}}
+                        {{/if}}
+                    {{else}}
+                        <!-- Fallback when details not available -->
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <span class="anime-id-badge">ID: {{this.id}}</span>
+                            <span class="type-badge">{{this.fav_type}}</span>
+                        </div>
+                        <p class="text-muted mb-0"><small>Details not available</small></p>
+                    {{/if}}
+                </div>
+            </div>
+            {{/each}}
+        </div>
+        {{else}}
+        <div class="alert alert-warning" role="alert">
+            <h4 class="alert-heading">No favorites found!</h4>
+            <p>This user hasn't added any anime to their favorites yet.</p>
+        </div>
+        {{/if}}
+
+        {{> pagination}}
+
+        <div class="actions">
+            <a href="/profile/{{username}}" class="refresh-button">👤 View Full Profile</a>
+            <a href="/" class="back-button">🏠 Back to Home</a>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

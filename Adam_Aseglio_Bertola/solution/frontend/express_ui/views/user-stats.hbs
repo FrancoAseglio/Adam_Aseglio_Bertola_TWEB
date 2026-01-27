@@ -1,19 +1,80 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<body>
-    <h1>{{title}}</h1>
-    
-    {{#if userStats}}
-        <p>Statistics for user: {{username}}</p>
-        <pre>{{json userStats}}</pre>
-    {{else}}
-        <p>No statistics found for this user.</p>
-    {{/if}}
-    
-    <br>
-    <a href="/">← Back to Home</a>
+<body class="bg-light">
+    <div class="container py-4">
+        {{#if userStats}}
+        <div class="text-center mb-4">
+            <h1>📊 User Statistics</h1>
+            <h2 class="text-primary">{{userStats.username}}</h2>
+            {{#if userStats.calculatedAt}}
+            <p class="text-muted">Last updated: {{userStats.calculatedAt}}</p>
+            {{/if}}
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-3 g-4 mb-4">
+            <div class="col">
+                <div class="card card-gradient pink text-center p-4">
+                    <div class="fs-1">⭐</div>
+                    <div class="stat-value">{{userStats.totalRatings}}</div>
+                    <div class="stat-label">Total Ratings</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card card-gradient orange text-center p-4">
+                    <div class="fs-1">❤️</div>
+                    <div class="stat-value">{{userStats.totalFavorites}}</div>
+                    <div class="stat-label">Total Favorites</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card card-gradient cyan text-center p-4">
+                    <div class="fs-1">📈</div>
+                    <div class="stat-value">{{userStats.averageScore}}</div>
+                    <div class="stat-label">Average Score</div>
+                </div>
+            </div>
+        </div>
+
+        {{#if userStats.statusCounts}}
+        <div class="card mb-4">
+            <div class="card-header"><h5 class="mb-0">Anime Watch Status Breakdown</h5></div>
+            <div class="card-body">
+                <div class="row row-cols-2 row-cols-md-5 g-3">
+                    <div class="col"><div class="status-badge watching"><div class="status-count">{{userStats.statusCounts.watching}}</div><div class="status-label">Watching</div></div></div>
+                    <div class="col"><div class="status-badge completed"><div class="status-count">{{userStats.statusCounts.completed}}</div><div class="status-label">Completed</div></div></div>
+                    <div class="col"><div class="status-badge on-hold"><div class="status-count">{{userStats.statusCounts.on_hold}}</div><div class="status-label">On Hold</div></div></div>
+                    <div class="col"><div class="status-badge dropped"><div class="status-count">{{userStats.statusCounts.dropped}}</div><div class="status-label">Dropped</div></div></div>
+                    <div class="col"><div class="status-badge plan-to-watch"><div class="status-count">{{userStats.statusCounts.plan_to_watch}}</div><div class="status-label">Plan to Watch</div></div></div>
+                </div>
+            </div>
+        </div>
+        {{/if}}
+
+        {{else}}
+        <div class="not-found">
+            <h2>😕 User Not Found</h2>
+            <p>The user "{{username}}" could not be found in the database.</p>
+        </div>
+        {{/if}}
+
+        <div class="actions">
+            <a href="/" class="back-button">← Back to Home</a>
+            {{#if userStats}}
+            <a href="/stats/user/{{userStats.username}}" class="refresh-button">🔄 Refresh</a>
+            {{/if}}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

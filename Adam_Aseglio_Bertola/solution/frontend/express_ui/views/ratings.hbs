@@ -1,19 +1,96 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-    <title>{{title}}</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{title}}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
-<body>
-    <h1>{{title}}</h1>
-    
+
+<body class="bg-light">
+  <div class="header-gradient orange">
+    <div class="container">
+      <h1>⭐ {{username}}'s Ratings</h1>
+      <p>All anime ratings</p>
+    </div>
+  </div>
+
+  <div class="container mb-5">
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="alert alert-info">
+          <strong>📊 Total Ratings:</strong> {{#if
+          pagination}}{{pagination.totalItems}}{{else}}{{ratings.length}}{{/if}}
+        </div>
+      </div>
+    </div>
+
     {{#if ratings}}
-        <p>Total ratings: {{ratings.length}}</p>
-        <pre>{{json ratings}}</pre>
+    <div class="row">
+      {{#each ratings}}
+      <div class="col-md-6 col-lg-4">
+        <div class="rating-card">
+          {{#if this.animeDetails}}
+          <!-- Anime with details -->
+          <a href="/anime/{{this.anime_id}}" class="anime-title d-block mb-2">{{this.animeDetails.title}}</a>
+          {{#if this.animeDetails.image_url}}
+          <img src="{{this.animeDetails.image_url}}" alt="{{this.animeDetails.title}}"
+            style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 12px;">
+          {{/if}}
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            {{#if this.animeDetails.type}}
+            <span class="type-badge">{{this.animeDetails.type}}</span>
+            {{/if}}
+            <span class="score-badge">⭐ {{this.score}}/10</span>
+          </div>
+          {{#if this.animeDetails.episodes}}
+          <p class="text-muted mb-2"><small>Total Episodes: {{this.animeDetails.episodes}}</small></p>
+          {{/if}}
+          {{#if this.num_watched_episodes}}
+          <p class="mb-2">
+            <span class="episodes-badge">📺 Watched: {{this.num_watched_episodes}} episodes</span>
+          </p>
+          {{/if}}
+          {{#if this.status}}
+          <p class="mb-0"><small><strong>Status:</strong> {{this.status}}</small></p>
+          {{/if}}
+          {{else}}
+          <!-- Fallback when anime details not available -->
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="anime-id">Anime ID: {{this.anime_id}}</span>
+            <span class="score-badge">⭐ {{this.score}}/10</span>
+          </div>
+          {{#if this.num_watched_episodes}}
+          <p class="mb-0">
+            <span class="episodes-badge">📺 {{this.num_watched_episodes}} episodes</span>
+          </p>
+          {{/if}}
+          {{/if}}
+        </div>
+      </div>
+      {{/each}}
+    </div>
     {{else}}
-        <p>No ratings found for this user.</p>
+    <div class="alert alert-warning" role="alert">
+      <h4 class="alert-heading">No ratings found!</h4>
+      <p>This user hasn't rated any anime yet.</p>
+    </div>
     {{/if}}
-    
-    <br>
-    <a href="/">← Back to Home</a>
+
+    {{> pagination}}
+
+    <div class="actions">
+      <a href="/profile/{{username}}" class="back-button">👤 View Full Profile</a>
+      <a href="/" class="back-button">🏠 Back to Home</a>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
