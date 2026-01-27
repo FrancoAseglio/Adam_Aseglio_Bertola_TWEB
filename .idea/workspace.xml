@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="317abb48-691f-4550-9677-6f4011036277" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/backend/springboot_pgsql/src/main/java/com/example/springboot_pgsql/Anime/AnimeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/backend/springboot_pgsql/src/main/java/com/example/springboot_pgsql/Anime/AnimeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/stylesheets/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/public/stylesheets/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/favorites.js" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/routes/favorites.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/favorites.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/favorites.hbs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/user-stats.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/user-stats.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/character-detail.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/character-detail.hbs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/error.hbs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/views/error.hbs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,6 +88,7 @@
       <workItem from="1769473272674" duration="1805000" />
       <workItem from="1769443753595" duration="600000" />
       <workItem from="1769503160240" duration="2473000" />
+      <workItem from="1769516639822" duration="571000" />
     </task>
     <servers />
   </component>

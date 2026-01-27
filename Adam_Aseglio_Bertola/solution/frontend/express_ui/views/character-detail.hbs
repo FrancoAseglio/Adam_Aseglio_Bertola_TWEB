@@ -11,31 +11,97 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body class="bg-light">
+    {{#if character}}
     <div class="header-gradient cyan">
         <div class="container">
-            <h1>{{title}}</h1>
+            <h1>{{character.name}}</h1>
+            {{#if character.nameKanji}}
+                <p>{{character.nameKanji}}</p>
+            {{/if}}
+            {{#if character.nicknames}}
+                <p class="mb-0"><em>Also known as: {{formatList character.nicknames}}</em></p>
+            {{/if}}
         </div>
     </div>
 
-    <div class="container py-4">
-        {{#if character}}
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">{{character.name}}</h5>
+<div class="container py-4">
+        <div class="row g-4">
+            <!-- Character Image -->
+            <div class="col-md-4">
+                <div class="character-detail-image">
+                    {{#if character.image_url}}
+                        <img src="{{character.image_url}}" alt="{{character.name}}" onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+                    {{else}}
+                        <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" alt="No image available">
+                    {{/if}}
                 </div>
-                <div class="card-body">
-                    <pre>{{json character}}</pre>
-                </div>
-            </div>
-        {{else}}
-            <div class="alert alert-warning">
-                <p class="mb-0">Character not found.</p>
-            </div>
-        {{/if}}
 
-        <div class="mt-4">
-            <a href="/" class="btn btn-primary">← Back to Home</a>
+                {{#if character.favorites}}
+                    <div class="card mt-3 text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="fs-1">❤️</div>
+                            <div class="stat-value" style="font-size: 2rem; color: black !important;">{{character.favorites}}</div>
+                            <div class="stat-label" style="font-size: 0.9rem; color: black !important;">Favorites</div>
+                        </div>
+                    </div>
+                {{/if}}
+            </div>
+
+            <!-- Character Details -->
+            <div class="col-md-8">
+                <div class="info-card-detail">
+                    <h3>Character Information</h3>
+
+                    <div class="info-grid">
+                        <div class="info-label">Character ID:</div>
+                        <div class="info-value">{{character.characterMalId}}</div>
+
+                        <div class="info-label">Name:</div>
+                        <div class="info-value">{{character.name}}</div>
+
+                        {{#if character.nameKanji}}
+                        <div class="info-label">Japanese Name:</div>
+                        <div class="info-value">{{character.nameKanji}}</div>
+                        {{/if}}
+
+                        {{#if character.nicknames}}
+                        <div class="info-label">Nicknames:</div>
+                        <div class="info-value">{{formatList character.nicknames}}</div>
+                        {{/if}}
+
+                        {{#if character.favorites}}
+                        <div class="info-label">Favorited by:</div>
+                        <div class="info-value">{{character.favorites}} users</div>
+                        {{/if}}
+                    </div>
+                </div>
+
+                {{#if character.about}}
+                <div class="info-card-detail">
+                    <h3>About</h3>
+                    <p class="about-text">{{character.about}}</p>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="#" onclick="history.back(); return false;" class="back-button">← Back to Results</a>
+            <a href="/" class="back-button">🏠 Home</a>
         </div>
     </div>
+    {{else}}
+    <div class="container py-5">
+        <div class="not-found">
+            <h2>😕 Character Not Found</h2>
+            <p>The character you're looking for doesn't exist or couldn't be loaded.</p>
+        </div>
+        <div class="actions">
+            <a href="#" onclick="history.back(); return false;" class="back-button">← Back to Results</a>
+        </div>
+    </div>
+    {{/if}}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
