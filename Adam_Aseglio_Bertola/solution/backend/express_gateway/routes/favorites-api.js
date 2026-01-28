@@ -32,14 +32,29 @@ router.get('/:username', async (req, res) => {
     const favoritesWithDetails = await Promise.all(
       favorites.map(async (fav) => {
         try {
-          const detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/anime/${fav.id}`);
+          let detailsResponse;
+          const favType = fav.fav_type || 'anime';
+
+          // Recupera i dettagli in base al tipo
+          switch (favType) {
+            case 'character':
+              detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/characters/${fav.id}`);
+              break;
+            case 'people':
+              detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/people/${fav.id}`);
+              break;
+            case 'anime':
+            default:
+              detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/anime/${fav.id}`);
+              break;
+          }
 
           return {
             ...fav,
             details: detailsResponse.data
           };
         } catch (error) {
-          console.error(`Error fetching anime details for id ${fav.id}:`, error.message);
+          console.error(`Error fetching ${fav.fav_type || 'anime'} details for id ${fav.id}:`, error.message);
           
           return {
             ...fav,
@@ -94,13 +109,27 @@ router.get('/:username', async (req, res) => {
  */
 router.post('/', async (req, res) => {
   try {
-    const { username, id } = req.body;
+    const { username, id, fav_type = 'anime' } = req.body;
 
-    const favoriteResponse = await axios.post(`${BACKEND_MONGO_URL}/favorites`, { username, id });
+    const favoriteResponse = await axios.post(`${BACKEND_MONGO_URL}/favorites`, { username, id, fav_type });
     const favorite         = favoriteResponse.data;
 
     try {
-      const detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/anime/${id}`);
+      let detailsResponse;
+      
+      // Recupera i dettagli in base al tipo
+      switch (fav_type) {
+        case 'character':
+          detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/characters/${id}`);
+          break;
+        case 'people':
+          detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/people/${id}`);
+          break;
+        case 'anime':
+        default:
+          detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/anime/${id}`);
+          break;
+      }
 
       res.status(201).json({
         ...favorite,
@@ -164,7 +193,8 @@ router.post('/', async (req, res) => {
  */
 router.delete('/:username/:id', async (req, res) => {
   try {
-    await axios.delete(`${BACKEND_MONGO_URL}/favorites/${req.params.username}/${req.params.id}`);
+    const fav_type = req.query.fav_type || 'anime';
+    await axios.delete(`${BACKEND_MONGO_URL}/favorites/${req.params.username}/${req.params.id}?fav_type=${fav_type}`);
 
     res.json({ message: 'Favorite removed successfully' });
   } catch (error) {

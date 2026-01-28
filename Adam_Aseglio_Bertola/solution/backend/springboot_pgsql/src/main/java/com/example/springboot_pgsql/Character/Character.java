@@ -12,10 +12,13 @@ import jakarta.persistence.*;
 public class Character {
     @Id
     @Column(name = "character_mal_id")
+    @JsonProperty("character_mal_id")
     private Integer characterMalId;
+    
     private String name;
     
     @Column(name = "name_kanji")
+    @JsonProperty("name_kanji")
     private String nameKanji;
     
     private String nicknames;
