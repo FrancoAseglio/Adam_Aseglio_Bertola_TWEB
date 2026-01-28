@@ -20,30 +20,32 @@ async function getUserFavorites(username) {
  * Add a new favorite anime for a user
  * @param {string} username - The username
  * @param {number} id - The ID of the item
+ * @param {string} fav_type - The type of favorite (anime, character, people)
  * @returns {Promise<Object>} The created favorite object
  */
-async function addUserFavorite(username, id) {
+async function addUserFavorite(username, id, fav_type = 'anime') {
   if (!username || !id) {
     const error = new Error('Missing required fields: username, id');
     error.statusCode = 400;
     throw error;
   }
 
-  const existing = await Favorite.findOne({ username, id });
+  const existing = await Favorite.findOne({ username, id, fav_type });
 
   if (existing) {
-    const error = new Error('This anime is already in your favorites');
+    const error = new Error(`This ${fav_type} is already in your favorites`);
     error.statusCode = 409;
     throw error;
   }
 
   const favorite = new Favorite({
     username,
-    id: parseInt(id)
+    id: parseInt(id),
+    fav_type
   });
 
   await favorite.save();
-  console.log(`Added favorite: anime ${id} for user ${username}`);
+  console.log(`Added favorite: ${fav_type} ${id} for user ${username}`);
 
   return favorite.toObject();
 }
@@ -52,24 +54,25 @@ async function addUserFavorite(username, id) {
  * Remove a favorite anime for a user
  * @param {string} username - The username
  * @param {number} id - The ID of the item to remove
+ * @param {string} fav_type - The type of favorite (anime, character, people)
  * @returns {Promise<Object>} The deleted favorite object
  */
-async function removeUserFavorite(username, id) {
+async function removeUserFavorite(username, id, fav_type = 'anime') {
   if (!username || !id) {
     const error = new Error('Missing required fields: username, id');
     error.statusCode = 400;
     throw error;
   }
 
-  const favorite = await Favorite.findOneAndDelete({ username, id: parseInt(id) });
+  const favorite = await Favorite.findOneAndDelete({ username, id: parseInt(id), fav_type });
 
   if (!favorite) {
-    const error = new Error('This anime is not in your favorites');
+    const error = new Error(`This ${fav_type} is not in your favorites`);
     error.statusCode = 404;
     throw error;
   }
 
-  console.log(`Removed favorite: anime ${id} for user ${username}`);
+  console.log(`Removed favorite: ${fav_type} ${id} for user ${username}`);
   return favorite.toObject();
 }
 

@@ -11,8 +11,6 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body class="bg-light">
-    {{> navbar}}
-    
     {{#if person}}
     <div class="header-gradient purple">
         <div class="container">
@@ -119,7 +117,8 @@
         </div>
 
         <div class="actions">
-            <a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary">← Back to Results</a>
+            <a href="#" onclick="history.back(); return false;" class="back-button">← Back to Results</a>
+            <a href="/" class="back-button">🏠 Home</a>
         </div>
     </div>
     {{else}}
@@ -129,7 +128,8 @@
             <p>The person you're looking for doesn't exist or couldn't be loaded.</p>
         </div>
         <div class="actions">
-            <a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary">← Back to Results</a>
+            <a href="#" onclick="history.back(); return false;" class="back-button">← Back to Results</a>
+            <a href="/" class="back-button">🏠 Home</a>
         </div>
     </div>
     {{/if}}

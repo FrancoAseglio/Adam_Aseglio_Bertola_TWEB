@@ -1,5 +1,6 @@
 package com.example.springboot_pgsql.Person;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 
@@ -13,18 +14,23 @@ public class Person {
 
     @Id
     @Column(name = "person_mal_id")
+    @JsonProperty("person_mal_id")
     private Integer personMalId;
 
     @Column(name = "given_name")
+    @JsonProperty("given_name")
     private String givenName;
 
     @Column(name = "family_name")
+    @JsonProperty("family_name")
     private String familyName;
 
     @Column(name = "given_name_native")
+    @JsonProperty("given_name_native")
     private String givenNameNative;
 
     @Column(name = "family_name_native")
+    @JsonProperty("family_name_native")
     private String familyNameNative;
 
     private LocalDate birthday;
@@ -35,17 +41,20 @@ public class Person {
     private Integer favorites;
 
     @Column(name = "image_url")
+    @JsonProperty("image_url")
     private String imageUrl;
 
     private String url;
 
     @Column(name = "relevant_location")
+    @JsonProperty("relevant_location")
     private String relevantLocation;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "alternate_names")
+    @JsonProperty("alternate_names")
     private String alternateNames;
 
     public Integer getPersonMalId() { return personMalId; }

@@ -89,8 +89,8 @@ router.get('/:username', async (req, res) => {
  */
 router.post('/', async (req, res) => {
   try {
-    const { username, id } = req.body;
-    const favorite = await addUserFavorite(username, id);
+    const { username, id, fav_type = 'anime' } = req.body;
+    const favorite = await addUserFavorite(username, id, fav_type);
     res.status(201).json(favorite);
   } catch (error) {
     if (error.statusCode === 400)
@@ -144,7 +144,8 @@ router.post('/', async (req, res) => {
  */
 router.delete('/:username/:id', async (req, res) => {
   try {
-    await removeUserFavorite(req.params.username, parseInt(req.params.id));
+    const fav_type = req.query.fav_type || 'anime';
+    await removeUserFavorite(req.params.username, parseInt(req.params.id), fav_type);
     res.json({ message: 'Favorite removed successfully' });
   } catch (error) {
     if (error.statusCode === 404) 
