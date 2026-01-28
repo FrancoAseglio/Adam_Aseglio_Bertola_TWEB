@@ -19,93 +19,131 @@
     </div>
 
     <div class="container mb-5">
-        <div class="row mb-4">
-            <div class="col-md-12">
-                <div class="alert alert-info">
-                    <strong>📊 Total Favorites:</strong> {{#if pagination}}{{pagination.totalItems}}{{else}}{{favorites.length}}{{/if}}
-                </div>
-            </div>
-        </div>
-
         {{#if favorites}}
-        <div class="row">
-            {{#each favorites}}
-            <div class="col-md-6 col-lg-4">
-                <div class="favorite-card">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="mb-0">
+                    Favorites 
+                    {{#if pagination}}
+                        <span class="badge bg-pink">{{pagination.totalItems}} total</span>
+                    {{else}}
+                        <span class="badge bg-pink">{{favorites.length}} total</span>
+                    {{/if}}
+                </h2>
+            </div>
+
+            <div class="row g-4">
+                {{#each favorites}}
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
                     {{#if this.details}}
                         {{#if (eq this.fav_type "anime")}}
-                            <!-- Anime Details -->
-                            {{#if this.details.image_url}}
-                            <img src="{{this.details.image_url}}" alt="{{this.details.title}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 12px;">
-                            {{/if}}
-                            <a href="/anime/{{this.id}}" class="anime-title d-block mb-2">{{this.details.title}}</a>
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="type-badge">{{this.details.type}}</span>
-                                <div>
+                            <!-- Anime Card -->
+                            <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/anime/{{this.id}}'">
+                                {{#if this.details.image_url}}
+                                <img src="{{this.details.image_url}}" alt="{{this.details.title}}" class="card-img-top" 
+                                     style="height:300px;object-fit:cover" 
+                                     onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+                                {{else}}
+                                <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" 
+                                     alt="{{this.details.title}}" class="card-img-top" style="height:300px;object-fit:cover">
+                                {{/if}}
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">{{this.details.title}}</h6>
+                                    {{#if this.details.type}}
+                                    <p class="card-text small text-muted mb-1"><strong>Type:</strong> {{this.details.type}}</p>
+                                    {{/if}}
+                                    {{#if this.details.episodes}}
+                                    <p class="card-text small text-muted mb-1"><strong>Episodes:</strong> {{this.details.episodes}}</p>
+                                    {{/if}}
                                     {{#if this.details.score}}
-                                    <span class="score-badge">⭐ {{this.details.score}}</span>
+                                    <p class="card-text small text-muted mb-1">
+                                        <strong>Score:</strong> 
+                                        <span class="badge {{#if (gt this.details.score 8)}}bg-success{{else if (gt this.details.score 7)}}bg-info{{else}}bg-secondary{{/if}}">
+                                            ⭐ {{this.details.score}}
+                                        </span>
+                                    </p>
+                                    {{/if}}
+                                    {{#if this.details.genres}}
+                                    <p class="card-text small text-muted mb-1"><strong>Genres:</strong> {{formatList this.details.genres}}</p>
                                     {{/if}}
                                 </div>
                             </div>
-                            {{#if this.details.genres}}
-                            <p class="text-muted mb-2"><small>{{formatList this.details.genres}}</small></p>
-                            {{/if}}
-                            {{#if this.details.episodes}}
-                            <p class="text-muted mb-0"><small>Episodes: {{this.details.episodes}}</small></p>
-                            {{/if}}
                         {{else if (eq this.fav_type "character")}}
-                            <!-- Character Details -->
-                            <a href="/characters/{{this.id}}" class="anime-title d-block mb-2">{{this.details.name}}</a>
-                            {{#if this.details.name_kanji}}
-                            <p class="text-muted mb-2"><small>{{this.details.name_kanji}}</small></p>
-                            {{/if}}
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="type-badge">Character</span>
-                                {{#if this.details.favorites}}
-                                <span class="score-badge">❤️ {{this.details.favorites}}</span>
+                            <!-- Character Card -->
+                            <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/characters/{{this.id}}'">
+                                {{#if this.details.image_url}}
+                                <img src="{{this.details.image_url}}" alt="{{this.details.name}}" class="card-img-top" 
+                                     style="height:300px;object-fit:cover" 
+                                     onerror="this.src='https://via.placeholder.com/225x350/f093fb/ffffff?text=No+Image'">
+                                {{else}}
+                                <img src="https://via.placeholder.com/225x350/f093fb/ffffff?text=No+Image" 
+                                     alt="{{this.details.name}}" class="card-img-top" style="height:300px;object-fit:cover">
                                 {{/if}}
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">{{this.details.name}}</h6>
+                                    {{#if this.details.name_kanji}}
+                                    <p class="card-text small text-muted mb-1"><strong>Kanji:</strong> {{this.details.name_kanji}}</p>
+                                    {{/if}}
+                                    <p class="card-text small text-muted mb-1"><strong>Type:</strong> Character</p>
+                                    {{#if this.details.favorites}}
+                                    <p class="card-text small text-muted mb-1">
+                                        <strong>Favorites:</strong> 
+                                        <span class="badge bg-danger">❤️ {{this.details.favorites}}</span>
+                                    </p>
+                                    {{/if}}
+                                </div>
                             </div>
-                            {{#if this.details.image_url}}
-                            <img src="{{this.details.image_url}}" alt="{{this.details.name}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;">
-                            {{/if}}
                         {{else if (eq this.fav_type "people")}}
-                            <!-- People Details -->
-                            <a href="/people/{{this.id}}" class="anime-title d-block mb-2">{{this.details.givenName}} {{this.details.familyName}}</a>
-                            {{#if this.details.givenNameNative}}
-                            <p class="text-muted mb-2"><small>{{this.details.givenNameNative}} {{this.details.familyNameNative}}</small></p>
-                            {{/if}}
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <span class="type-badge">Person</span>
-                                {{#if this.details.favorites}}
-                                <span class="score-badge">❤️ {{this.details.favorites}}</span>
+                            <!-- People Card -->
+                            <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/people/{{this.id}}'">
+                                {{#if this.details.image_url}}
+                                <img src="{{this.details.image_url}}" alt="{{this.details.given_name}} {{this.details.family_name}}" class="card-img-top" 
+                                     style="height:300px;object-fit:cover" 
+                                     onerror="this.src='https://via.placeholder.com/225x350/4facfe/ffffff?text=No+Image'">
+                                {{else}}
+                                <img src="https://via.placeholder.com/225x350/4facfe/ffffff?text=No+Image" 
+                                     alt="{{this.details.given_name}} {{this.details.family_name}}" class="card-img-top" style="height:300px;object-fit:cover">
                                 {{/if}}
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">{{this.details.given_name}} {{this.details.family_name}}</h6>
+                                    {{#if this.details.given_name_native}}
+                                    <p class="card-text small text-muted mb-1"><strong>Kanji:</strong> {{this.details.given_name_native}} {{this.details.family_name_native}}</p>
+                                    {{/if}}
+                                    <p class="card-text small text-muted mb-1"><strong>Type:</strong> Person</p>
+                                    {{#if this.details.favorites}}
+                                    <p class="card-text small text-muted mb-1">
+                                        <strong>Favorites:</strong> 
+                                        <span class="badge bg-danger">❤️ {{this.details.favorites}}</span>
+                                    </p>
+                                    {{/if}}
+                                </div>
                             </div>
-                            {{#if this.details.imageUrl}}
-                            <img src="{{this.details.imageUrl}}" alt="{{this.details.givenName}} {{this.details.familyName}}" style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px;">
-                            {{/if}}
                         {{/if}}
                     {{else}}
-                        <!-- Fallback when details not available -->
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="anime-id-badge">ID: {{this.id}}</span>
-                            <span class="type-badge">{{this.fav_type}}</span>
+                        <!-- Fallback Card -->
+                        <div class="card anime-card h-100">
+                            <img src="https://via.placeholder.com/225x350/6c757d/ffffff?text=No+Details" 
+                                 alt="Unknown" class="card-img-top" style="height:300px;object-fit:cover">
+                            <div class="card-body">
+                                <h6 class="card-title text-muted">ID: {{this.id}}</h6>
+                                <p class="card-text small text-muted mb-1"><strong>Type:</strong> {{this.fav_type}}</p>
+                                <p class="card-text small text-muted">Details not available</p>
+                            </div>
                         </div>
-                        <p class="text-muted mb-0"><small>Details not available</small></p>
                     {{/if}}
                 </div>
+                {{/each}}
             </div>
-            {{/each}}
-        </div>
+
+            {{> pagination baseUrl=(concat "/favorites/" username) urlSeparator="?"}}
         {{else}}
-        <div class="alert alert-warning" role="alert">
-            <h4 class="alert-heading">No favorites found!</h4>
-            <p>This user hasn't added any anime to their favorites yet.</p>
+        <div class="text-center py-5">
+            <h2 class="text-muted">😕 No Favorites Found</h2>
+            <p class="text-muted">This user hasn't added any anime to their favorites yet.</p>
+            <a href="/anime/search" class="btn btn-primary mt-3">🔍 Search Anime</a>
         </div>
         {{/if}}
 
-        {{> pagination}}
-
-        <div class="actions">
+        <div class="actions mt-4">
             <a href="/profile/{{username}}" class="refresh-button">👤 View Full Profile</a>
             <a href="/" class="back-button">🏠 Back to Home</a>
         </div>

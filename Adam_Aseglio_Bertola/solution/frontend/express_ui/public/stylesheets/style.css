@@ -545,3 +545,9 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
+/* ----- Custom Badge Colors ----- */
+.badge.bg-pink {
+  background: var(--gradient-pink) !important;
+  color: white !important;
+}
+

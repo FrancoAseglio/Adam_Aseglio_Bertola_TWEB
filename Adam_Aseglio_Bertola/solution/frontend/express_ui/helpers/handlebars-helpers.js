@@ -119,6 +119,18 @@ function registerHelpers() {
     if (!Array.isArray(array)) return false;
     return array.includes(value);
   });
+
+  /**
+   * Concatenate multiple strings
+   * @param {...string} args - Strings to concatenate
+   * @returns {string} Concatenated string
+   * @example {{concat "/favorites/" username}} => "/favorites/john"
+   */
+  hbs.registerHelper('concat', function(...args) {
+    // Remove the last argument which is the options object from Handlebars
+    args.pop();
+    return args.join('');
+  });
 }
 
 module.exports = { registerHelpers };
