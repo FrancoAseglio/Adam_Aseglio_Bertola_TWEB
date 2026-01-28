@@ -15,8 +15,8 @@
     <div class="header-gradient purple">
         <div class="container">
             <h1>{{person.name}}</h1>
-            {{#if person.givenName}}
-                <p>{{person.givenName}} {{person.familyName}}</p>
+            {{#if person.given_name}}
+                <p>{{person.given_name}} {{person.family_name}}</p>
             {{/if}}
         </div>
     </div>
@@ -26,27 +26,27 @@
             <!-- Person Image -->
             <div class="col-md-4">
                 <div class="character-detail-image">
-                    {{#if person.imageUrl}}
-                        <img src="{{person.imageUrl}}" alt="{{person.name}}" onerror="this.src='https://via.placeholder.com/225x350/9333ea/ffffff?text=No+Image'">
+                    {{#if person.image_url}}
+                        <img src="{{person.image_url}}" alt="{{person.name}}" onerror="this.src='https://via.placeholder.com/225x350/9333ea/ffffff?text=No+Image'">
                     {{else}}
                         <img src="https://via.placeholder.com/225x350/9333ea/ffffff?text=No+Image" alt="No image available">
                     {{/if}}
                 </div>
 
                 {{#if person.favorites}}
-                    <div class="card mt-3 text-center border-0 shadow-sm">
-                        <div class="card-body">
-                            <div class="fs-1">⭐</div>
-                            <div class="stat-value" style="font-size: 2rem;">{{person.favorites}}</div>
-                            <div class="stat-label" style="font-size: 0.9rem;">Favorites</div>
+                    <div class="card mt-3 text-center border-0 shadow-lg" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                        <div class="card-body py-4">
+                            <div style="font-size: 3rem;">❤️</div>
+                            <div class="stat-value fw-bold" style="font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">{{person.favorites}}</div>
+                            <div class="stat-label fw-semibold" style="font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase;">users</div>
                         </div>
                     </div>
                 {{/if}}
 
-                {{#if person.websiteUrl}}
+                {{#if person.website_url}}
                     <div class="card mt-3 border-0 shadow-sm">
                         <div class="card-body text-center">
-                            <a href="{{person.websiteUrl}}" target="_blank" class="btn btn-primary btn-sm">
+                            <a href="{{person.website_url}}" target="_blank" class="btn btn-primary btn-sm">
                                 🌐 Visit Website
                             </a>
                         </div>
@@ -59,44 +59,33 @@
                 <div class="info-card-detail">
                     <h3>Person Information</h3>
 
-                    <div class="info-grid">
-                        <div class="info-label">Name:</div>
-                        <div class="info-value">{{person.name}}</div>
+                    <div>
+                        <p class="mb-2"><strong>Name:</strong> {{person.name}}</p>
 
-                        {{#if person.givenName}}
-                        <div class="info-label">Given Name:</div>
-                        <div class="info-value">{{person.givenName}}</div>
+                        {{#if person.given_name}}
+                        <p class="mb-2"><strong>Given Name:</strong> {{person.given_name}}</p>
                         {{/if}}
 
-                        {{#if person.familyName}}
-                        <div class="info-label">Family Name:</div>
-                        <div class="info-value">{{person.familyName}}</div>
+                        {{#if person.family_name}}
+                        <p class="mb-2"><strong>Family Name:</strong> {{person.family_name}}</p>
                         {{/if}}
 
-                        {{#if person.alternateNames}}
-                        <div class="info-label">Alternate Names:</div>
-                        <div class="info-value">{{formatList person.alternateNames}}</div>
+                        {{#if person.alternate_names}}
+                        <p class="mb-2"><strong>Alternate Names:</strong> {{formatList person.alternate_names}}</p>
                         {{/if}}
 
                         {{#if person.birthday}}
-                        <div class="info-label">Birthday:</div>
-                        <div class="info-value">{{person.birthday}}</div>
+                        <p class="mb-2"><strong>Birthday:</strong> {{person.birthday}}</p>
                         {{/if}}
 
-                        {{#if person.relevantLocation}}
-                        <div class="info-label">Location:</div>
-                        <div class="info-value">{{person.relevantLocation}}</div>
+                        {{#if person.relevant_location}}
+                        <p class="mb-2"><strong>Location:</strong> {{person.relevant_location}}</p>
                         {{/if}}
 
                         {{#if person.url}}
-                        <div class="info-label">MyAnimeList:</div>
-                        <div class="info-value"><a href="{{person.url}}" target="_blank" class="text-decoration-none">View on MAL →</a></div>
+                        <p class="mb-2"><strong>MyAnimeList:</strong> <a href="{{person.url}}" target="_blank" class="text-decoration-none">View on MAL →</a></p>
                         {{/if}}
 
-                        {{#if person.favorites}}
-                        <div class="info-label">Favorited by:</div>
-                        <div class="info-value">{{person.favorites}} users</div>
-                        {{/if}}
                     </div>
                 </div>
 
@@ -107,10 +96,10 @@
                 </div>
                 {{/if}}
 
-                {{#if person.websiteUrl}}
+                {{#if person.website_url}}
                 <div class="info-card-detail">
                     <h3>Links</h3>
-                    <p><a href="{{person.websiteUrl}}" target="_blank" class="text-decoration-none">🌐 Official Website</a></p>
+                    <p><a href="{{person.website_url}}" target="_blank" class="text-decoration-none">🌐 Official Website</a></p>
                 </div>
                 {{/if}}
             </div>

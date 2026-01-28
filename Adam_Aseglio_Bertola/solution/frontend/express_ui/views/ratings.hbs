@@ -31,47 +31,69 @@
     </div>
 
     {{#if ratings}}
-    <div class="row">
+    <div class="row g-4">
       {{#each ratings}}
-      <div class="col-md-6 col-lg-4">
-        <div class="rating-card">
-          {{#if this.animeDetails}}
-          <!-- Anime with details -->
-          <a href="/anime/{{this.anime_id}}" class="anime-title d-block mb-2">{{this.animeDetails.title}}</a>
+      <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+        {{#if this.animeDetails}}
+        <!-- Anime Card -->
+        <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/anime/{{this.anime_id}}'">
           {{#if this.animeDetails.image_url}}
-          <img src="{{this.animeDetails.image_url}}" alt="{{this.animeDetails.title}}"
-            style="width: 100%; max-height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 12px;">
-          {{/if}}
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            {{#if this.animeDetails.type}}
-            <span class="type-badge">{{this.animeDetails.type}}</span>
-            {{/if}}
-            <span class="score-badge">⭐ {{this.score}}/10</span>
-          </div>
-          {{#if this.animeDetails.episodes}}
-          <p class="text-muted mb-2"><small>Total Episodes: {{this.animeDetails.episodes}}</small></p>
-          {{/if}}
-          {{#if this.num_watched_episodes}}
-          <p class="mb-2">
-            <span class="episodes-badge">📺 Watched: {{this.num_watched_episodes}} episodes</span>
-          </p>
-          {{/if}}
-          {{#if this.status}}
-          <p class="mb-0"><small><strong>Status:</strong> {{this.status}}</small></p>
-          {{/if}}
+          <img src="{{this.animeDetails.image_url}}" alt="{{this.animeDetails.title}}" class="card-img-top" 
+               style="height:300px;object-fit:cover" 
+               onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
           {{else}}
-          <!-- Fallback when anime details not available -->
-          <div class="d-flex justify-content-between align-items-center mb-3">
-            <span class="anime-id">Anime ID: {{this.anime_id}}</span>
-            <span class="score-badge">⭐ {{this.score}}/10</span>
+          <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" 
+               alt="{{this.animeDetails.title}}" class="card-img-top" style="height:300px;object-fit:cover">
+          {{/if}}
+          <div class="card-body">
+            <h6 class="card-title text-primary">{{this.animeDetails.title}}</h6>
+            {{#if this.animeDetails.type}}
+            <p class="card-text small text-muted mb-1"><strong>Type:</strong> {{this.animeDetails.type}}</p>
+            {{/if}}
+            {{#if this.animeDetails.episodes}}
+            <p class="card-text small text-muted mb-1"><strong>Episodes:</strong> {{this.animeDetails.episodes}}</p>
+            {{/if}}
+            <p class="card-text small text-muted mb-1">
+              <strong>Your Score:</strong> 
+              <span class="badge {{#if (gt this.score 8)}}bg-success{{else if (gt this.score 7)}}bg-info{{else if (gt this.score 5)}}bg-warning{{else}}bg-secondary{{/if}}">
+                ⭐ {{this.score}}/10
+              </span>
+            </p>
+            {{#if this.num_watched_episodes}}
+            <p class="card-text small text-muted mb-1">
+              <strong>Watched:</strong> 
+              <span class="badge bg-primary">📺 {{this.num_watched_episodes}} eps</span>
+            </p>
+            {{/if}}
+            {{#if this.status}}
+            <p class="card-text small text-muted mb-1"><strong>Status:</strong> {{this.status}}</p>
+            {{/if}}
+            {{#if this.animeDetails.genres}}
+            <p class="card-text small text-muted mb-1"><strong>Genres:</strong> {{formatList this.animeDetails.genres}}</p>
+            {{/if}}
           </div>
-          {{#if this.num_watched_episodes}}
-          <p class="mb-0">
-            <span class="episodes-badge">📺 {{this.num_watched_episodes}} episodes</span>
-          </p>
-          {{/if}}
-          {{/if}}
         </div>
+        {{else}}
+        <!-- Fallback Card -->
+        <div class="card anime-card h-100">
+          <img src="https://via.placeholder.com/225x350/6c757d/ffffff?text=No+Details" 
+               alt="Unknown" class="card-img-top" style="height:300px;object-fit:cover">
+          <div class="card-body">
+            <h6 class="card-title text-muted">Anime ID: {{this.anime_id}}</h6>
+            <p class="card-text small text-muted mb-1">
+              <strong>Your Score:</strong> 
+              <span class="badge bg-secondary">⭐ {{this.score}}/10</span>
+            </p>
+            {{#if this.num_watched_episodes}}
+            <p class="card-text small text-muted mb-1">
+              <strong>Watched:</strong> 
+              <span class="badge bg-primary">📺 {{this.num_watched_episodes}} eps</span>
+            </p>
+            {{/if}}
+            <p class="card-text small text-muted">Details not available</p>
+          </div>
+        </div>
+        {{/if}}
       </div>
       {{/each}}
     </div>
@@ -82,7 +104,7 @@
     </div>
     {{/if}}
 
-    {{> pagination}}
+    {{> pagination baseUrl=(concat "/ratings/" username) urlSeparator="?"}}
 
     <div class="actions">
       <a href="/profile/{{username}}" class="back-button">👤 View Full Profile</a>
