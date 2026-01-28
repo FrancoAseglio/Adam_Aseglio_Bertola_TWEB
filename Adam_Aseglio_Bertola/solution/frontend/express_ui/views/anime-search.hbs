@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body class="bg-light">
+    {{> navbar}}
+    
     <div class="header-gradient primary">
         <div class="container">
             <h1>🔍 Search Anime</h1>
@@ -193,8 +195,8 @@
             </div>
         {{/if}}
 
-        <div class="actions mt-4">
-            <a href="/" class="back-button">← Back to Home</a>
+        <div class="mt-4">
+            <a href="/anime/search" class="btn btn-outline-secondary">🔄 Clear All Filters</a>
         </div>
     </div>
 

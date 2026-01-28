@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body class="bg-light">
+    {{> navbar}}
+    
     <div class="header-gradient primary">
         <div class="container">
             <h1>📖 Anime Details</h1>
@@ -173,10 +175,9 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="d-flex gap-2 mt-4">
+                <!-- Action Button -->
+                <div class="mt-4">
                     <a href="/anime/search" class="btn btn-outline-primary">← Back to Search</a>
-                    <a href="/" class="btn btn-outline-secondary">🏠 Home</a>
                 </div>
             </div>
         </div>
@@ -186,10 +187,7 @@
             <p>The requested anime could not be found.</p>
             <hr>
             <div class="d-flex gap-2">
-                <a href="/anime/search" class="btn btn-primary">← Back to Search</a>
-                <a href="/" class="btn btn-secondary">🏠 Home</a>
-            </div>
-        </div>
+             a href="/anime/search" class="btn btn-primary">← Back to Search</a
         {{/if}}
     </div>
 

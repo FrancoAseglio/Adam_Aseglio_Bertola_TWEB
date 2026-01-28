@@ -13,6 +13,8 @@
 </head>
 
 <body class="bg-light">
+  {{> navbar}}
+  
   <div class="header-gradient orange">
     <div class="container">
       <h1>⭐ {{username}}'s Ratings</h1>
@@ -84,9 +86,8 @@
 
     {{> pagination}}
 
-    <div class="actions">
-      <a href="/profile/{{username}}" class="back-button">👤 View Full Profile</a>
-      <a href="/" class="back-button">🏠 Back to Home</a>
+    <div class="mt-4">
+      <a href="/profile/{{username}}" class="btn btn-outline-primary">👤 View Full Profile</a>
     </div>
   </div>
 
