@@ -99,10 +99,10 @@ function setupEnterKeyListeners() {
         if (e.key === 'Enter') {
           e.preventDefault();
 
-          try { 
-            await fn(); 
-          } catch (err) { 
-            console.error(`Error in ${id}:`, err); 
+          try {
+            await fn();
+          } catch (err) {
+            console.error(`Error in ${id}:`, err);
           }
         }
       });

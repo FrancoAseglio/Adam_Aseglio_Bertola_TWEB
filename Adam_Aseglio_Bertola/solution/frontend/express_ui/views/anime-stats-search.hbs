@@ -19,6 +19,7 @@
     </div>
 
     <div class="container py-4">
+        <!-- Form di ricerca semplice senza filtri -->
         <div class="card mb-4">
             <div class="card-body">
                 <form action="/stats/search" method="GET">
@@ -30,38 +31,62 @@
             </div>
         </div>
 
+        <!-- Risultati -->
         {{#if query}}
             {{#if results}}
                 {{#if results.length}}
-                    <div class="card">
-                        <div class="card-header bg-info text-white">
-                            <h5 class="mb-0">Search Results for "{{query}}" ({{results.length}} found)</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row g-3">
-                                {{#each results}}
-                                <div class="col-md-6 col-lg-4">
-                                    <div class="card h-100 hover-lift" style="cursor: pointer;" onclick="window.location.href='/stats/anime/{{this.animeMalId}}'">
-                                        <div class="card-body">
-                                            <h6 class="card-title">{{this.title}}</h6>
-                                            <p class="card-text text-muted small mb-1">ID: {{this.animeMalId}}</p>
-                                            {{#if this.type}}
-                                            <p class="card-text text-muted small mb-1">Type: {{this.type}}</p>
-                                            {{/if}}
-                                            {{#if this.score}}
-                                            <p class="card-text text-muted small mb-0">⭐ Score: {{this.score}}</p>
-                                            {{/if}}
-                                        </div>
-                                    </div>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h2 class="mb-0">
+                            Search Results 
+                            {{#if pagination}}
+                                <span class="badge bg-primary">{{pagination.totalItems}} found</span>
+                            {{else}}
+                                <span class="badge bg-primary">{{results.length}} found</span>
+                            {{/if}}
+                        </h2>
+                    </div>
+
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                        {{#each results}}
+                        <div class="col">
+                            <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/stats/anime/{{this.mal_id}}'">
+                                {{#if this.image_url}}
+                                <img src="{{this.image_url}}" alt="{{this.title}}" class="card-img-top" 
+                                     style="height:300px;object-fit:cover" 
+                                     onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+                                {{else}}
+                                <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" 
+                                     alt="{{this.title}}" class="card-img-top" style="height:300px;object-fit:cover">
+                                {{/if}}
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">{{this.title}}</h6>
+                                    {{#if this.type}}
+                                    <p class="card-text small text-muted mb-1"><strong>Type:</strong> {{this.type}}</p>
+                                    {{/if}}
+                                    {{#if this.episodes}}
+                                    <p class="card-text small text-muted mb-1"><strong>Episodes:</strong> {{this.episodes}}</p>
+                                    {{/if}}
+                                    {{#if this.score}}
+                                    <p class="card-text small text-muted mb-1">
+                                        <strong>Score:</strong> 
+                                        <span class="badge {{#if (gt this.score 8)}}bg-success{{else if (gt this.score 7)}}bg-info{{else}}bg-secondary{{/if}}">
+                                            ⭐ {{this.score}}
+                                        </span>
+                                    </p>
+                                    {{/if}}
+                                    {{#if this.genres}}
+                                    <p class="card-text small text-muted mb-1"><strong>Genres:</strong> {{formatList this.genres}}</p>
+                                    {{/if}}
                                 </div>
-                                {{/each}}
                             </div>
                         </div>
+                        {{/each}}
                     </div>
+                {{> pagination baseUrl=(concat "/stats/search?title=" query) urlSeparator="&"}}
                 {{else}}
-                    <div class="alert alert-info">
-                        <h5>No Results Found</h5>
-                        <p class="mb-0">No anime found matching "{{query}}". Try searching with different keywords.</p>
+                    <div class="text-center py-5">
+                        <h2 class="text-muted">😕 No Results Found</h2>
+                        <p class="text-muted">No anime found matching "{{query}}". Try searching with different keywords.</p>
                     </div>
                 {{/if}}
             {{else}}
@@ -70,14 +95,22 @@
                 </div>
             {{/if}}
         {{else}}
-            <div class="alert alert-info">
-                <p class="mb-0">Enter a title above to search for anime statistics.</p>
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-search text-muted" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-muted">Start Your Search</h3>
+                <p class="text-muted">Enter a title above to search for anime statistics</p>
             </div>
         {{/if}}
 
-        <div class="mt-4">
-            <a href="/" class="btn btn-primary">← Back to Home</a>
+        <div class="actions mt-4">
+            <a href="/" class="back-button">← Back to Home</a>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
