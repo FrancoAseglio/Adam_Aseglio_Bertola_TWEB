@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{title}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+<body class="bg-light">
+    {{> navbar}}
+    
+    {{#if person}}
+    <div class="header-gradient purple">
+        <div class="container">
+            <h1>{{person.name}}</h1>
+            {{#if person.givenName}}
+                <p>{{person.givenName}} {{person.familyName}}</p>
+            {{/if}}
+        </div>
+    </div>
+
+    <div class="container py-4">
+        <div class="row g-4">
+            <!-- Person Image -->
+            <div class="col-md-4">
+                <div class="character-detail-image">
+                    {{#if person.imageUrl}}
+                        <img src="{{person.imageUrl}}" alt="{{person.name}}" onerror="this.src='https://via.placeholder.com/225x350/9333ea/ffffff?text=No+Image'">
+                    {{else}}
+                        <img src="https://via.placeholder.com/225x350/9333ea/ffffff?text=No+Image" alt="No image available">
+                    {{/if}}
+                </div>
+
+                {{#if person.favorites}}
+                    <div class="card mt-3 text-center border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="fs-1">⭐</div>
+                            <div class="stat-value" style="font-size: 2rem;">{{person.favorites}}</div>
+                            <div class="stat-label" style="font-size: 0.9rem;">Favorites</div>
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if person.websiteUrl}}
+                    <div class="card mt-3 border-0 shadow-sm">
+                        <div class="card-body text-center">
+                            <a href="{{person.websiteUrl}}" target="_blank" class="btn btn-primary btn-sm">
+                                🌐 Visit Website
+                            </a>
+                        </div>
+                    </div>
+                {{/if}}
+            </div>
+
+            <!-- Person Details -->
+            <div class="col-md-8">
+                <div class="info-card-detail">
+                    <h3>Person Information</h3>
+
+                    <div class="info-grid">
+                        <div class="info-label">Name:</div>
+                        <div class="info-value">{{person.name}}</div>
+
+                        {{#if person.givenName}}
+                        <div class="info-label">Given Name:</div>
+                        <div class="info-value">{{person.givenName}}</div>
+                        {{/if}}
+
+                        {{#if person.familyName}}
+                        <div class="info-label">Family Name:</div>
+                        <div class="info-value">{{person.familyName}}</div>
+                        {{/if}}
+
+                        {{#if person.alternateNames}}
+                        <div class="info-label">Alternate Names:</div>
+                        <div class="info-value">{{formatList person.alternateNames}}</div>
+                        {{/if}}
+
+                        {{#if person.birthday}}
+                        <div class="info-label">Birthday:</div>
+                        <div class="info-value">{{person.birthday}}</div>
+                        {{/if}}
+
+                        {{#if person.relevantLocation}}
+                        <div class="info-label">Location:</div>
+                        <div class="info-value">{{person.relevantLocation}}</div>
+                        {{/if}}
+
+                        {{#if person.url}}
+                        <div class="info-label">MyAnimeList:</div>
+                        <div class="info-value"><a href="{{person.url}}" target="_blank" class="text-decoration-none">View on MAL →</a></div>
+                        {{/if}}
+
+                        {{#if person.favorites}}
+                        <div class="info-label">Favorited by:</div>
+                        <div class="info-value">{{person.favorites}} users</div>
+                        {{/if}}
+                    </div>
+                </div>
+
+                {{#if person.about}}
+                <div class="info-card-detail">
+                    <h3>About</h3>
+                    <p class="about-text">{{person.about}}</p>
+                </div>
+                {{/if}}
+
+                {{#if person.websiteUrl}}
+                <div class="info-card-detail">
+                    <h3>Links</h3>
+                    <p><a href="{{person.websiteUrl}}" target="_blank" class="text-decoration-none">🌐 Official Website</a></p>
+                </div>
+                {{/if}}
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary">← Back to Results</a>
+        </div>
+    </div>
+    {{else}}
+    <div class="container py-5">
+        <div class="not-found">
+            <h2>😕 Person Not Found</h2>
+            <p>The person you're looking for doesn't exist or couldn't be loaded.</p>
+        </div>
+        <div class="actions">
+            <a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary">← Back to Results</a>
+        </div>
+    </div>
+    {{/if}}
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
