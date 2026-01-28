@@ -1,22 +1,45 @@
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
+var createError  = require('http-errors');
+var express      = require('express');
+var path         = require('path');
 var cookieParser = require('cookie-parser');
-var logger = require('morgan');
-var hbs = require('hbs');
+var logger       = require('morgan');
+var hbs          = require('hbs');
 
-var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var animeRouter = require('./routes/anime');
-var charactersRouter = require('./routes/characters');
-var peopleRouter = require('./routes/people');
-var ratingsRouter = require('./routes/ratings');
-var favoritesRouter = require('./routes/favorites');
-var profilesRouter = require('./routes/profiles');
-var statsRouter = require('./routes/stats');
+var indexRouter           = require('./routes/index');
+var usersRouter           = require('./routes/users');
+var animeRouter           = require('./routes/anime');
+var charactersRouter      = require('./routes/characters');
+var peopleRouter          = require('./routes/people');
+var ratingsRouter         = require('./routes/ratings');
+var favoritesRouter       = require('./routes/favorites');
+var profilesRouter        = require('./routes/profiles');
+var statsRouter           = require('./routes/stats');
 var recommendationsRouter = require('./routes/recommendations');
 
 var app = express();
+
+// Swagger documentation
+const swaggerJSDoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
+const swaggerOptions = {
+  definition: {
+    openapi: '3.0.0',
+    info: {
+      title: 'Anime Data System API',
+      version: '1.0.0',
+      description: 'API for anime data',
+    },
+    servers: [
+      { url: 'http://localhost:3000', description: 'FrontEnd UI' }
+    ],
+  },
+  apis: [path.join(__dirname, 'routes/*.js')],
+};
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+
+// Swagger served on the main app
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.get('/docs', (req, res) => res.redirect('/api-docs'));
 
 // Register Handlebars helpers
 const { registerHelpers } = require('./helpers/handlebars-helpers');
@@ -53,11 +76,8 @@ app.use(function(req, res, next) {
 
 // error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });
