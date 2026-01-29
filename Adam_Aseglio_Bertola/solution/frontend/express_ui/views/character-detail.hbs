@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body class="bg-light">
+    {{> navbar}}
+    
     {{#if character}}
     <div class="header-gradient cyan">
         <div class="container">
@@ -85,9 +87,8 @@
             </div>
         </div>
 
-        <div class="actions">
-            <a href="#" onclick="history.back(); return false;" class="back-button">← Back to Results</a>
-            <a href="/" class="back-button">🏠 Home</a>
+        <div class="mt-4">
+            <a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary">← Back to Results</a>
         </div>
     </div>
     {{else}}

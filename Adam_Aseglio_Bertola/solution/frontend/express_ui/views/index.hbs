@@ -43,23 +43,39 @@
 
     <!-- Feature Cards -->
     <div class="row g-4 mb-5">
-        <div class="col-md-6">
-            <div class="card h-100 border-0 shadow-sm hover-lift" style="cursor: pointer; transition: all 0.3s ease;" onclick="loadSection('anime')">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-lift" style="cursor: pointer; transition: all 0.3s ease;" onclick="window.location.href='/anime/search'">
                 <div class="card-body text-center p-4">
                     <div class="mb-3" style="font-size: 3rem;">🎥</div>
                     <h5 class="card-title fw-bold mb-3">Browse Anime</h5>
-                    <p class="card-text text-muted">Search anime by title, genre, explore top-rated series, characters and view anime statistics</p>
+                    <p class="card-text text-muted">Search anime by title, genre, explore top-rated series and view anime statistics</p>
                     <div class="mt-3">
                         <span class="badge bg-info me-1">Search</span>
                         <span class="badge bg-info me-1">Top Rated</span>
-                        <span class="badge bg-info me-1">Characters</span>
+                        <span class="badge bg-info me-1">By Genre</span>
                         <span class="badge bg-info">Anime Stats</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <div class="card h-100 border-0 shadow-sm hover-lift" style="cursor: pointer; transition: all 0.3s ease;" onclick="loadSection('characters')">
+                <div class="card-body text-center p-4">
+                    <div class="mb-3" style="font-size: 3rem;">🦸</div>
+                    <h5 class="card-title fw-bold mb-3">Characters</h5>
+                    <p class="card-text text-muted">Search characters, view details, add or remove characters from the database</p>
+                    <div class="mt-3">
+                        <span class="badge bg-warning me-1">Search</span>
+                        <span class="badge bg-warning me-1">Details</span>
+                        <span class="badge bg-warning me-1">Add</span>
+                        <span class="badge bg-warning">Remove</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
             <div class="card h-100 border-0 shadow-sm hover-lift" style="cursor: pointer; transition: all 0.3s ease;" onclick="loadSection('user')">
                 <div class="card-body text-center p-4">
                     <div class="mb-3" style="font-size: 3rem;">👤</div>
@@ -76,83 +92,35 @@
         </div>
     </div>
 
-    <!-- Browse Anime Section -->
-    <div id="anime-section" class="row" style="display: none;">
+    <!-- Characters Section -->
+    <div id="characters-section" class="row" style="display: none;">
         <div class="col-md-6 mb-3">
             <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Search Anime</h5>
-                </div>
-                <div class="card-body">
-                    <input type="text" class="form-control mb-3" id="searchQuery" placeholder="Enter anime title (e.g., Naruto)">
-                    <button class="btn btn-info" onclick="searchAnime()">Search</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Top Rated Anime</h5>
-                </div>
-                <div class="card-body">
-                    <input type="number" class="form-control mb-3" id="topAnimeLimit" placeholder="Enter number of anime (e.g., 10, 20, 50)" value="20" min="1" max="100">
-                    <button class="btn btn-info" onclick="getTopAnime()">Show Top Rated</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Search by Genre</h5>
-                </div>
-                <div class="card-body">
-                    <input type="text" class="form-control mb-3" id="genreInput" placeholder="Enter genre (e.g., Action, Comedy, Drama)">
-                    <button class="btn btn-info" onclick="getAnimeByGenre()">Search Genre</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header bg-info text-white">
+                <div class="card-header bg-warning text-dark">
                     <h5 class="mb-0">Search Character</h5>
                 </div>
                 <div class="card-body">
                     <input type="text" class="form-control mb-3" id="characterSearchQuery" placeholder="Enter character name (e.g., Naruto)">
-                    <button class="btn btn-info" onclick="searchCharacter()">Search</button>
+                    <button class="btn btn-warning" onclick="searchCharacter()">Search</button>
                 </div>
             </div>
         </div>
 
         <div class="col-md-6 mb-3">
             <div class="card">
-                <div class="card-header bg-info text-white">
+                <div class="card-header bg-warning text-dark">
                     <h5 class="mb-0">Get Character Details</h5>
                 </div>
                 <div class="card-body">
                     <input type="number" class="form-control mb-3" id="characterId" placeholder="Enter character ID (e.g., 40)">
-                    <button class="btn btn-info" onclick="getCharacterDetail()">Get Details</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header bg-info text-white">
-                    <h5 class="mb-0">Search Anime Stats</h5>
-                </div>
-                <div class="card-body">
-                    <input type="text" class="form-control mb-3" id="statsSearchQuery" placeholder="Search anime to view stats (e.g., Naruto)">
-                    <button class="btn btn-info" onclick="searchAnimeStats()">Search Stats</button>
+                    <button class="btn btn-warning" onclick="getCharacterDetail()">Get Details</button>
                 </div>
             </div>
         </div>
         
         <div class="col-md-6 mb-3">
             <div class="card">
-                <div class="card-header bg-warning text-dark fw-bold">
+                <div class="card-header" style="background-color: #ffc107; color: #000; font-weight: bold;">
                     <h5 class="mb-0">➕ Add Character</h5>
                 </div>
                 <div class="card-body">

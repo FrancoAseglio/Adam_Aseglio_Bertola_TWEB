@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body class="bg-light">
+    {{> navbar}}
+    
     <div class="header-gradient primary">
         <div class="container">
             <h1>📖 Anime Details</h1>
@@ -19,61 +21,72 @@
 
     <div class="container py-4">
         {{#if anime}}
-        <div class="card shadow-sm mb-4">
-            <div class="card-body">
-                <!-- Titles Section -->
-                <h3 class="text-primary mb-2">{{anime.title}}</h3>
-                {{#if anime.titleEnglish}}
-                <p class="text-muted mb-1" style="font-size: 0.95rem;">{{anime.titleEnglish}}</p>
-                {{/if}}
-                {{#if anime.titleJapanese}}
-                <p class="text-muted mb-3" style="font-size: 0.95rem;">{{anime.titleJapanese}}</p>
-                {{/if}}
-
-                <!-- Meta Grid - 3 items -->
-                <div class="d-flex flex-wrap gap-3 mt-3">
-                    {{#if anime.score}}
-                    <div class="text-center px-4 py-2 rounded bg-light" style="min-width: 140px;">
-                        <div class="small text-muted text-uppercase">Score</div>
-                        <div class="h5 mb-0 text-primary fw-bold">⭐ {{anime.score}}/10</div>
-                    </div>
-                    {{/if}}
-                    {{#if anime.rank}}
-                    <div class="text-center px-4 py-2 rounded bg-light" style="min-width: 140px;">
-                        <div class="small text-muted text-uppercase">Rank</div>
-                        <div class="h5 mb-0 text-success fw-bold">#{{anime.rank}}</div>
-                    </div>
-                    {{/if}}
-                    {{#if anime.favorites}}
-                    <div class="text-center px-4 py-2 rounded bg-light" style="min-width: 140px;">
-                        <div class="small text-muted text-uppercase">Favorites</div>
-                        <div class="h5 mb-0 text-danger fw-bold">❤️ {{anime.favorites}}</div>
-                    </div>
-                    {{/if}}
-                </div>
-            </div>
+        <!-- Titles Section -->
+        <div class="mb-4">
+            <h1 class="text-primary mb-2">{{anime.title}}</h1>
+            {{#if anime.titleEnglish}}
+            <p class="text-muted mb-1" style="font-size: 0.95rem;">{{anime.titleEnglish}}</p>
+            {{/if}}
+            {{#if anime.titleJapanese}}
+            <p class="text-muted mb-3" style="font-size: 0.95rem;">{{anime.titleJapanese}}</p>
+            {{/if}}
         </div>
 
         <!-- Main Content with Image and Details -->
         <div class="row">
             <!-- Image Column -->
-            <div class="col-lg-3 col-md-4 mb-4">
+            <div class="col-lg-4 col-md-5 mb-4">
                 {{#if anime.imageUrl}}
-                <img src="{{anime.imageUrl}}" alt="{{anime.title}}" class="img-fluid rounded shadow-lg w-100" 
-                     style="max-width: 350px;"
+                <img src="{{anime.imageUrl}}" alt="{{anime.title}}" class="img-fluid rounded shadow-lg w-100 mb-3" 
+                     style="max-width: 100%;"
                      onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="text-center p-5 border rounded bg-light shadow" style="display:none; width: 225px; height: 350px; align-items: center; justify-content: center;">
+                <div class="text-center p-5 border rounded bg-light shadow mb-3" style="display:none; width: 100%; height: 500px; align-items: center; justify-content: center;">
                     <div class="display-1">🎬</div>
                 </div>
                 {{else}}
-                <div class="text-center p-5 border rounded bg-light shadow d-flex" style="width: 225px; height: 350px; align-items: center; justify-content: center;">
+                <div class="text-center p-5 border rounded bg-light shadow d-flex mb-3" style="width: 100%; height: 500px; align-items: center; justify-content: center;">
                     <div class="display-1">🎬</div>
                 </div>
                 {{/if}}
+
+                <!-- Stats Box -->
+                <a href="/anime/stats/{{#if anime.malId}}{{anime.malId}}{{else}}{{anime.mal_id}}{{/if}}" class="text-decoration-none">
+                    <div class="card shadow-sm" 
+                         style="cursor: pointer; transition: all 0.3s ease;"
+                         onmouseover="this.style.transform='translateY(-4px)'; this.style.boxShadow='0 8px 16px rgba(0,0,0,0.15)';"
+                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='';">
+                        <div class="card-body">
+                            <h5 class="card-title text-center mb-3">📊 Statistics</h5>
+                            <div class="d-flex flex-column gap-2">
+                                {{#if anime.score}}
+                                <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background-color: rgba(13, 110, 253, 0.1);">
+                                    <span class="text-muted">Score</span>
+                                    <span class="fw-bold text-primary">⭐ {{anime.score}}/10</span>
+                                </div>
+                                {{/if}}
+                                {{#if anime.rank}}
+                                <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background-color: rgba(25, 135, 84, 0.1);">
+                                    <span class="text-muted">Rank</span>
+                                    <span class="fw-bold text-success">#{{anime.rank}}</span>
+                                </div>
+                                {{/if}}
+                                {{#if anime.favorites}}
+                                <div class="d-flex justify-content-between align-items-center p-2 rounded" style="background-color: rgba(220, 53, 69, 0.1);">
+                                    <span class="text-muted">Favorites</span>
+                                    <span class="fw-bold text-danger">❤️ {{anime.favorites}}</span>
+                                </div>
+                                {{/if}}
+                            </div>
+                            <div class="text-center mt-3">
+                                <small class="text-muted">Click to view detailed stats</small>
+                            </div>
+                        </div>
+                    </div>
+                </a>
             </div>
 
             <!-- Details Column -->
-            <div class="col-lg-9 col-md-8">
+            <div class="col-lg-8 col-md-7">
                 <div class="card shadow-sm">
                     <div class="card-body">
                         {{#if anime.synopsis}}
@@ -173,10 +186,9 @@
                     </div>
                 </div>
 
-                <!-- Action Buttons -->
-                <div class="d-flex gap-2 mt-4">
+                <!-- Action Button -->
+                <div class="mt-4">
                     <a href="/anime/search" class="btn btn-outline-primary">← Back to Search</a>
-                    <a href="/" class="btn btn-outline-secondary">🏠 Home</a>
                 </div>
             </div>
         </div>
@@ -186,10 +198,7 @@
             <p>The requested anime could not be found.</p>
             <hr>
             <div class="d-flex gap-2">
-                <a href="/anime/search" class="btn btn-primary">← Back to Search</a>
-                <a href="/" class="btn btn-secondary">🏠 Home</a>
-            </div>
-        </div>
+             a href="/anime/search" class="btn btn-primary">← Back to Search</a
         {{/if}}
     </div>
 
