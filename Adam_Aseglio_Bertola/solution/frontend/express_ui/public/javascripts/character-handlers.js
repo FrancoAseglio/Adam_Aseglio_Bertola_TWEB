@@ -27,18 +27,14 @@
  * await addCharacter('Monkey D. Luffy', 'https://cdn.myanimelist.net/images/characters/9/310307.jpg', 'Luffy is the captain...');
  */
 async function addCharacter(name, image, about) {
-  if (!name || typeof name !== 'string' || name.trim() === '') {
-    alert('❌ Please enter a valid character name');
+  // A new character needs at least 'name' and 'about' fileds
+  if (!name || typeof name !== 'string' || name.trim() === ''){
+    alert('❌ Please enter a character name');
     return;
   }
 
-  if (!image || typeof image !== 'string' || image.trim() === '') {
-    alert('❌ Please enter a valid image URL');
-    return;
-  }
-
-  if (!about || typeof about !== 'string' || about.trim() === '') {
-    alert('❌ Please enter a valid character description');
+  if (!about || typeof about !== "string" || about.trim() === "") {
+    alert("❌ Please enter a valid character description");
     return;
   }
 
@@ -80,7 +76,11 @@ async function addCharacter(name, image, about) {
  * await removeCharacter(40);
  */
 async function removeCharacter(characterId) {
-  if (!characterId || !Number.isInteger(parseInt(characterId)) || parseInt(characterId) <= 0) {
+  if (!characterId) {
+    alert('❌ Please enter a character ID');
+    return;
+  }
+  if (!Number.isInteger(parseInt(characterId)) || parseInt(characterId) <= 0) {
     alert('❌ Please enter a valid character ID (positive number)');
     return;
   }

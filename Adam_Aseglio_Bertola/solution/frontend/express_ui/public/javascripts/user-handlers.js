@@ -20,7 +20,7 @@
  */
 async function getUserProfile() {
   const username = value('username');
-  if (!username) return alert('Please enter a username');
+  if (!username) return alert("❌ Please enter a username");
   window.location.href = `/profile/${encodeURIComponent(username)}`;
 }
 
@@ -32,7 +32,7 @@ async function getUserProfile() {
  */
 async function getUserFavorites() {
   const username = value('favUsername');
-  if (!username) return alert('Please enter a username');
+  if (!username) return alert("❌ Please enter a username");
   window.location.href = `/favorites/${encodeURIComponent(username)}`;
 }
 
@@ -44,7 +44,7 @@ async function getUserFavorites() {
  */
 async function getUserRatings() {
   const username = value('ratingUsername');
-  if (!username) return alert('Please enter a username');
+  if (!username) return alert("❌ Please enter a username");
   window.location.href = `/ratings/${encodeURIComponent(username)}`;
 }
 
@@ -56,7 +56,7 @@ async function getUserRatings() {
  */
 async function getUserStats() {
   const username = value('statsUsername');
-  if (!username) return alert('Please enter a username');
+  if (!username) return alert("❌ Please enter a username");
   window.location.href = `/stats/user/${encodeURIComponent(username)}`;
 }
 
@@ -73,8 +73,8 @@ async function addFavoriteFromForm() {
   const itemId   = value('addFavItemId');
   const favType  = 'anime';
 
-  if (!username) return alert('Please enter a username');
-  if (!itemId)   return alert('Please enter an item ID');
+  if (!username) return alert("❌ Please enter a username");
+  if (!itemId)   return alert("❌ Please enter an item ID");
 
   try {
     await addFavorite(username, itemId, favType);
@@ -82,7 +82,7 @@ async function addFavoriteFromForm() {
     document.getElementById('addFavItemId').value = '';
   } catch (error) {
     console.error('Error in addFavoriteFromForm:', error);
-    alert('An error occurred while adding the favorite. Check the console for details.');
+    alert("❌ An error occurred while adding the favorite. Check the console for details.");
   }
 }
 
@@ -97,8 +97,8 @@ async function removeFavoriteFromForm() {
   const username = value('removeFavUsername');
   const itemId   = value('removeFavItemId');
 
-  if (!username) return alert('Please enter a username');
-  if (!itemId)   return alert('Please enter an item ID');
+  if (!username) return alert("❌ Please enter a username");
+  if (!itemId)   return alert("❌ Please enter an item ID");
 
   try {
     await removeFavorite(username, itemId);
@@ -106,7 +106,7 @@ async function removeFavoriteFromForm() {
     document.getElementById('removeFavItemId').value = '';
   } catch (error) {
     console.error('Error in removeFavoriteFromForm:', error);
-    alert('An error occurred while removing the favorite. Check the console for details.');
+    alert("❌ An error occurred while removing the favorite. Check the console for details.",);
   }
 }
 
@@ -123,9 +123,7 @@ async function addCharacterFromForm() {
   const image = value('addCharImage');
   const about = value('addCharAbout');
 
-  if (!name)  return alert('Please enter a character name');
-  if (!image) return alert('Please enter an image URL');
-  if (!about) return alert('Please enter a character description');
+  if (!name) return alert('❌ Please enter a character name');
 
   try {
     await addCharacter(name, image, about);
@@ -134,7 +132,7 @@ async function addCharacterFromForm() {
     document.getElementById('addCharAbout').value = '';
   } catch (error) {
     console.error('Error in addCharacterFromForm:', error);
-    alert('An error occurred while adding the character. Check the console for details.');
+    alert("❌ An error occurred while adding the character. Check the console for details.",);
   }
 }
 
@@ -146,15 +144,14 @@ async function addCharacterFromForm() {
  */
 async function removeCharacterFromForm() {
   const characterId = value('removeCharId');
-
-  if (!characterId) return alert('Please enter a character ID');
+  if (!characterId) return alert('❌ Please enter a character ID');
 
   try {
     await removeCharacter(characterId);
     document.getElementById('removeCharId').value = '';
   } catch (error) {
     console.error('Error in removeCharacterFromForm:', error);
-    alert('An error occurred while removing the character. Check the console for details.');
+    alert("❌ An error occurred while removing the character. Check the console for details.",);
   }
 }
 

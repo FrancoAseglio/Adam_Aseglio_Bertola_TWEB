@@ -77,6 +77,7 @@ function setupEnterKeyListeners() {
     topAnimeLimit:         typeof getTopAnime     !== 'undefined' ? getTopAnime : null,
     genreInput:            typeof getAnimeByGenre !== 'undefined' ? getAnimeByGenre : null,
     characterSearchQuery:  typeof searchCharacter !== 'undefined' ? searchCharacter : null,
+    characterId:           typeof getCharacterDetail !== 'undefined' ? getCharacterDetail : null,
     // User
     username:              typeof getUserProfile   !== 'undefined' ? getUserProfile : null,
     favUsername:           typeof getUserFavorites !== 'undefined' ? getUserFavorites : null,
@@ -88,7 +89,12 @@ function setupEnterKeyListeners() {
     removeFavUsername:     typeof removeFavoriteFromForm !== 'undefined' ? removeFavoriteFromForm : null,
     // Stats
     statsUsername:         typeof getUserStats  !== 'undefined' ? getUserStats : null,
-    statsAnimeId:          typeof getAnimeStats !== 'undefined' ? getAnimeStats : null
+    statsAnimeId:          typeof getAnimeStats !== 'undefined' ? getAnimeStats : null,
+    // Character
+    addCharName:           typeof addCharacterFromForm    !== 'undefined' ? addCharacterFromForm : null,
+    addCharImage:          typeof addCharacterFromForm    !== 'undefined' ? addCharacterFromForm : null,
+    addCharAbout:          typeof addCharacterFromForm    !== 'undefined' ? addCharacterFromForm : null,
+    removeCharId:          typeof removeCharacterFromForm !== 'undefined' ? removeCharacterFromForm : null
   };
 
   Object.entries(map).forEach(([id, fn]) => {
@@ -130,7 +136,7 @@ const value = id => document.getElementById(id)?.value.trim();
  */
 async function userAction(id, fn) {
   const user = value(id);
-  if (!user) return alert('Please enter a username');
+  if (!user) return showPopup('Please enter a username', true);
 
   showResult(await handle(() => fn(user)));
 }
@@ -144,7 +150,7 @@ async function userAction(id, fn) {
  */
 async function animeAction(id, fn) {
   const input = value(id);
-  if (!input) return alert('Please enter an anime title or ID');
+  if (!input) return showPopup('Please enter an anime title or ID', true);
 
   showResult({ message: 'Searching for anime...' });
   const malId = await resolveAnimeId(input);
