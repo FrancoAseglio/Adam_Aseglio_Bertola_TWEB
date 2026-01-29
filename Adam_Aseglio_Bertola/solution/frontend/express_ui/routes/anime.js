@@ -61,7 +61,13 @@ const GATEWAY_URL = 'http://localhost:3001/api';
  *         description: Server error
  */
 router.get('/search', async (req, res) => {
-  const { title, genres, minScore, limit } = req.query;
+  let { title, genres, minScore, limit } = req.query;
+  
+  // Pulisci parametri vuoti
+  title = title && title.trim() !== '' ? title.trim() : undefined;
+  minScore = minScore && minScore.trim() !== '' ? minScore : undefined;
+  limit = limit && limit.trim() !== '' ? limit : undefined;
+  
   let availableGenres = [];
 
   try {
@@ -88,35 +94,43 @@ router.get('/search', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = 20;
     let allResults = [];
+    let usedGenreAPI = false;
 
+    // Strategia di ricerca API
     if (title) {
       const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params: { title } });
-      allResults     = response.data;
+      allResults = response.data;
     } else if (selectedGenres.length > 0) {
       const response = await axios.get(`${GATEWAY_URL}/anime/genre/${selectedGenres[0]}`);
-      allResults     = response.data;
-    } else if (limit) {
-      const response = await axios.get(`${GATEWAY_URL}/anime/top/all`, { params: { limit: parseInt(limit) } });
-      allResults     = response.data;
+      allResults = response.data;
+      usedGenreAPI = true;
     } else {
-      const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params: { title: '' } });
-      allResults     = response.data;
+      let apiLimit = 100;
+      if (minScore) {
+        apiLimit = 10000;
+      } else if (limit) {
+        apiLimit = Math.max(parseInt(limit), 100);
+      }
+      const response = await axios.get(`${GATEWAY_URL}/anime/top/all`, { params: { limit: apiLimit } });
+      allResults = response.data;
     }
 
     let filteredResults = allResults;
 
-    if (limit && (title || selectedGenres.length > 0)) {
-      filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
-      filteredResults = filteredResults.slice(0, parseInt(limit));
-    }
-
-    if (selectedGenres.length > 0) {
+    // Filtra per generi - applica filtro client-side con OR logic se necessario
+    if (selectedGenres.length > 0 && !(usedGenreAPI && selectedGenres.length === 1)) {
+      const beforeFilter = filteredResults.length;
       filteredResults = filteredResults.filter(anime => {
         if (!anime.genres) return false;
         
         let animeGenres = [];
         if (typeof anime.genres === 'string') {
-          animeGenres = anime.genres.split(',').map(g => g.trim());
+          // Parse string formato Python: "['Action', 'Fantasy']"
+          animeGenres = anime.genres
+            .replace(/[\[\]']/g, '') // Rimuovi [, ], '
+            .split(',')
+            .map(g => g.trim())
+            .filter(g => g); // Rimuovi vuoti
         } else if (Array.isArray(anime.genres)) {
           animeGenres = anime.genres.map(g => {
             if (typeof g === 'string') return g.trim();
@@ -125,18 +139,29 @@ router.get('/search', async (req, res) => {
           });
         }
         
-        return selectedGenres.every(selectedGenre => 
+        // OR logic: l'anime deve avere ALMENO UNO dei generi selezionati
+        return selectedGenres.some(selectedGenre => 
           animeGenres.some(ag => ag.toLowerCase() === selectedGenre.toLowerCase())
         );
       });
+      console.log('Genre filter:', beforeFilter, '→', filteredResults.length);
     }
 
+    // Filtra per score minimo
     if (minScore) {
       const minScoreNum = parseFloat(minScore);
       filteredResults = filteredResults.filter(anime => anime.score && anime.score >= minScoreNum);
     }
 
-    if (limit || minScore) filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
+    // Ordina per score se necessario
+    if (limit || minScore) {
+      filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
+    }
+
+    // Applica limit DOPO tutti i filtri
+    if (limit) {
+      filteredResults = filteredResults.slice(0, parseInt(limit));
+    }
 
     filteredResults = filteredResults.map(anime => ({
       ...anime,
