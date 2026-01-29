@@ -17,11 +17,11 @@
     <div class="header-gradient cyan">
         <div class="container">
             <h1>{{character.name}}</h1>
-            {{#if character.nameKanji}}
-                <p>{{character.nameKanji}}</p>
+            {{#if character.name_kanji}}
+                <p>{{character.name_kanji}}</p>
             {{/if}}
             {{#if character.nicknames}}
-                <p class="mb-0"><em>Also known as: {{formatList character.nicknames}}</em></p>
+                <p class="mb-0"><em>Also known as: {{character.nicknames}}</em></p>
             {{/if}}
         </div>
     </div>
@@ -56,24 +56,24 @@
 
                     <div class="info-grid">
                         <div class="info-label">Character ID:</div>
-                        <div class="info-value">{{character.characterMalId}}</div>
+                        <div class="info-value">{{character.character_mal_id}}</div>
 
                         <div class="info-label">Name:</div>
                         <div class="info-value">{{character.name}}</div>
 
-                        {{#if character.nameKanji}}
-                        <div class="info-label">Japanese Name:</div>
-                        <div class="info-value">{{character.nameKanji}}</div>
+                        {{#if character.name_kanji}}
+                        <div class="info-label">Name Kanji:</div>
+                        <div class="info-value">{{character.name_kanji}}</div>
                         {{/if}}
 
                         {{#if character.nicknames}}
                         <div class="info-label">Nicknames:</div>
-                        <div class="info-value">{{formatList character.nicknames}}</div>
+                        <div class="info-value">{{character.nicknames}}</div>
                         {{/if}}
 
-                        {{#if character.favorites}}
-                        <div class="info-label">Favorited by:</div>
-                        <div class="info-value">{{character.favorites}} users</div>
+                        {{#if character.image_url}}
+                        <div class="info-label">Image URL:</div>
+                        <div class="info-value">{{character.image_url}}</div>
                         {{/if}}
                     </div>
                 </div>
