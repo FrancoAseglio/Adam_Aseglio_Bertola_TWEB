@@ -1,5 +1,5 @@
 # Python
-_pycache_/
+pycache/
 *.py[cod]
 *$py.class
 *.so
@@ -37,6 +37,7 @@ poetry.lock  # Consider: commit this for reproducibility
 # Data files (adjust based on your needs)
 *.csv
 *.xlsx
+*.xml
 *.parquet
 *.db
 *.sqlite
@@ -80,4 +81,4 @@ logs/
 # pytest
 .pytest_cache/
 .coverage
-htmlcov/
+htmlcov
