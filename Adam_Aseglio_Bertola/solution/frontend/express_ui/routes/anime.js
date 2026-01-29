@@ -236,6 +236,62 @@ router.get('/genre/:genre', async (req, res) => {
   }
 });
 
+// Route for anime statistics - specific path to avoid conflicts
+router.get('/stats/:id', async (req, res) => {
+  try {
+    const statsResponse = await axios.get(`${GATEWAY_URL}/stats/anime/${req.params.id}`);
+    const { stats, animeDetails } = statsResponse.data;
+    
+    // Merge stats with anime details
+    const combinedStats = {
+      ...stats,
+      ...(animeDetails || {})
+    };
+    
+    res.render('anime-stats', {
+      layout: false,
+      title: `${animeDetails?.title || 'Anime'} - Statistics`,
+      stats: combinedStats,
+      animeId: req.params.id
+    });
+  } catch (error) {
+    console.error('Error fetching anime stats:', error.message);
+    res.status(404).render('error', {
+      layout: false,
+      message: 'Anime statistics not found',
+      error: { status: 404, stack: error.message }
+    });
+  }
+});
+
+// Route for anime statistics - alternative pattern
+router.get('/:id/stats', async (req, res) => {
+  try {
+    const statsResponse = await axios.get(`${GATEWAY_URL}/stats/anime/${req.params.id}`);
+    const { stats, animeDetails } = statsResponse.data;
+    
+    // Merge stats with anime details
+    const combinedStats = {
+      ...stats,
+      ...(animeDetails || {})
+    };
+    
+    res.render('anime-stats', {
+      layout: false,
+      title: `${animeDetails?.title || 'Anime'} - Statistics`,
+      stats: combinedStats,
+      animeId: req.params.id
+    });
+  } catch (error) {
+    console.error('Error fetching anime stats:', error.message);
+    res.status(404).render('error', {
+      layout: false,
+      message: 'Anime statistics not found',
+      error: { status: 404, stack: error.message }
+    });
+  }
+});
+
 // This route must be LAST because /:id catches all paths
 router.get('/:id', async (req, res) => {
   try {
@@ -244,6 +300,9 @@ router.get('/:id', async (req, res) => {
     
     if (anime.image_url) {
       anime.imageUrl = anime.image_url;
+    }
+    if (anime.mal_id) {
+      anime.malId = anime.mal_id;
     }
     
     res.render('anime-detail', {
