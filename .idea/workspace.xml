@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="5cc7b208-c0a8-44f7-9f03-60a0a1659f23" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/handlebars.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/handlebars.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/js-yaml.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/js-yaml.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/mime.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/mime.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/swagger-jsdoc.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/swagger-jsdoc.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/uglifyjs.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/uglifyjs.ps1" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/z-schema.cmd" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/z-schema.ps1" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/handlebars" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/handlebars" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/js-yaml" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/js-yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/mime" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/mime" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/swagger-jsdoc" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/swagger-jsdoc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/uglifyjs" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/uglifyjs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/z-schema" beforeDir="false" afterPath="$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/node_modules/.bin/z-schema" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Adam_Aseglio_Bertola/solution/frontend/express_ui/app.js" root0="SKIP_INSPECTION" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 5
+}</component>
+  <component name="ProjectId" id="38sxXUSyP8wwOrk6J84nxJD7u1N" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Node.js.www.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.typescript.service.memoryLimit.init&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;javascript.preferred.runtime.type.id&quot;: &quot;node&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lorenzo/OneDrive/Desktop/Adam_Aseglio_Bertola_TWEB&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-9b0f141eb926-JavaScript-WS-253.29346.143" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="5cc7b208-c0a8-44f7-9f03-60a0a1659f23" name="Changes" comment="" />
+      <created>1769602121360</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1769602121360</updated>
+      <workItem from="1769602122801" duration="4664000" />
+      <workItem from="1769675996217" duration="33000" />
+      <workItem from="1769676045664" duration="1224000" />
+      <workItem from="1769677698176" duration="41000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

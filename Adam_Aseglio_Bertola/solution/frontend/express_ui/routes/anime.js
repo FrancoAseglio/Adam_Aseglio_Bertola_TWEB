@@ -100,7 +100,7 @@ router.get('/search', async (req, res) => {
       allResults     = response.data;
     } else {
       const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params: { title: '' } });
-      allResul wts     = response.data;
+      allResults     = response.data;
     }
 
     let filteredResults = allResults;

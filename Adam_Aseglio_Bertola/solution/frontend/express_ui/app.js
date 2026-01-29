@@ -6,7 +6,6 @@ var logger       = require('morgan');
 var hbs          = require('hbs');
 
 var indexRouter           = require('./routes/index');
-var usersRouter           = require('./routes/users');
 var animeRouter           = require('./routes/anime');
 var charactersRouter      = require('./routes/characters');
 var peopleRouter          = require('./routes/people');
@@ -59,7 +58,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/anime', animeRouter);
 app.use('/characters', charactersRouter);
 app.use('/people', peopleRouter);
