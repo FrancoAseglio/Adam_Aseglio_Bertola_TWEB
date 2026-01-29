@@ -39,7 +39,7 @@ router.get('/:username/full', async (req, res) => {
     };
 
     const enrichedFavorites = await Promise.all(
-      favorites.slice(0, 10).map(async (fav) => {
+      favorites.slice(0, 20).map(async (fav) => {
         try {
           let detailsResponse;
           const endpoint = typeEndpoints[fav.fav_type];

@@ -615,3 +615,22 @@ h1, h2, h3, h4, h5, h6 {
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
   white-space: nowrap;
 }
+
+/* ----- Character Info Grid ----- */
+.info-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.75rem 1.5rem;
+  align-items: start;
+}
+
+.info-label {
+  font-weight: 700;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.info-value {
+  color: var(--text-primary);
+  word-break: break-word;
+}

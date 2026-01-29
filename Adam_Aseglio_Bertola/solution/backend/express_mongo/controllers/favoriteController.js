@@ -7,7 +7,10 @@ const Favorite = require('../models/Favorite');
  */
 async function getUserFavorites(username) {
   try {
-    const favorites = await Favorite.find({ username }).sort({ createdAt: -1 });
+    const favorites = await Favorite.find({ 
+      username, 
+      fav_type: { $in: ['anime', 'character', 'people'] } 
+    }).sort({ createdAt: -1 });
     console.log(`Retrieved ${favorites.length} favorites for user ${username}`);
     return favorites.map(fav => fav.toObject());
   } catch (error) {
