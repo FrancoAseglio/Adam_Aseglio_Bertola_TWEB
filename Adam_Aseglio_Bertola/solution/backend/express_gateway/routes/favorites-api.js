@@ -35,7 +35,6 @@ router.get('/:username', async (req, res) => {
           let detailsResponse;
           const favType = fav.fav_type || 'anime';
 
-          // Recupera i dettagli in base al tipo
           switch (favType) {
             case 'character':
               detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/characters/${fav.id}`);
@@ -117,7 +116,6 @@ router.post('/', async (req, res) => {
     try {
       let detailsResponse;
       
-      // Recupera i dettagli in base al tipo
       switch (fav_type) {
         case 'character':
           detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/characters/${id}`);
