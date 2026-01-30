@@ -679,3 +679,37 @@ h1, h2, h3, h4, h5, h6 {
   width: 100%;
 }
 
+/* ----- Stats Carousel Controls ----- */
+#statsCarousel .carousel-control-prev,
+#statsCarousel .carousel-control-next {
+  width: 60px;
+  height: 60px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(99, 102, 241, 0.85);
+  border-radius: 50%;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+#statsCarousel .carousel-control-prev {
+  left: -10px;
+}
+
+#statsCarousel .carousel-control-next {
+  right: -10px;
+}
+
+#statsCarousel .carousel-control-prev:hover,
+#statsCarousel .carousel-control-next:hover {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+  transform: translateY(-50%) scale(1.1);
+}
+
+#statsCarousel .carousel-control-prev-icon,
+#statsCarousel .carousel-control-next-icon {
+  filter: brightness(0) invert(1);
+  width: 24px;
+  height: 24px;
+}

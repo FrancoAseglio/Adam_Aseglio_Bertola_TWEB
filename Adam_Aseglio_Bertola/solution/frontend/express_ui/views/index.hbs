@@ -9,33 +9,55 @@
 
     <!-- Global Statistics Section -->
     {{#if globalStats}}
-    <div class="row g-4 mb-5">
-        <div class="col-md-3 col-sm-6">
-            <div class="card h-100 border-0 shadow-sm text-center p-4" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);">
-                <div style="font-size: 3rem;">🎬</div>
-                <h2 class="display-6 fw-bold text-white mb-2">{{globalStats.totalAnime}}</h2>
-                <p class="text-white-50 mb-0">Total Anime</p>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card h-100 border-0 shadow-sm text-center p-4" style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%);">
-                <div style="font-size: 3rem;">👥</div>
-                <h2 class="display-6 fw-bold text-white mb-2">{{globalStats.totalProfiles}}</h2>
-                <p class="text-white-50 mb-0">Total Users</p>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card h-100 border-0 shadow-sm text-center p-4" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);">
-                <div style="font-size: 3rem;">⭐</div>
-                <h2 class="display-6 fw-bold text-white mb-2">{{globalStats.totalRatings}}</h2>
-                <p class="text-white-50 mb-0">Total Ratings</p>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="card h-100 border-0 shadow-sm text-center p-4" style="background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%);">
-                <div style="font-size: 3rem;">❤️</div>
-                <h2 class="display-6 fw-bold text-white mb-2">{{globalStats.totalFavorites}}</h2>
-                <p class="text-white-50 mb-0">Total Favorites</p>
+    <div class="row mb-5">
+        <div class="col-12">
+            <div id="statsCarousel" class="carousel slide" data-bs-ride="false">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="d-flex justify-content-center px-2">
+                            <div class="card border-0 shadow-lg text-center p-5" style="background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%); min-width: 350px; max-width: 500px; width: 100%;">
+                                <div style="font-size: 5rem;">🎬</div>
+                                <h2 class="display-3 fw-bold text-white mb-3">{{globalStats.totalAnime}}</h2>
+                                <p class="text-white-50 mb-0 fs-4">Total Anime</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center px-2">
+                            <div class="card border-0 shadow-lg text-center p-5" style="background: linear-gradient(135deg, #10b981 0%, #34d399 100%); min-width: 350px; max-width: 500px; width: 100%;">
+                                <div style="font-size: 5rem;">👥</div>
+                                <h2 class="display-3 fw-bold text-white mb-3">{{globalStats.totalProfiles}}</h2>
+                                <p class="text-white-50 mb-0 fs-4">Total Users</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center px-2">
+                            <div class="card border-0 shadow-lg text-center p-5" style="background: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%); min-width: 350px; max-width: 500px; width: 100%;">
+                                <div style="font-size: 5rem;">⭐</div>
+                                <h2 class="display-3 fw-bold text-white mb-3">{{globalStats.totalRatings}}</h2>
+                                <p class="text-white-50 mb-0 fs-4">Total Ratings</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center px-2">
+                            <div class="card border-0 shadow-lg text-center p-5" style="background: linear-gradient(135deg, #ec4899 0%, #f43f5e 100%); min-width: 350px; max-width: 500px; width: 100%;">
+                                <div style="font-size: 5rem;">❤️</div>
+                                <h2 class="display-3 fw-bold text-white mb-3">{{globalStats.totalFavorites}}</h2>
+                                <p class="text-white-50 mb-0 fs-4">Total Favorites</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#statsCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#statsCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
             </div>
         </div>
     </div>
@@ -60,7 +82,7 @@
         </div>
 
         <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm hover-lift" style="cursor: pointer; transition: all 0.3s ease;" onclick="loadSection('characters')">
+            <div class="card h-100 border-0 shadow-sm hover-lift" style="cursor: pointer; transition: all 0.3s ease;" onclick="window.location.href='/characters/search'">
                 <div class="card-body text-center p-4">
                     <div class="mb-3" style="font-size: 3rem;">🦸</div>
                     <h5 class="card-title fw-bold mb-3">Characters</h5>
@@ -76,11 +98,11 @@
         </div>
 
         <div class="col-md-4">
-            <div class="card h-100 border-0 shadow-sm hover-lift" style="cursor: pointer; transition: all 0.3s ease;" onclick="loadSection('user')">
+            <div class="card h-100 border-0 shadow-sm hover-lift" style="cursor: pointer; transition: all 0.3s ease;" onclick="window.location.href='/profile'">
                 <div class="card-body text-center p-4">
                     <div class="mb-3" style="font-size: 3rem;">👤</div>
                     <h5 class="card-title fw-bold mb-3">User Profiles</h5>
-                    <p class="card-text text-muted">Manage your profile, favorites, ratings and view user statistics</p>
+                    <p class="card-text text-muted">Search and view user profiles, favorites, ratings and statistics</p>
                     <div class="mt-3">
                         <span class="badge bg-success me-1">Profile</span>
                         <span class="badge bg-success me-1">Favorites</span>
@@ -92,107 +114,88 @@
         </div>
     </div>
 
-    <!-- Characters Section -->
-    <div id="characters-section" class="row" style="display: none;">
-        <div class="col-md-12 mb-3">
-            <div class="card">
-                <div class="card-header bg-warning text-dark">
-                    <h5 class="mb-0">Search Character</h5>
-                </div>
-                <div class="card-body">
-                    <input type="text" class="form-control mb-3" id="characterSearchQuery" placeholder="Enter character name (e.g., Naruto)">
-                    <button class="btn btn-warning" onclick="searchCharacter()">Search</button>
+    <!-- Manage Data Section -->
+    <div class="mb-5">
+        <h2 class="text-center mb-4 fw-bold" style="color: var(--text-primary);">📝 Manage Data</h2>
+        
+        <div class="row g-4">
+            <!-- Add Character -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0">➕ Add Character</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Character Name</label>
+                            <input type="text" class="form-control form-control-sm" id="addCharName" placeholder="e.g., Monkey D. Luffy">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Image URL</label>
+                            <input type="text" class="form-control form-control-sm" id="addCharImage" placeholder="e.g., https://cdn.myanimelist.net/...">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">About/Description</label>
+                            <textarea class="form-control form-control-sm" id="addCharAbout" rows="2" placeholder="e.g., Luffy is the captain..."></textarea>
+                        </div>
+                        <button class="btn btn-warning w-100" onclick="addCharacterFromForm()">Add Character</button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header bg-warning text-dark fw-bold">
-                    <h5 class="mb-0">➕ Add Character</h5>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Character Name</label>
-                        <input type="text" class="form-control form-control-sm" id="addCharName" placeholder="e.g., Monkey D. Luffy">
+            <!-- Remove Character -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">➖ Remove Character</h5>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Image URL</label>
-                        <input type="text" class="form-control form-control-sm" id="addCharImage" placeholder="e.g., https://cdn.myanimelist.net/images/characters/9/310307.jpg">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Character ID (MAL ID)</label>
+                            <input type="number" class="form-control form-control-sm" id="removeCharId" placeholder="e.g., 40" min="1">
+                        </div>
+                        <button class="btn btn-danger w-100" onclick="removeCharacterFromForm()">Remove Character</button>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">About/Description</label>
-                        <textarea class="form-control form-control-sm" id="addCharAbout" rows="3" placeholder="e.g., Luffy is the captain of the Straw Hat Pirates..."></textarea>
-                    </div>
-                    <button class="btn btn-warning w-100" onclick="addCharacterFromForm()">Add Character</button>
                 </div>
             </div>
-        </div>
 
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header bg-danger text-white fw-bold">
-                    <h5 class="mb-0">➖ Remove Character</h5>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Character ID (MAL ID)</label>
-                        <input type="number" class="form-control form-control-sm" id="removeCharId" placeholder="e.g., 40" min="1">
+            <!-- Add Favorite -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">⭐ Add Favorite</h5>
                     </div>
-                    <button class="btn btn-danger w-100" onclick="removeCharacterFromForm()">Remove Character</button>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Username</label>
+                            <input type="text" class="form-control form-control-sm" id="addFavUsername" placeholder="e.g., CKK2">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Anime ID (MAL ID)</label>
+                            <input type="number" class="form-control form-control-sm" id="addFavItemId" placeholder="e.g., 21 (for One Piece)" min="1">
+                        </div>
+                        <button class="btn btn-primary w-100" onclick="addFavoriteFromForm()">Add Favorite</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- User Data Section -->
-    <div id="user-section" class="row" style="display: none;">
-        <div class="col-md-12 mb-3">
-            <div class="card">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0">User Profile</h5>
-                </div>
-                <div class="card-body">
-                    <input type="text" class="form-control mb-3" id="username" placeholder="Enter username (e.g., CKK2)">
-                    <button class="btn btn-success" onclick="getUserProfile()">Get Profile</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header bg-warning text-dark fw-bold">
-                    <h5 class="mb-0">➕ Add Favorite</h5>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Username</label>
-                        <input type="text" class="form-control form-control-sm" id="addFavUsername" placeholder="e.g., CKK2">
+            <!-- Remove Favorite -->
+            <div class="col-md-6">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">❌ Remove Favorite</h5>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Anime ID to add (MAL ID)</label>
-                        <input type="number" class="form-control form-control-sm" id="addFavItemId" placeholder="e.g., 21 (for One Piece)" min="1">
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Username</label>
+                            <input type="text" class="form-control form-control-sm" id="removeFavUsername" placeholder="e.g., CKK2">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label small fw-semibold">Anime ID (MAL ID)</label>
+                            <input type="number" class="form-control form-control-sm" id="removeFavItemId" placeholder="e.g., 21 (for One Piece)" min="1">
+                        </div>
+                        <button class="btn btn-danger w-100" onclick="removeFavoriteFromForm()">Remove Favorite</button>
                     </div>
-                    <button class="btn btn-warning w-100" onclick="addFavoriteFromForm()">Add Favorite</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-6 mb-3">
-            <div class="card">
-                <div class="card-header bg-danger text-white fw-bold">
-                    <h5 class="mb-0">➖ Remove Favorite</h5>
-                </div>
-                <div class="card-body">
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Username</label>
-                        <input type="text" class="form-control form-control-sm" id="removeFavUsername" placeholder="e.g., CKK2">
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label small fw-semibold">Anime ID to remove (MAL ID)</label>
-                        <input type="number" class="form-control form-control-sm" id="removeFavItemId" placeholder="e.g., 21 (for One Piece)" min="1">
-                    </div>
-                    <button class="btn btn-danger w-100" onclick="removeFavoriteFromForm()">Remove Favorite</button>
                 </div>
             </div>
         </div>
