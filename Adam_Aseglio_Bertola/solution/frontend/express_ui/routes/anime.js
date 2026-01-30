@@ -444,10 +444,63 @@ router.get('/:id', async (req, res) => {
       anime.malId = anime.mal_id;
     }
     
+    // Get top 20 characters for this anime
+    let charactersList = [];
+    try {
+      const charactersResponse = await axios.get(`${GATEWAY_URL}/character-anime/anime/${req.params.id}/top`);
+      const characterWorks = charactersResponse.data;
+      
+      // Fetch details for each character
+      const characterDetailsPromises = characterWorks.map(work => 
+        axios.get(`${GATEWAY_URL}/characters/${work.characterMalId}`)
+          .then(response => ({
+            ...response.data,
+            role: work.role
+          }))
+          .catch(err => {
+            console.error(`Error fetching character ${work.characterMalId}:`, err.message);
+            return null;
+          })
+      );
+      
+      const characterDetails = await Promise.all(characterDetailsPromises);
+      charactersList = characterDetails.filter(char => char !== null);
+    } catch (error) {
+      console.error('Error fetching characters for anime:', error.message);
+    }
+    
+    // Get top 20 people for this anime
+    let peopleList = [];
+    try {
+      const peopleResponse = await axios.get(`${GATEWAY_URL}/person-voice-work/anime/${req.params.id}/top`);
+      const peopleWorks = peopleResponse.data;
+      
+      // Fetch details for each person
+      const peopleDetailsPromises = peopleWorks.map(work => 
+        axios.get(`${GATEWAY_URL}/people/${work.personMalId}`)
+          .then(response => ({
+            ...response.data,
+            role: work.role,
+            language: work.language
+          }))
+          .catch(err => {
+            console.error(`Error fetching person ${work.personMalId}:`, err.message);
+            return null;
+          })
+      );
+      
+      const peopleDetails = await Promise.all(peopleDetailsPromises);
+      peopleList = peopleDetails.filter(person => person !== null);
+    } catch (error) {
+      console.error('Error fetching people for anime:', error.message);
+    }
+    
     res.render('anime-detail', {
       layout: false,
       title : anime.title || `Anime ${req.params.id}`,
-      anime : anime
+      anime : anime,
+      charactersList: charactersList,
+      peopleList: peopleList
     });
   } catch (error) {
     res.status(404).render('error', {

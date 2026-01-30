@@ -21,6 +21,10 @@ public class CharacterAnimeWorkService {
         return repository.findByAnimeMalId(animeId);
     }
 
+    public List<CharacterAnimeWork> getTop20CharactersByAnime(Integer animeId) {
+        return repository.findTop20CharactersByAnimeOrderByFavorites(animeId);
+    }
+
     public List<CharacterAnimeWork> getAnimeByCharacter(Integer characterId) {
         return repository.findByCharacterMalId(characterId);
     }

@@ -191,6 +191,90 @@
                     <a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary">← Go Back</a>
                 </div>
             </div>
+
+            <!-- Characters Section -->
+            {{#if charactersList}}
+            {{#if charactersList.length}}
+            <div class="mt-5">
+                <h3 class="mb-3">Characters (Top 20 by Favorites)</h3>
+                <div class="anime-scroll-container">
+                    <div class="anime-scroll-wrapper">
+                        {{#each charactersList}}
+                        <div class="anime-scroll-card">
+                            <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/characters/{{this.character_mal_id}}'">
+                                {{#if this.image_url}}
+                                <img src="{{this.image_url}}" alt="{{this.name}}" class="card-img-top" 
+                                     style="height:280px;object-fit:cover" 
+                                     onerror="this.src='https://via.placeholder.com/225x350/f093fb/ffffff?text=No+Image'">
+                                {{else}}
+                                <img src="https://via.placeholder.com/225x350/f093fb/ffffff?text=No+Image" 
+                                     alt="{{this.name}}" class="card-img-top" style="height:280px;object-fit:cover">
+                                {{/if}}
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">{{this.name}}</h6>
+                                    {{#if this.role}}
+                                    <p class="card-text small text-muted mb-1"><strong>Role:</strong> {{this.role}}</p>
+                                    {{/if}}
+                                    {{#if this.name_kanji}}
+                                    <p class="card-text small text-muted mb-1"><strong>Kanji:</strong> {{this.name_kanji}}</p>
+                                    {{/if}}
+                                    {{#if this.favorites}}
+                                    <p class="card-text small text-muted mb-1">
+                                        <strong>Favorites:</strong> 
+                                        <span class="badge bg-danger">❤️ {{this.favorites}}</span>
+                                    </p>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            {{/if}}
+
+            <!-- People Section -->
+            {{#if peopleList}}
+            {{#if peopleList.length}}
+            <div class="mt-5">
+                <h3 class="mb-3">Staff & Voice Actors (Top 20 by Favorites)</h3>
+                <div class="anime-scroll-container">
+                    <div class="anime-scroll-wrapper">
+                        {{#each peopleList}}
+                        <div class="anime-scroll-card">
+                            <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/people/{{this.person_mal_id}}'">
+                                {{#if this.image_url}}
+                                <img src="{{this.image_url}}" alt="{{this.name}}" class="card-img-top" 
+                                     style="height:280px;object-fit:cover" 
+                                     onerror="this.src='https://via.placeholder.com/225x350/9333ea/ffffff?text=No+Image'">
+                                {{else}}
+                                <img src="https://via.placeholder.com/225x350/9333ea/ffffff?text=No+Image" 
+                                     alt="{{this.name}}" class="card-img-top" style="height:280px;object-fit:cover">
+                                {{/if}}
+                                <div class="card-body">
+                                    <h6 class="card-title text-primary">{{this.name}}</h6>
+                                    {{#if this.language}}
+                                    <p class="card-text small text-muted mb-1"><strong>Language:</strong> {{this.language}}</p>
+                                    {{/if}}
+                                    {{#if this.role}}
+                                    <p class="card-text small text-muted mb-1"><strong>Role:</strong> {{this.role}}</p>
+                                    {{/if}}
+                                    {{#if this.favorites}}
+                                    <p class="card-text small text-muted mb-1">
+                                        <strong>Favorites:</strong> 
+                                        <span class="badge bg-danger">❤️ {{this.favorites}}</span>
+                                    </p>
+                                    {{/if}}
+                                </div>
+                            </div>
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+            {{/if}}
+            {{/if}}
         </div>
         {{else}}
         <div class="alert alert-warning">

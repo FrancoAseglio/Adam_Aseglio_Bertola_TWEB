@@ -26,6 +26,11 @@ public class CharacterAnimeWorkController {
         return characterAnimeWorkService.getCharactersByAnime(animeId);
     }
 
+    @GetMapping("/anime/{animeId}/top")
+    public List<CharacterAnimeWork> getTop20CharactersByAnime(@PathVariable Integer animeId) {
+        return characterAnimeWorkService.getTop20CharactersByAnime(animeId);
+    }
+
     @GetMapping("/character/{characterId}")
     public List<CharacterAnimeWork> getAnimeByCharacter(@PathVariable Integer characterId) {
         return characterAnimeWorkService.getAnimeByCharacter(characterId);

@@ -3,6 +3,7 @@ package com.example.springboot_pgsql.PersonVoiceWork;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 
 /**
  * REST Controller for PersonVoiceWork endpoints.
@@ -24,6 +25,11 @@ public class PersonVoiceWorkController {
     @GetMapping
     public List<PersonVoiceWork> getAllVoiceWorks() {
         return personVoiceWorkService.findAll();
+    }
+
+    @GetMapping("/anime/{animeId}/top")
+    public List<Map<String, Object>> getTop20PeopleByAnime(@PathVariable Integer animeId) {
+        return personVoiceWorkService.getTop20PeopleByAnime(animeId);
     }
 
     @PostMapping

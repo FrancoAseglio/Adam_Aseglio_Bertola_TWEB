@@ -18,6 +18,7 @@ const charactersApiRouter      = require('./routes/characters-api');
 const peopleApiRouter          = require('./routes/people-api');
 const recommendationsApiRouter = require('./routes/recommendations-api');
 const characterAnimeApiRouter  = require('./routes/character-anime-api');
+const personVoiceApiRouter     = require('./routes/person-voice-api');
 
 const app = express();
 
@@ -71,6 +72,7 @@ app.use('/api/stats',            statsApiRouter);
 app.use('/api/profiles',         profilesApiRouter);
 app.use('/api/recommendations',  recommendationsApiRouter);
 app.use('/api/character-anime',  characterAnimeApiRouter);
+app.use('/api/person-voice-work', personVoiceApiRouter);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {
