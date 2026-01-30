@@ -17,6 +17,7 @@ const profilesApiRouter        = require('./routes/profiles-api');
 const charactersApiRouter      = require('./routes/characters-api');
 const peopleApiRouter          = require('./routes/people-api');
 const recommendationsApiRouter = require('./routes/recommendations-api');
+const characterAnimeApiRouter  = require('./routes/character-anime-api');
 
 const app = express();
 
@@ -61,14 +62,15 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 
 // API Routes
-app.use('/api/characters',      charactersApiRouter);
-app.use('/api/people',          peopleApiRouter);
-app.use('/api/anime',           animeApiRouter);
-app.use('/api/favorites',       favoritesApiRouter);
-app.use('/api/ratings',         ratingsApiRouter);
-app.use('/api/stats',           statsApiRouter);
-app.use('/api/profiles',        profilesApiRouter);
-app.use('/api/recommendations', recommendationsApiRouter);
+app.use('/api/characters',       charactersApiRouter);
+app.use('/api/people',           peopleApiRouter);
+app.use('/api/anime',            animeApiRouter);
+app.use('/api/favorites',        favoritesApiRouter);
+app.use('/api/ratings',          ratingsApiRouter);
+app.use('/api/stats',            statsApiRouter);
+app.use('/api/profiles',         profilesApiRouter);
+app.use('/api/recommendations',  recommendationsApiRouter);
+app.use('/api/character-anime',  characterAnimeApiRouter);
 
 // Catch 404 and forward to error handler
 app.use(function(req, res, next) {

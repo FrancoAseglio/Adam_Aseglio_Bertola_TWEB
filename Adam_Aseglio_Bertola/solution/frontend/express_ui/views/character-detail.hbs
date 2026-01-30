@@ -87,6 +87,52 @@
             </div>
         </div>
 
+        {{#if animeList}}
+        {{#if animeList.length}}
+        <div class="mt-5">
+            <h3 class="mb-3">Anime Appearances</h3>
+            <div class="anime-scroll-container">
+                <div class="anime-scroll-wrapper">
+                    {{#each animeList}}
+                    <div class="anime-scroll-card">
+                        <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/anime/{{this.mal_id}}'">
+                            {{#if this.image_url}}
+                            <img src="{{this.image_url}}" alt="{{this.title}}" class="card-img-top" 
+                                 style="height:280px;object-fit:cover" 
+                                 onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+                            {{else}}
+                            <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" 
+                                 alt="{{this.title}}" class="card-img-top" style="height:280px;object-fit:cover">
+                            {{/if}}
+                            <div class="card-body">
+                                <h6 class="card-title text-primary">{{this.title}}</h6>
+                                {{#if this.role}}
+                                <p class="card-text small text-muted mb-1"><strong>Role:</strong> {{this.role}}</p>
+                                {{/if}}
+                                {{#if this.type}}
+                                <p class="card-text small text-muted mb-1"><strong>Type:</strong> {{this.type}}</p>
+                                {{/if}}
+                                {{#if this.episodes}}
+                                <p class="card-text small text-muted mb-1"><strong>Episodes:</strong> {{this.episodes}}</p>
+                                {{/if}}
+                                {{#if this.score}}
+                                <p class="card-text small text-muted mb-1">
+                                    <strong>Score:</strong> 
+                                    <span class="badge {{#if (gt this.score 8)}}bg-success{{else if (gt this.score 7)}}bg-info{{else}}bg-secondary{{/if}}">
+                                        ⭐ {{this.score}}
+                                    </span>
+                                </p>
+                                {{/if}}
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
+        {{/if}}
+
         <div class="mt-4">
             <a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary">← Back to Results</a>
         </div>
