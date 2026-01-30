@@ -42,7 +42,7 @@ async function addFavorite(username, itemId) {
     try {
       await handle(() => api.get(`/profiles/${username.trim()}/stats`));
     } catch (userError) {
-      alert(`❌ User "${username}" does not exist. Please create a profile first.`);
+      alert(`❌ User "${username}" does not exist. Please use an existing username.`);
       console.error('User not found:', userError);
       return;
     }

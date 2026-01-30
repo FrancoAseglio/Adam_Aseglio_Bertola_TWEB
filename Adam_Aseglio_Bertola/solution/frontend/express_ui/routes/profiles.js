@@ -6,6 +6,28 @@ const GATEWAY_URL = 'http://localhost:3001/api';
 
 /**
  * @swagger
+ * /profile:
+ *   get:
+ *     tags:
+ *       - Profiles
+ *     summary: Display user profile search page
+ *     description: |
+ *       Renders a search page where users can enter a username to view a profile.
+ *       This is the entry point for profile browsing.
+ *     operationId: getProfileSearchPage
+ *     responses:
+ *       200:
+ *         description: Profile search page rendered successfully
+ */
+router.get('/', async (req, res) => {
+  res.render('profile-search', {
+    layout: false,
+    title: 'Search User Profiles'
+  });
+});
+
+/**
+ * @swagger
  * /profile/{username}:
  *   get:
  *     tags:
