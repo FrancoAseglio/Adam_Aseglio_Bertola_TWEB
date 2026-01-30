@@ -137,10 +137,31 @@ router.get('/:id', async (req, res) => {
   try {
     const characterResponse = await axios.get(`${GATEWAY_URL}/characters/${req.params.id}`);
     
+    // Fetch anime appearances for this character
+    let animeList = [];
+    try {
+      const animeWorksResponse = await axios.get(`${GATEWAY_URL}/character-anime/character/${req.params.id}`);
+      
+      // For each anime work, fetch the full anime details
+      if (animeWorksResponse.data && animeWorksResponse.data.length > 0) {
+        const animePromises = animeWorksResponse.data.map(work => 
+          axios.get(`${GATEWAY_URL}/anime/${work.animeMalId}`)
+            .then(response => ({...response.data, role: work.role}))
+            .catch(() => null)
+        );
+        const animeResults = await Promise.all(animePromises);
+        animeList = animeResults.filter(anime => anime !== null);
+      }
+    } catch (animeError) {
+      console.error('Error fetching anime for character:', animeError.message);
+      // Continue without anime list if there's an error
+    }
+    
     res.render('character-detail', {
       layout   : false,
       title    : `Character ${req.params.id}`,
-      character: characterResponse.data
+      character: characterResponse.data,
+      animeList: animeList
     });
   } catch (error) {
     res.status(404).render('error', {
