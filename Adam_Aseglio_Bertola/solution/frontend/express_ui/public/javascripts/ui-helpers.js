@@ -13,12 +13,55 @@ function searchProfile(event) {
 }
 
 /**
+ * Initialize the stats carousel with auto-play and timer reset
+ */
+function initStatsCarousel() {
+  const carousel = document.getElementById('statsCarousel');
+  if (!carousel) return;
+  
+  const bsCarousel = new bootstrap.Carousel(carousel, {
+    interval: false, // Disable default auto-play
+    ride: false
+  });
+  
+  let autoPlayTimer;
+  const AUTO_PLAY_INTERVAL = 5000; // 5 secondi per auto-play
+  let isAutoSliding = false; // Flag per distinguere auto-play da click manuale
+  
+  // Funzione per avviare l'auto-play
+  function startAutoPlay() {
+    clearTimeout(autoPlayTimer);
+    autoPlayTimer = setTimeout(() => {
+      isAutoSliding = true;
+      bsCarousel.next();
+      isAutoSliding = false;
+      startAutoPlay(); // Ricomincia il timer dopo lo slide
+    }, AUTO_PLAY_INTERVAL);
+  }
+  
+  // Event listener per interazioni manuali (click su frecce)
+  carousel.addEventListener('slide.bs.carousel', function(event) {
+    // Resetta il timer SOLO se è un click manuale (non auto-play)
+    if (!isAutoSliding) {
+      clearTimeout(autoPlayTimer);
+      startAutoPlay();
+    }
+  });
+  
+  // Avvia l'auto-play iniziale
+  startAutoPlay();
+}
+
+/**
  * Initialize the page on load
  */
 function init() {
   console.log('Anime Data System initialized');
   const resultsEl = document.getElementById('results');
   if (resultsEl) resultsEl.style.display = 'none';
+  
+  // Inizializza il carosello delle statistiche
+  initStatsCarousel();
 }
 
 /**
