@@ -51,23 +51,72 @@ const GATEWAY_URL = 'http://localhost:3001/api';
  *               description: Rendered error page with error details
  */
 router.get('/search', async (req, res) => {
-  const name = req.query.name;
-  if (!name) {
+  let { name, role, minFavorites, limit } = req.query;
+  
+  // Clean empty parameters
+  name = name && name.trim() !== '' ? name.trim() : undefined;
+  role = role && role.trim() !== '' ? role.trim() : undefined;
+  minFavorites = minFavorites && minFavorites.trim() !== '' ? minFavorites : undefined;
+  limit = limit && limit.trim() !== '' ? limit : undefined;
+  
+  // If no parameters, show search form
+  if (!name && !role && !minFavorites && !limit) {
     return res.render('character-search', {
       layout : false,
       title  : 'Search Characters',
       query  : '',
+      filters: {},
       results: null
     });
   }
 
   try {
-    const response = await axios.get(`${GATEWAY_URL}/characters/search`, { params: { name } });
+    const page = parseInt(req.query.page) || 1;
+    const itemsPerPage = 20;
+    
+    const params = {};
+    if (name) params.name = name;
+    if (role) params.role = role;
+    if (minFavorites) params.minFavorites = minFavorites;
+    
+    const response = await axios.get(`${GATEWAY_URL}/characters/search`, { params });
+    let allResults = response.data;
+    
+    // Apply limit on frontend if specified
+    if (limit && allResults.length > 0) {
+      allResults = allResults.slice(0, parseInt(limit));
+    }
+    
+    // Pagination
+    const totalItems = allResults.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedResults = allResults.slice(startIndex, endIndex);
+    
+    // Build base URL for pagination
+    const queryParams = new URLSearchParams();
+    if (name) queryParams.append('name', name);
+    if (role) queryParams.append('role', role);
+    if (minFavorites) queryParams.append('minFavorites', minFavorites);
+    if (limit) queryParams.append('limit', limit);
+    
     res.render('character-search', {
       layout : false,
       title  : 'Search Results',
-      query  : name,
-      results: response.data
+      query  : name || '',
+      filters: { name, role, minFavorites, limit },
+      results: paginatedResults,
+      baseUrl: `/characters/search?${queryParams.toString()}`,
+      urlSeparator: '&',
+      pagination: {
+        currentPage: page,
+        totalPages: totalPages,
+        totalItems: totalItems,
+        itemsPerPage: itemsPerPage,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1
+      }
     });
   } catch (error) {
     res.status(500).render('error', {
@@ -151,6 +200,9 @@ router.get('/:id', async (req, res) => {
         );
         const animeResults = await Promise.all(animePromises);
         animeList = animeResults.filter(anime => anime !== null);
+        
+        // Sort by score descending (highest first)
+        animeList.sort((a, b) => (b.score || 0) - (a.score || 0));
       }
     } catch (animeError) {
       console.error('Error fetching anime for character:', animeError.message);

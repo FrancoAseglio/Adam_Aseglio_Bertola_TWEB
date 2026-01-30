@@ -28,6 +28,10 @@ public class Character {
     @Column(name = "image")
     @JsonProperty("image_url")
     private String imageUrl;
+    
+    @Transient
+    @JsonProperty("role")
+    private String role;
 
     public Integer getCharacterMalId() { return characterMalId; }
     public void setCharacterMalId(Integer characterMalId) { this.characterMalId = characterMalId; }
@@ -49,4 +53,7 @@ public class Character {
 
     public String getImageUrl() { return imageUrl; }
     public void setImageUrl(String imageUrl) { this.imageUrl = imageUrl; }
+    
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
 }

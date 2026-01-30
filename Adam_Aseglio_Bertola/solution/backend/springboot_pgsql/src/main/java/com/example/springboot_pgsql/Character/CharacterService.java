@@ -31,7 +31,11 @@ public class CharacterService {
     }
 
     public List<Character> searchByName(String name) {
-        return characterRepository.findByNameContainingIgnoreCase(name);
+        return characterRepository.findByNameContainingIgnoreCaseOrderByFavoritesDesc(name);
+    }
+    
+    public List<Character> searchWithFilters(String name, String role, Integer minFavorites) {
+        return characterRepository.searchWithFilters(name, role, minFavorites);
     }
 
     public Character saveCharacter(Character character) {
@@ -67,7 +71,7 @@ public class CharacterService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Character about/description is required");
         }
         
-        List<Character> existingChars = characterRepository.findByNameContainingIgnoreCase(name.trim());
+        List<Character> existingChars = characterRepository.findByNameContainingIgnoreCaseOrderByFavoritesDesc(name.trim());
         if (!existingChars.isEmpty()) {
             for (Character existing : existingChars) {
                 if (existing.getName().equalsIgnoreCase(name.trim())) {
