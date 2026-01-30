@@ -12,7 +12,7 @@
 </head>
 <body class="bg-light">
     {{> navbar}}
-    
+
     <div class="header-gradient cyan">
         <div class="container">
             <h1>🔍 Search Characters</h1>
@@ -43,7 +43,7 @@
                             <div class="row g-3">
                                 {{#each results}}
                                 <div class="col-md-6 col-lg-4">
-                                    <div class="card h-100 hover-lift" style="cursor: pointer;" onclick="window.location.href='/characters/{{this.characterMalId}}'">
+                                        <div class="card h-100 hover-lift" style="cursor: pointer;" onclick="window.location.href='/characters/{{this.character_mal_id}}'">
                                         {{#if this.image_url}}
                                         <img src="{{this.image_url}}" class="card-img-top" alt="{{this.name}}" style="height: 300px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/300x300/667eea/ffffff?text=No+Image'">
                                         {{else}}
@@ -54,7 +54,7 @@
                                             {{#if this.nameKanji}}
                                             <p class="card-text text-muted small mb-1">{{this.nameKanji}}</p>
                                             {{/if}}
-                                            <p class="card-text text-muted small mb-0">ID: {{this.characterMalId}}</p>
+                                                <p class="card-text text-muted small mb-0">ID: {{this.character_mal_id}}</p>
                                             {{#if this.favorites}}
                                             <p class="card-text mt-2">
                                                 <span class="badge bg-danger">❤️ {{this.favorites}}</span>

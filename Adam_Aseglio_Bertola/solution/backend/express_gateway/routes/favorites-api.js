@@ -35,7 +35,6 @@ router.get('/:username', async (req, res) => {
           let detailsResponse;
           const favType = fav.fav_type || 'anime';
 
-          // Recupera i dettagli in base al tipo
           switch (favType) {
             case 'character':
               detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/characters/${fav.id}`);
@@ -55,7 +54,7 @@ router.get('/:username', async (req, res) => {
           };
         } catch (error) {
           console.error(`Error fetching ${fav.fav_type || 'anime'} details for id ${fav.id}:`, error.message);
-          
+
           return {
             ...fav,
             details: null
@@ -66,9 +65,9 @@ router.get('/:username', async (req, res) => {
 
     res.json(favoritesWithDetails);
   } catch (error) {
-    res.status(500).json({ 
-      message: 'Error fetching favorites', 
-      error  : error.message 
+    res.status(500).json({
+      message: 'Error fetching favorites',
+      error  : error.message
     });
   }
 });
@@ -116,8 +115,7 @@ router.post('/', async (req, res) => {
 
     try {
       let detailsResponse;
-      
-      // Recupera i dettagli in base al tipo
+
       switch (fav_type) {
         case 'character':
           detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/characters/${id}`);
@@ -137,7 +135,7 @@ router.post('/', async (req, res) => {
       });
     } catch (detailsError) {
       console.error(`Error enriching favorite details:`, detailsError.message);
-      
+
       res.status(201).json({
         ...favorite,
         details: null
@@ -147,7 +145,7 @@ router.post('/', async (req, res) => {
     if (error.response?.status === 409) {
       return res.status(409).json({
         message: 'Conflict',
-        error : error.response.data.error
+        error  : error.response.data.error
       });
     }
 
@@ -158,9 +156,9 @@ router.post('/', async (req, res) => {
       });
     }
 
-    res.status(500).json({ 
-      message: 'Error adding favorite', 
-      error  : error.message 
+    res.status(500).json({
+      message: 'Error adding favorite',
+      error  : error.message
     });
   }
 });
@@ -195,3 +193,21 @@ router.delete('/:username/:id', async (req, res) => {
   try {
     const fav_type = req.query.fav_type || 'anime';
     await axios.delete(`${BACKEND_MONGO_URL}/favorites/${req.params.username}/${req.params.id}?fav_type=${fav_type}`);
+    res.status(200).json({ message: 'Favorite removed successfully' });
+  } catch (error) {
+
+    if (error.response?.status === 404) {
+      return res.status(404).json({
+        message: 'Favorite not found',
+        error  : error.response.data.error
+      });
+    }
+
+    res.status(500).json({
+      message: 'Server error',
+      error  : error.message
+    });
+  }
+});
+
+module.exports = router;
