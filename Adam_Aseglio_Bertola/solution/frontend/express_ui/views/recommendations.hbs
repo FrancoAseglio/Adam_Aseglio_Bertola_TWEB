@@ -82,9 +82,8 @@
     </div>
     {{/if}}
 
-    <div class="actions">
-      <a href="/anime/{{anime.mal_id}}" class="back-button">← Back to Anime</a>
-      <a href="/" class="back-button">🏠 Home</a>
+    <div class="text-center mt-4">
+      <a href="/anime/{{anime.mal_id}}" class="btn btn-outline-primary">← Back to Anime</a>
     </div>
   </div>
   {{else}}
@@ -98,9 +97,6 @@
     <div class="not-found">
       <h2>⚠️ Anime Not Found</h2>
       <p>The anime you're looking for could not be found.</p>
-    </div>
-    <div class="actions">
-      <a href="/" class="back-button">← Back to Home</a>
     </div>
   </div>
   {{/if}}

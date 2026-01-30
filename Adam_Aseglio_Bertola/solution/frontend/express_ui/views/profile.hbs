@@ -22,32 +22,45 @@
 
     <div class="container mb-5">
         <!-- Stats Row -->
-        <div class="row g-4 mb-4">
-            <div class="col-sm-6 col-lg-3">
-                <div class="stat-card">
-                    <div class="stat-value">{{profile.completed}}</div>
-                    <div class="stat-label">✓ Completed</div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
-                    <div class="stat-value">{{profile.watching}}</div>
-                    <div class="stat-label">▶ Watching</div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
-                    <div class="stat-value">{{profile.userRatings}}</div>
-                    <div class="stat-label">⭐ Ratings</div>
-                </div>
-            </div>
-            <div class="col-sm-6 col-lg-3">
-                <div class="stat-card" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
-                    <div class="stat-value">{{profile.userFavorites}}</div>
-                    <div class="stat-label">❤ Favorites</div>
+        {{#if profile}}
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow-sm" style="cursor: pointer;" onclick="window.location.href='/stats/user/{{username}}'">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0">📊 User Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-4">
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="stat-card">
+                                    <div class="stat-value">{{profile.completed}}</div>
+                                    <div class="stat-label">✓ Completed</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="stat-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                                    <div class="stat-value">{{profile.watching}}</div>
+                                    <div class="stat-label">▶ Watching</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="stat-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+                                    <div class="stat-value">{{profile.userRatings}}</div>
+                                    <div class="stat-label">⭐ Ratings</div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-lg-3">
+                                <div class="stat-card" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                                    <div class="stat-value">{{profile.userFavorites}}</div>
+                                    <div class="stat-label">❤ Favorites</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
+        {{/if}}
 
         <!-- Favorites Section -->
         {{#if favorites}}
@@ -140,6 +153,11 @@
                             </div>
                             {{/each}}
                         </div>
+                        <div class="card-footer bg-transparent border-top-0 text-center pt-3">
+                            <a href="/favorites/{{username}}" class="btn btn-success">
+                                ❤️ View All Favorites →
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -208,18 +226,18 @@
                             </div>
                             {{/each}}
                         </div>
+                        <div class="card-footer bg-transparent border-top-0 text-center pt-3">
+                            <a href="/ratings/{{username}}" class="btn btn-warning">
+                                ⭐ View All Ratings →
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         {{/if}}
 
-        <!-- Navigation Buttons -->
-        <div class="actions">
-            <a href="/" class="back-button">🏠 Back to Home</a>
-            <a href="/favorites/{{username}}" class="refresh-button">❤️ View All Favorites</a>
-            <a href="/ratings/{{username}}" class="refresh-button">⭐ View All Ratings</a>
-        </div>
+
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

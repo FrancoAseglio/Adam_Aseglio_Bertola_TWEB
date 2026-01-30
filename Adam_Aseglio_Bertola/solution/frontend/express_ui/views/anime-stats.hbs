@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="/stylesheets/style.css">
 </head>
 <body class="bg-light">
+    {{> navbar}}
+    
     {{#if stats}}
     <div class="header-gradient primary">
         <div class="container">
@@ -184,11 +186,10 @@
         </div>
         {{/if}}
 
-        <div class="actions">
-            <a href="#" onclick="history.back(); return false;" class="back-button">← Back to Results</a>
-            <a href="/" class="back-button">🏠 Home</a>
+        <div class="text-center mt-4">
+            <a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary me-2">← Back to Results</a>
             {{#if animeDetails}}
-            <a href="/anime/{{animeDetails.mal_id}}" class="back-button">📖 View Anime Details</a>
+            <a href="/anime/{{animeDetails.mal_id}}" class="btn btn-outline-primary">📖 View Anime Details</a>
             {{/if}}
         </div>
     </div>

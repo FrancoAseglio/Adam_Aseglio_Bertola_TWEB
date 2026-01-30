@@ -35,6 +35,7 @@ router.get('/:username', async (req, res) => {
           let detailsResponse;
           const favType = fav.fav_type || 'anime';
 
+          // Recupera i dettagli in base al tipo
           switch (favType) {
             case 'character':
               detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/characters/${fav.id}`);
@@ -116,6 +117,7 @@ router.post('/', async (req, res) => {
     try {
       let detailsResponse;
       
+      // Recupera i dettagli in base al tipo
       switch (fav_type) {
         case 'character':
           detailsResponse = await axios.get(`${BACKEND_SPRING_URL}/characters/${id}`);
@@ -193,21 +195,3 @@ router.delete('/:username/:id', async (req, res) => {
   try {
     const fav_type = req.query.fav_type || 'anime';
     await axios.delete(`${BACKEND_MONGO_URL}/favorites/${req.params.username}/${req.params.id}?fav_type=${fav_type}`);
-
-    res.json({ message: 'Favorite removed successfully' });
-  } catch (error) {
-    if (error.response?.status === 404) {
-      return res.status(404).json({
-        message: 'Not found',
-        error  : error.response.data.error
-      });
-    }
-
-    res.status(500).json({ 
-      message: 'Error removing favorite', 
-      error  : error.message 
-    });
-  }
-});
-
-module.exports = router;
