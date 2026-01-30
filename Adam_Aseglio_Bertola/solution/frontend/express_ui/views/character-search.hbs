@@ -12,77 +12,160 @@
 </head>
 <body class="bg-light">
     {{> navbar}}
-
+    
     <div class="header-gradient cyan">
         <div class="container">
             <h1>🔍 Search Characters</h1>
-            <p>Search for anime characters by name</p>
         </div>
     </div>
 
     <div class="container py-4">
+        <!-- Search Filters Form -->
         <div class="card mb-4">
+            <div class="card-header text-white" style="background: linear-gradient(135deg, #06b6d4 0%, #22d3ee 100%);">
+                <h5 class="mb-0">🎯 Search Filters</h5>
+            </div>
             <div class="card-body">
                 <form action="/characters/search" method="GET">
-                    <div class="input-group">
-                        <input type="text" name="name" class="form-control" placeholder="Enter character name (e.g., Naruto)" value="{{query}}" required>
-                        <button type="submit" class="btn btn-primary">Search</button>
+                    <div class="row g-2 align-items-end">
+                        <!-- Name Search -->
+                        <div class="col-md-3">
+                            <label for="name" class="form-label form-label-sm mb-1">Name</label>
+                            <input type="text" name="name" id="name" class="form-control form-control-sm" 
+                                   placeholder="Search character..." 
+                                   value="{{filters.name}}">
+                        </div>
+
+                        <!-- Role Filter -->
+                        <div class="col-md-2">
+                            <label for="role" class="form-label form-label-sm mb-1">Role</label>
+                            <select name="role" id="role" class="form-select form-select-sm">
+                                <option value="">All Roles</option>
+                                <option value="Main" {{#if (eq filters.role "Main")}}selected{{/if}}>Main</option>
+                                <option value="Supporting" {{#if (eq filters.role "Supporting")}}selected{{/if}}>Supporting</option>
+                            </select>
+                        </div>
+
+                        <!-- Min Favorites Filter -->
+                        <div class="col-md-2">
+                            <label for="minFavorites" class="form-label form-label-sm mb-1">Min Favorites</label>
+                            <input type="number" name="minFavorites" id="minFavorites" class="form-control form-control-sm" 
+                                   placeholder="e.g. 1000" min="0"
+                                   value="{{filters.minFavorites}}">
+                        </div>
+
+                        <!-- Top Limit -->
+                        <div class="col-md-2">
+                            <label for="limit" class="form-label form-label-sm mb-1">Top Limit</label>
+                            <input type="number" name="limit" id="limit" class="form-control form-control-sm" 
+                                   placeholder="e.g. 50" min="1"
+                                   value="{{filters.limit}}">
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="col-md-3">
+                            <label class="form-label form-label-sm mb-1 invisible">Actions</label>
+                            <div class="d-flex gap-1">
+                                <button type="submit" class="btn btn-primary btn-sm flex-fill">
+                                    Search
+                                </button>
+                                <a href="/characters/search" class="btn btn-outline-secondary btn-sm flex-fill">
+                                    Clear
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
 
-        {{#if query}}
-            {{#if results}}
-                {{#if results.length}}
-                    <div class="card">
-                        <div class="card-header bg-info text-white">
-                            <h5 class="mb-0">Search Results for "{{query}}" ({{results.length}} found)</h5>
-                        </div>
-                        <div class="card-body">
-                            <div class="row g-3">
-                                {{#each results}}
-                                <div class="col-md-6 col-lg-4">
-                                        <div class="card h-100 hover-lift" style="cursor: pointer;" onclick="window.location.href='/characters/{{this.character_mal_id}}'">
-                                        {{#if this.image_url}}
-                                        <img src="{{this.image_url}}" class="card-img-top" alt="{{this.name}}" style="height: 300px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/300x300/667eea/ffffff?text=No+Image'">
-                                        {{else}}
-                                        <img src="https://via.placeholder.com/300x300/667eea/ffffff?text=No+Image" class="card-img-top" alt="No image" style="height: 300px; object-fit: cover;">
-                                        {{/if}}
-                                        <div class="card-body">
-                                            <h6 class="card-title">{{this.name}}</h6>
-                                            {{#if this.nameKanji}}
-                                            <p class="card-text text-muted small mb-1">{{this.nameKanji}}</p>
-                                            {{/if}}
-                                                <p class="card-text text-muted small mb-0">ID: {{this.character_mal_id}}</p>
-                                            {{#if this.favorites}}
-                                            <p class="card-text mt-2">
-                                                <span class="badge bg-danger">❤️ {{this.favorites}}</span>
-                                            </p>
-                                            {{/if}}
-                                        </div>
-                                    </div>
-                                </div>
-                                {{/each}}
+        <!-- Results -->
+        {{#if results}}
+            {{#if results.length}}
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h2 class="mb-0">
+                        Search Results 
+                        <span class="badge bg-primary">{{pagination.totalItems}} found</span>
+                    </h2>
+                    
+                    <!-- Active Filters Display -->
+                    <div class="text-end">
+                        {{#if filters.name}}
+                        <span class="badge bg-info">Name: {{filters.name}}</span>
+                        {{/if}}
+                        {{#if filters.role}}
+                        <span class="badge bg-success">Role: {{filters.role}}</span>
+                        {{/if}}
+                        {{#if filters.minFavorites}}
+                        <span class="badge bg-warning">Favorites ≥ {{filters.minFavorites}}</span>
+                        {{/if}}
+                        {{#if filters.limit}}
+                        <span class="badge bg-danger">Top {{filters.limit}}</span>
+                        {{/if}}
+                    </div>
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+                    {{#each results}}
+                    <div class="col">
+                        <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/characters/{{this.character_mal_id}}'">
+                            {{#if this.image_url}}
+                            <img src="{{this.image_url}}" alt="{{this.name}}" class="card-img-top" 
+                                 style="height:300px;object-fit:cover" 
+                                 onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+                            {{else}}
+                            <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" 
+                                 alt="{{this.name}}" class="card-img-top" style="height:300px;object-fit:cover">
+                            {{/if}}
+                            <div class="card-body">
+                                <h6 class="card-title text-primary">{{this.name}}</h6>
+                                {{#if this.name_kanji}}
+                                <p class="card-text small text-muted mb-1"><strong>Kanji:</strong> {{this.name_kanji}}</p>
+                                {{/if}}
+                                {{#if this.role}}
+                                <p class="card-text small text-muted mb-1"><strong>Role:</strong> {{this.role}}</p>
+                                {{/if}}
+                                {{#if this.favorites}}
+                                <p class="card-text small text-muted mb-1">
+                                    <strong>Favorites:</strong> 
+                                    <span class="badge bg-danger">❤️ {{this.favorites}}</span>
+                                </p>
+                                {{/if}}
                             </div>
                         </div>
                     </div>
-                {{else}}
-                    <div class="alert alert-info">
-                        <h5>No Results Found</h5>
-                        <p class="mb-0">No characters found matching "{{query}}". Try searching with different keywords.</p>
-                    </div>
-                {{/if}}
+                    {{/each}}
+                </div>
+                
+                {{> pagination}}
             {{else}}
-                <div class="alert alert-warning">
-                    <p class="mb-0">Error searching for characters.</p>
+                <div class="text-center py-5">
+                    <h2 class="text-muted">😕 No Results Found</h2>
+                    <p class="text-muted">Try adjusting your filters or search terms</p>
                 </div>
             {{/if}}
         {{else}}
-            <div class="alert alert-info">
-                <p class="mb-0">Enter a character name above to search.</p>
+            <div class="text-center py-5">
+                <div class="mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" class="bi bi-search text-muted" viewBox="0 0 16 16">
+                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                    </svg>
+                </div>
+                <h3 class="text-muted">Start Your Search</h3>
+                <p class="text-muted">Use the filters above to find characters by name, role, or popularity</p>
+                <div class="mt-4">
+                    <p class="text-muted small">💡 <strong>Tips:</strong></p>
+                    <ul class="list-unstyled text-muted small">
+                        <li>• Search by name only for broad results</li>
+                        <li>• Filter by role (Main/Supporting) for specific character types</li>
+                        <li>• Use minimum favorites to find popular characters</li>
+                        <li>• Set top limit to see the most popular characters</li>
+                    </ul>
+                </div>
             </div>
         {{/if}}
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

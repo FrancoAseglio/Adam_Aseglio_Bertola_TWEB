@@ -27,8 +27,23 @@ public class CharacterController {
     }
 
     @GetMapping("/search")
-    public List<Character> searchByName(@RequestParam String name) {
-        return characterService.searchByName(name);
+    public List<Character> searchByName(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) Integer minFavorites) {
+        
+        // If any filter is provided, use the advanced search
+        if (role != null || minFavorites != null) {
+            return characterService.searchWithFilters(name, role, minFavorites);
+        }
+        
+        // Otherwise use simple name search
+        if (name != null && !name.isEmpty()) {
+            return characterService.searchByName(name);
+        }
+        
+        // Return empty list if no parameters
+        return java.util.Collections.emptyList();
     }
 
     @GetMapping
