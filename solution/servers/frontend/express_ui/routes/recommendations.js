@@ -75,11 +75,9 @@ router.get('/:malId', async (req, res) => {
     const page  = parseInt(req.query.page) || 1;
     const itemsPerPage = 20;
 
-    // anime details from PostgreSQL
     const animeResponse = await axios.get(`${GATEWAY_URL}/anime/${malId}`);
     const anime = animeResponse.data;
 
-    // recommendations from MongoDB
     const recommendationsResponse = await axios.get(`${GATEWAY_URL}/recommendations/${malId}`);
     const allRecommendations = recommendationsResponse.data;
 

@@ -63,7 +63,6 @@ const GATEWAY_URL = 'http://localhost:3001/api';
 router.get('/search', async (req, res) => {
   let { title, genres, minScore, limit } = req.query;
   
-  // Pulisci parametri vuoti
   title = title && title.trim() !== '' ? title.trim() : undefined;
   minScore = minScore && minScore.trim() !== '' ? minScore : undefined;
   limit = limit && limit.trim() !== '' ? limit : undefined;
@@ -96,7 +95,6 @@ router.get('/search', async (req, res) => {
     let allResults = [];
     let usedGenreAPI = false;
 
-    // Strategia di ricerca API
     if (title) {
       const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params: { title } });
       allResults = response.data;
@@ -106,18 +104,14 @@ router.get('/search', async (req, res) => {
       usedGenreAPI = true;
     } else {
       let apiLimit = 100;
-      if (minScore) {
-        apiLimit = 10000;
-      } else if (limit) {
-        apiLimit = Math.max(parseInt(limit), 100);
-      }
+      if (minScore) apiLimit = 10000;
+      else if (limit) apiLimit = Math.max(parseInt(limit), 100);
       const response = await axios.get(`${GATEWAY_URL}/anime/top/all`, { params: { limit: apiLimit } });
       allResults = response.data;
     }
 
     let filteredResults = allResults;
 
-    // Filtra per generi - applica filtro client-side con OR logic se necessario
     if (selectedGenres.length > 0 && !(usedGenreAPI && selectedGenres.length === 1)) {
       const beforeFilter = filteredResults.length;
       filteredResults = filteredResults.filter(anime => {
@@ -125,12 +119,11 @@ router.get('/search', async (req, res) => {
         
         let animeGenres = [];
         if (typeof anime.genres === 'string') {
-          // Parse string formato Python: "['Action', 'Fantasy']"
           animeGenres = anime.genres
-            .replace(/[\[\]']/g, '') // Rimuovi [, ], '
+            .replace(/[\[\]']/g, '')
             .split(',')
             .map(g => g.trim())
-            .filter(g => g); // Rimuovi vuoti
+            .filter(g => g);
         } else if (Array.isArray(anime.genres)) {
           animeGenres = anime.genres.map(g => {
             if (typeof g === 'string') return g.trim();
@@ -139,7 +132,6 @@ router.get('/search', async (req, res) => {
           });
         }
         
-        // OR logic: l'anime deve avere ALMENO UNO dei generi selezionati
         return selectedGenres.some(selectedGenre => 
           animeGenres.some(ag => ag.toLowerCase() === selectedGenre.toLowerCase())
         );
@@ -147,21 +139,13 @@ router.get('/search', async (req, res) => {
       console.log('Genre filter:', beforeFilter, '→', filteredResults.length);
     }
 
-    // Filtra per score minimo
     if (minScore) {
       const minScoreNum = parseFloat(minScore);
       filteredResults = filteredResults.filter(anime => anime.score && anime.score >= minScoreNum);
     }
 
-    // Ordina per score se necessario
-    if (limit || minScore) {
-      filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
-    }
-
-    // Applica limit DOPO tutti i filtri
-    if (limit) {
-      filteredResults = filteredResults.slice(0, parseInt(limit));
-    }
+    if (limit || minScore) filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
+    if (limit) filteredResults = filteredResults.slice(0, parseInt(limit));
 
     filteredResults = filteredResults.map(anime => ({
       ...anime,
@@ -351,13 +335,45 @@ router.get('/genre/:genre', async (req, res) => {
   }
 });
 
-// Route for anime statistics - specific path to avoid conflicts
+/**
+ * @swagger
+ * /stats/{id}:
+ *   get:
+ *     tags:
+ *       - Anime Statistics
+ *     summary: Get anime statistics by ID
+ *     description: |
+ *       Retrieves comprehensive statistics for a specific anime including viewing stats,
+ *       ratings distribution, and anime details.
+ *     operationId: getAnimeStatsById
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: MyAnimeList anime ID
+ *     responses:
+ *       200:
+ *         description: Anime statistics retrieved successfully
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ *               description: Rendered HTML page with anime statistics
+ *       404:
+ *         description: Anime statistics not found
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ *               description: Error page
+ */
 router.get('/stats/:id', async (req, res) => {
   try {
     const statsResponse = await axios.get(`${GATEWAY_URL}/stats/anime/${req.params.id}`);
     const { stats, animeDetails } = statsResponse.data;
     
-    // Merge stats with anime details
     const combinedStats = {
       ...stats,
       ...(animeDetails || {})
@@ -372,20 +388,56 @@ router.get('/stats/:id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching anime stats:', error.message);
     res.status(404).render('error', {
-      layout: false,
+      layout : false,
       message: 'Anime statistics not found',
-      error: { status: 404, stack: error.message }
+      error  : { 
+        status: 404, 
+        stack : error.message 
+      }
     });
   }
 });
 
-// Route for anime statistics - alternative pattern
+/**
+ * @swagger
+ * /{id}/stats:
+ *   get:
+ *     tags:
+ *       - Anime Statistics
+ *     summary: Get anime statistics by ID (alternative route)
+ *     description: |
+ *       Alternative endpoint to retrieve comprehensive statistics for a specific anime.
+ *       This route provides the same functionality as /stats/{id} but with reversed path structure.
+ *       Returns viewing stats, ratings distribution, and anime details.
+ *     operationId: getAnimeStatsByIdAlt
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: MyAnimeList anime ID
+ *     responses:
+ *       200:
+ *         description: Anime statistics retrieved successfully
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ *               description: Rendered HTML page with anime statistics
+ *       404:
+ *         description: Anime statistics not found
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ *               description: Error page
+ */
 router.get('/:id/stats', async (req, res) => {
   try {
     const statsResponse = await axios.get(`${GATEWAY_URL}/stats/anime/${req.params.id}`);
     const { stats, animeDetails } = statsResponse.data;
     
-    // Merge stats with anime details
     const combinedStats = {
       ...stats,
       ...(animeDetails || {})
@@ -400,14 +452,16 @@ router.get('/:id/stats', async (req, res) => {
   } catch (error) {
     console.error('Error fetching anime stats:', error.message);
     res.status(404).render('error', {
-      layout: false,
+      layout : false,
       message: 'Anime statistics not found',
-      error: { status: 404, stack: error.message }
+      error  : { 
+        status: 404, 
+        stack : error.message 
+      }
     });
   }
 });
 
-// This route must be LAST because /:id catches all paths
 /**
  * @swagger
  * /anime/{id}:
@@ -437,20 +491,14 @@ router.get('/:id', async (req, res) => {
     const animeResponse = await axios.get(`${GATEWAY_URL}/anime/${req.params.id}`);
     const anime = animeResponse.data;
     
-    if (anime.image_url) {
-      anime.imageUrl = anime.image_url;
-    }
-    if (anime.mal_id) {
-      anime.malId = anime.mal_id;
-    }
+    if (anime.image_url) anime.imageUrl = anime.image_url;
+    if (anime.mal_id) anime.malId = anime.mal_id;
     
-    // Get top 20 characters for this anime
     let charactersList = [];
     try {
       const charactersResponse = await axios.get(`${GATEWAY_URL}/character-anime/anime/${req.params.id}/top`);
       const characterWorks = charactersResponse.data;
       
-      // Fetch details for each character
       const characterDetailsPromises = characterWorks.map(work => 
         axios.get(`${GATEWAY_URL}/characters/${work.characterMalId}`)
           .then(response => ({
@@ -469,13 +517,11 @@ router.get('/:id', async (req, res) => {
       console.error('Error fetching characters for anime:', error.message);
     }
     
-    // Get top 20 people for this anime
     let peopleList = [];
     try {
       const peopleResponse = await axios.get(`${GATEWAY_URL}/person-voice-work/anime/${req.params.id}/top`);
       const peopleWorks = peopleResponse.data;
       
-      // Fetch details for each person
       const peopleDetailsPromises = peopleWorks.map(work => 
         axios.get(`${GATEWAY_URL}/people/${work.personMalId}`)
           .then(response => ({

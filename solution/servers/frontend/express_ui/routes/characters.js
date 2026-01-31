@@ -53,13 +53,11 @@ const GATEWAY_URL = 'http://localhost:3001/api';
 router.get('/search', async (req, res) => {
   let { name, role, minFavorites, limit } = req.query;
   
-  // Clean empty parameters
   name = name && name.trim() !== '' ? name.trim() : undefined;
   role = role && role.trim() !== '' ? role.trim() : undefined;
   minFavorites = minFavorites && minFavorites.trim() !== '' ? minFavorites : undefined;
   limit = limit && limit.trim() !== '' ? limit : undefined;
   
-  // If no parameters, show search form
   if (!name && !role && !minFavorites && !limit) {
     return res.render('character-search', {
       layout : false,
@@ -81,20 +79,14 @@ router.get('/search', async (req, res) => {
     
     const response = await axios.get(`${GATEWAY_URL}/characters/search`, { params });
     let allResults = response.data;
+    if (limit && allResults.length > 0) allResults = allResults.slice(0, parseInt(limit));
     
-    // Apply limit on frontend if specified
-    if (limit && allResults.length > 0) {
-      allResults = allResults.slice(0, parseInt(limit));
-    }
-    
-    // Pagination
     const totalItems = allResults.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
     const startIndex = (page - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    const endIndex   = startIndex + itemsPerPage;
     const paginatedResults = allResults.slice(startIndex, endIndex);
     
-    // Build base URL for pagination
     const queryParams = new URLSearchParams();
     if (name) queryParams.append('name', name);
     if (role) queryParams.append('role', role);
@@ -110,12 +102,12 @@ router.get('/search', async (req, res) => {
       baseUrl: `/characters/search?${queryParams.toString()}`,
       urlSeparator: '&',
       pagination: {
-        currentPage: page,
-        totalPages: totalPages,
-        totalItems: totalItems,
+        currentPage : page,
+        totalPages  : totalPages,
+        totalItems  : totalItems,
         itemsPerPage: itemsPerPage,
-        hasNextPage: page < totalPages,
-        hasPrevPage: page > 1
+        hasNextPage : page < totalPages,
+        hasPrevPage : page > 1
       }
     });
   } catch (error) {
@@ -185,13 +177,10 @@ router.get('/search', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const characterResponse = await axios.get(`${GATEWAY_URL}/characters/${req.params.id}`);
-    
-    // Fetch anime appearances for this character
     let animeList = [];
     try {
       const animeWorksResponse = await axios.get(`${GATEWAY_URL}/character-anime/character/${req.params.id}`);
       
-      // For each anime work, fetch the full anime details
       if (animeWorksResponse.data && animeWorksResponse.data.length > 0) {
         const animePromises = animeWorksResponse.data.map(work => 
           axios.get(`${GATEWAY_URL}/anime/${work.animeMalId}`)
@@ -200,13 +189,10 @@ router.get('/:id', async (req, res) => {
         );
         const animeResults = await Promise.all(animePromises);
         animeList = animeResults.filter(anime => anime !== null);
-        
-        // Sort by score descending (highest first)
         animeList.sort((a, b) => (b.score || 0) - (a.score || 0));
       }
     } catch (animeError) {
       console.error('Error fetching anime for character:', animeError.message);
-      // Continue without anime list if there's an error
     }
     
     res.render('character-detail', {

@@ -20,35 +20,31 @@ function initStatsCarousel() {
   if (!carousel) return;
   
   const bsCarousel = new bootstrap.Carousel(carousel, {
-    interval: false, // Disable default auto-play
+    interval: false,
     ride: false
   });
   
   let autoPlayTimer;
-  const AUTO_PLAY_INTERVAL = 5000; // 5 secondi per auto-play
-  let isAutoSliding = false; // Flag per distinguere auto-play da click manuale
+  const AUTO_PLAY_INTERVAL = 5000;
+  let isAutoSliding = false;
   
-  // Funzione per avviare l'auto-play
   function startAutoPlay() {
     clearTimeout(autoPlayTimer);
     autoPlayTimer = setTimeout(() => {
       isAutoSliding = true;
       bsCarousel.next();
       isAutoSliding = false;
-      startAutoPlay(); // Ricomincia il timer dopo lo slide
+      startAutoPlay();
     }, AUTO_PLAY_INTERVAL);
   }
   
-  // Event listener per interazioni manuali (click su frecce)
   carousel.addEventListener('slide.bs.carousel', function(event) {
-    // Resetta il timer SOLO se è un click manuale (non auto-play)
     if (!isAutoSliding) {
       clearTimeout(autoPlayTimer);
       startAutoPlay();
     }
   });
   
-  // Avvia l'auto-play iniziale
   startAutoPlay();
 }
 
@@ -60,7 +56,6 @@ function init() {
   const resultsEl = document.getElementById('results');
   if (resultsEl) resultsEl.style.display = 'none';
   
-  // Inizializza il carosello delle statistiche
   initStatsCarousel();
 }
 
@@ -75,7 +70,6 @@ function loadSection(section) {
   sectionElement.style.display = 'flex';
   clearResults();
 
-  // Smooth scroll to the newly displayed section
   setTimeout(() => {
     sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, 100);
