@@ -43,14 +43,14 @@
                                 <button class="btn btn-sm btn-outline-secondary dropdown-toggle w-100 d-flex justify-content-between align-items-center" type="button" id="genreDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                                     <span id="genreButtonText">Select...</span>
                                 </button>
-                                <ul class="dropdown-menu w-100" aria-labelledby="genreDropdown" style="max-height: 300px; overflow-y: auto;">
+                                <ul class="dropdown-menu genre-dropdown w-100" aria-labelledby="genreDropdown">
                                     {{#each availableGenres}}
                                     <li>
                                         <div class="dropdown-item p-0">
                                             <div class="form-check m-0 p-2">
                                                 <input class="form-check-input genre-checkbox" type="checkbox" value="{{this}}" id="genre-{{@index}}" 
                                                     {{#if (includes ../selectedGenres this)}}checked{{/if}}>
-                                                <label class="form-check-label w-100 d-block" for="genre-{{@index}}" style="cursor: pointer;">
+                                                <label class="form-check-label w-100 d-block clickable" for="genre-{{@index}}">
                                                     {{this}}
                                                 </label>
                                             </div>
@@ -132,14 +132,13 @@
                 <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
                     {{#each results}}
                     <div class="col">
-                        <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/anime/{{this.mal_id}}'">
+                        <div class="card anime-card clickable h-100" data-anime-id="{{this.mal_id}}">
                             {{#if this.imageUrl}}
-                            <img src="{{this.imageUrl}}" alt="{{this.title}}" class="card-img-top" 
-                                 style="height:300px;object-fit:cover" 
+                            <img src="{{this.imageUrl}}" alt="{{this.title}}" class="card-img-top anime-card-image" 
                                  onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
                             {{else}}
                             <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" 
-                                 alt="{{this.title}}" class="card-img-top" style="height:300px;object-fit:cover">
+                                 alt="{{this.title}}" class="card-img-top anime-card-image">
                             {{/if}}
                             <div class="card-body">
                                 <h6 class="card-title text-primary">{{this.title}}</h6>
@@ -196,66 +195,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Gestione dropdown generi con checkboxes
-        document.addEventListener('DOMContentLoaded', function() {
-            const checkboxes = document.querySelectorAll('.genre-checkbox');
-            const buttonText = document.getElementById('genreButtonText');
-            const badgesContainer = document.getElementById('selectedGenresBadges');
-            const hiddenContainer = document.getElementById('selectedGenresContainer');
-
-            function updateGenreDisplay() {
-                const selected = Array.from(checkboxes)
-                    .filter(cb => cb.checked)
-                    .map(cb => cb.value);
-
-                // Aggiorna testo button
-                if (selected.length === 0) {
-                    buttonText.textContent = 'Select...';
-                } else if (selected.length === 1) {
-                    buttonText.textContent = selected[0];
-                } else {
-                    buttonText.textContent = `${selected.length} selected`;
-                }
-
-                // Aggiorna badges
-                badgesContainer.innerHTML = selected.map(genre => 
-                    `<span class="badge bg-success me-1">${genre}</span>`
-                ).join('');
-
-                // Aggiorna hidden inputs per form submission
-                hiddenContainer.innerHTML = selected.map(genre => 
-                    `<input type="hidden" name="genres" value="${genre}">`
-                ).join('');
-
-                // Aggiorna stile visivo per righe selezionate
-                checkboxes.forEach(cb => {
-                    const parentDiv = cb.closest('.form-check');
-                    if (cb.checked) {
-                        parentDiv.style.backgroundColor = '#d1f4e0';
-                        parentDiv.querySelector('label').style.fontWeight = '600';
-                    } else {
-                        parentDiv.style.backgroundColor = '';
-                        parentDiv.querySelector('label').style.fontWeight = 'normal';
-                    }
-                });
-            }
-
-            // Event listeners per checkboxes
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', updateGenreDisplay);
-            });
-
-            // Previeni chiusura dropdown quando si clicca su checkbox
-            document.querySelectorAll('.dropdown-menu').forEach(menu => {
-                menu.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                });
-            });
-
-            // Inizializza display con generi già selezionati
-            updateGenreDisplay();
-        });
-    </script>
+    <script src="/javascripts/anime-handlers.js"></script>
 </body>
 </html>

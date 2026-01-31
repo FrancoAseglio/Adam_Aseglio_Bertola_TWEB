@@ -37,52 +37,6 @@ async function getAnimeDetails() {
 }
 
 /**
- * Get top rated anime with user-specified limit
- * Reads from: topAnimeLimit input field (default: 20)
- * Redirects to: /anime/top/all?limit=N
- * @returns {void} Redirects to top anime page
- */
-async function getTopAnime() {
-  const limit = document.getElementById('topAnimeLimit').value || 20;
-  const limitNum = parseInt(limit);
-
-  if (limitNum < 1 || limitNum > 100) {
-    alert('Please enter a number between 1 and 100');
-    return;
-  }
-
-  window.location.href = `/anime/top/all?limit=${limitNum}`;
-}
-
-/**
- * Search anime for viewing statistics
- * Reads from: statsSearchQuery input field
- * Redirects to: /stats/search?title=query
- * @returns {void} Redirects to anime stats search page
- */
-async function searchAnimeStats() {
-  const query = value('statsSearchQuery');
-  if (!query) return alert('Please enter an anime title to search');
-  window.location.href = `/stats/search?title=${encodeURIComponent(query)}`;
-}
-
-/**
- * Search anime to view statistics
- * Reads from: statsAnimeId input field
- * Redirects to: /stats/search?title=query to show search results
- * @returns {void} Redirects to search page
- */
-async function getAnimeStats() {
-  const input = document.getElementById('statsAnimeId').value.trim();
-  if (!input) {
-    alert('Please enter an anime title');
-    return;
-  }
-
-  window.location.href = `/stats/search?title=${encodeURIComponent(input)}`;
-}
-
-/**
  * Get anime filtered by genre
  * Reads from: genreInput input field
  * Endpoint: GET /api/anime/genre/:genre?limit=20
@@ -117,3 +71,130 @@ async function getCharacterDetail() {
   if (!id) return alert('Please enter a character ID');
   window.location.href = `/characters/${encodeURIComponent(id)}`;
 }
+
+// ============================================================================
+// VIEW-SPECIFIC EVENT HANDLERS
+// ============================================================================
+
+/**
+ * Initialize anime search page functionality
+ * Sets up genre dropdown management and clickable anime cards
+ */
+document.addEventListener('DOMContentLoaded', function() {
+  // GENRE DROPDOWN MANAGEMENT (anime-search.hbs)
+  const genreCheckboxes = document.querySelectorAll('.genre-checkbox');
+  const genreButton = document.querySelector('.genre-dropdown-toggle');
+  const genreInputsContainer = document.getElementById('genreInputsContainer');
+
+  if (genreCheckboxes.length > 0 && genreButton) {
+    // Update display whenever checkboxes change
+    function updateGenreDisplay() {
+      const checkedBoxes = Array.from(genreCheckboxes).filter(cb => cb.checked);
+      const checkedCount = checkedBoxes.length;
+      
+      // Update button text
+      if (checkedCount === 0) {
+        genreButton.textContent = 'Select Genres...';
+      } else if (checkedCount === 1) {
+        genreButton.textContent = checkedBoxes[0].nextElementSibling.textContent.trim();
+      } else {
+        genreButton.textContent = `${checkedCount} genres selected`;
+      }
+      
+      // Update hidden inputs for form submission
+      if (genreInputsContainer) {
+        genreInputsContainer.innerHTML = '';
+        checkedBoxes.forEach(cb => {
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'genres[]';
+          input.value = cb.value;
+          genreInputsContainer.appendChild(input);
+        });
+      }
+      
+      // Update badge display
+      document.querySelectorAll('.genre-badge').forEach(badge => badge.remove());
+      
+      if (checkedCount > 0) {
+        const badgeContainer = document.createElement('div');
+        badgeContainer.className = 'mt-2';
+        checkedBoxes.forEach(cb => {
+          const badge = document.createElement('span');
+          badge.className = 'badge bg-primary me-1 genre-badge';
+          badge.textContent = cb.nextElementSibling.textContent.trim();
+          badgeContainer.appendChild(badge);
+        });
+        genreButton.parentElement.appendChild(badgeContainer);
+      }
+      
+      // Visual feedback for checked items
+      genreCheckboxes.forEach(cb => {
+        const label = cb.closest('label');
+        if (cb.checked) {
+          label.style.backgroundColor = '#d1f4e0';
+          label.style.fontWeight = 'bold';
+        } else {
+          label.style.backgroundColor = '';
+          label.style.fontWeight = '';
+        }
+      });
+    }
+    
+    // Add change listeners to all checkboxes
+    genreCheckboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', updateGenreDisplay);
+    });
+    
+    // Prevent dropdown from closing when clicking checkboxes
+    document.querySelectorAll('.dropdown-item').forEach(item => {
+      item.addEventListener('click', function(e) {
+        e.stopPropagation();
+      });
+    });
+    
+    // Initialize display
+    updateGenreDisplay();
+  }
+
+  // CLICKABLE ANIME CARDS (anime-search.hbs, anime-genre.hbs)
+  document.querySelectorAll('.anime-card[data-anime-id]').forEach(card => {
+    card.addEventListener('click', function() {
+      const animeId = this.getAttribute('data-anime-id');
+      if (animeId) {
+        window.location.href = `/anime/${animeId}`;
+      }
+    });
+  });
+
+  // CLICKABLE CHARACTER CARDS (anime-detail.hbs)
+  document.querySelectorAll('[data-character-id]').forEach(card => {
+    card.addEventListener('click', function() {
+      const characterId = this.getAttribute('data-character-id');
+      if (characterId) {
+        window.location.href = `/characters/${characterId}`;
+      }
+    });
+  });
+
+  // CLICKABLE PEOPLE CARDS (anime-detail.hbs)
+  document.querySelectorAll('[data-person-id]').forEach(card => {
+    card.addEventListener('click', function() {
+      const personId = this.getAttribute('data-person-id');
+      if (personId) {
+        window.location.href = `/people/${personId}`;
+      }
+    });
+  });
+
+  // CLICKABLE STATS CARD (anime-detail.hbs)
+  const statsCard = document.querySelector('[data-anime-stats-id]');
+  if (statsCard) {
+    statsCard.addEventListener('click', function() {
+      const animeId = this.getAttribute('data-anime-stats-id');
+      if (animeId) {
+        window.location.href = `/anime/stats/${animeId}`;
+      }
+    });
+  }
+});

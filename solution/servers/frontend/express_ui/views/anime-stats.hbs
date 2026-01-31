@@ -27,7 +27,7 @@
         {{#if animeDetails}}
         {{#if animeDetails.image_url}}
         <div class="text-center mb-4">
-            <img src="{{animeDetails.image_url}}" alt="{{animeDetails.title}}" style="max-width: 280px; border-radius: 12px;" onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+            <img src="{{animeDetails.image_url}}" alt="{{animeDetails.title}}" class="anime-stats-image" onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
         </div>
         {{/if}}
         {{/if}}
@@ -71,7 +71,7 @@
                         <span class="score-votes">{{stats.score_10_votes}} votes</span>
                     </div>
                     <div class="score-bar-track">
-                        <div class="score-bar-fill" style="width: {{stats.score_10_percentage}}%; background: linear-gradient(90deg, #22c55e 0%, #16a34a 100%);">
+                        <div class="score-bar-fill score-fill-10" style="width: {{stats.score_10_percentage}}%;">
                             <span class="score-percentage">{{stats.score_10_percentage}}%</span>
                         </div>
                     </div>
@@ -82,7 +82,7 @@
                         <span class="score-votes">{{stats.score_9_votes}} votes</span>
                     </div>
                     <div class="score-bar-track">
-                        <div class="score-bar-fill" style="width: {{stats.score_9_percentage}}%; background: linear-gradient(90deg, #84cc16 0%, #65a30d 100%);">
+                        <div class="score-bar-fill score-fill-9" style="width: {{stats.score_9_percentage}}%;">
                             <span class="score-percentage">{{stats.score_9_percentage}}%</span>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                         <span class="score-votes">{{stats.score_8_votes}} votes</span>
                     </div>
                     <div class="score-bar-track">
-                        <div class="score-bar-fill" style="width: {{stats.score_8_percentage}}%; background: linear-gradient(90deg, #eab308 0%, #ca8a04 100%);">
+                        <div class="score-bar-fill score-fill-8" style="width: {{stats.score_8_percentage}}%;">
                             <span class="score-percentage">{{stats.score_8_percentage}}%</span>
                         </div>
                     </div>
@@ -104,7 +104,7 @@
                         <span class="score-votes">{{stats.score_7_votes}} votes</span>
                     </div>
                     <div class="score-bar-track">
-                        <div class="score-bar-fill" style="width: {{stats.score_7_percentage}}%; background: linear-gradient(90deg, #f59e0b 0%, #d97706 100%);">
+                        <div class="score-bar-fill score-fill-7" style="width: {{stats.score_7_percentage}}%;">
                             <span class="score-percentage">{{stats.score_7_percentage}}%</span>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                         <span class="score-votes">{{stats.score_6_votes}} votes</span>
                     </div>
                     <div class="score-bar-track">
-                        <div class="score-bar-fill" style="width: {{stats.score_6_percentage}}%; background: linear-gradient(90deg, #f97316 0%, #ea580c 100%);">
+                        <div class="score-bar-fill score-fill-6" style="width: {{stats.score_6_percentage}}%;">
                             <span class="score-percentage">{{stats.score_6_percentage}}%</span>
                         </div>
                     </div>
@@ -126,7 +126,7 @@
                         <span class="score-votes">{{stats.score_5_votes}} votes</span>
                     </div>
                     <div class="score-bar-track">
-                        <div class="score-bar-fill" style="width: {{stats.score_5_percentage}}%; background: linear-gradient(90deg, #ef4444 0%, #dc2626 100%);">
+                        <div class="score-bar-fill score-fill-5" style="width: {{stats.score_5_percentage}}%;">
                             <span class="score-percentage">{{stats.score_5_percentage}}%</span>
                         </div>
                     </div>
@@ -137,7 +137,7 @@
                         <span class="score-votes">{{stats.score_4_votes}} votes</span>
                     </div>
                     <div class="score-bar-track">
-                        <div class="score-bar-fill" style="width: {{stats.score_4_percentage}}%; background: linear-gradient(90deg, #ec4899 0%, #db2777 100%);">
+                        <div class="score-bar-fill score-fill-4" style="width: {{stats.score_4_percentage}}%;">
                             <span class="score-percentage">{{stats.score_4_percentage}}%</span>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                         <span class="score-votes">{{stats.score_3_votes}} votes</span>
                     </div>
                     <div class="score-bar-track">
-                        <div class="score-bar-fill" style="width: {{stats.score_3_percentage}}%; background: linear-gradient(90deg, #a855f7 0%, #9333ea 100%);">
+                        <div class="score-bar-fill score-fill-3" style="width: {{stats.score_3_percentage}}%;">
                             <span class="score-percentage">{{stats.score_3_percentage}}%</span>
                         </div>
                     </div>
@@ -159,7 +159,7 @@
                         <span class="score-votes">{{stats.score_2_votes}} votes</span>
                     </div>
                     <div class="score-bar-track">
-                        <div class="score-bar-fill" style="width: {{stats.score_2_percentage}}%; background: linear-gradient(90deg, #8b5cf6 0%, #7c3aed 100%);">
+                        <div class="score-bar-fill score-fill-2" style="width: {{stats.score_2_percentage}}%;">
                             <span class="score-percentage">{{stats.score_2_percentage}}%</span>
                         </div>
                     </div>
@@ -170,7 +170,7 @@
                         <span class="score-votes">{{stats.score_1_votes}} votes</span>
                     </div>
                     <div class="score-bar-track">
-                        <div class="score-bar-fill" style="width: {{stats.score_1_percentage}}%; background: linear-gradient(90deg, #64748b 0%, #475569 100%);">
+                        <div class="score-bar-fill score-fill-1" style="width: {{stats.score_1_percentage}}%;">
                             <span class="score-percentage">{{stats.score_1_percentage}}%</span>
                         </div>
                     </div>
