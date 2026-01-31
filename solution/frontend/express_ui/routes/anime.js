@@ -211,78 +211,6 @@ router.get('/search', async (req, res) => {
 
 /**
  * @swagger
- * /anime/top/all:
- *   get:
- *     tags:
- *       - Anime
- *     summary: Get top rated anime
- *     description: Retrieves top rated anime, sorted by score descending. 20 items per page.
- *     operationId: getTopAnime
- *     parameters:
- *       - name: limit
- *         in: query
- *         schema:
- *           type: integer
- *           default: 20
- *         description: Number of top anime to retrieve
- *       - name: page
- *         in: query
- *         schema:
- *           type: integer
- *           default: 1
- *     responses:
- *       200:
- *         description: Top rated anime
- *       500:
- *         description: Server error
- */
-router.get('/top/all', async (req, res) => {
-  try {
-    const limit = req.query.limit || 20;
-    const page  = parseInt(req.query.page) || 1;
-    const itemsPerPage = 20;
-
-    const response = await axios.get(`${GATEWAY_URL}/anime/top/all`, { params: { limit } });
-
-    const allResults = response.data;
-    const totalItems = allResults.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex   = startIndex + itemsPerPage;
-    const paginatedResults = allResults.slice(startIndex, endIndex);
-
-    res.render('anime-search', {
-      layout      : false,
-      title       : `Top ${limit} Rated Anime`,
-      results     : paginatedResults,
-      query       : `Top ${limit}`,
-      searchType  : 'top',
-      searchLimit : limit,
-      baseUrl     : `/anime/top/all?limit=${limit}`,
-      urlSeparator: '&',
-      pagination: {
-        currentPage : page,
-        totalPages  : totalPages,
-        totalItems  : totalItems,
-        itemsPerPage: itemsPerPage,
-        hasNextPage : page < totalPages,
-        hasPrevPage : page > 1,
-        limit       : limit
-      }
-    });
-  } catch (error) {
-    res.status(500).render('error', {
-      message: 'Error fetching top anime',
-      error  : { 
-        status: 500, 
-        stack : error.message 
-      }
-    });
-  }
-});
-
-/**
- * @swagger
  * /anime/genre/{genre}:
  *   get:
  *     tags:
@@ -351,7 +279,35 @@ router.get('/genre/:genre', async (req, res) => {
   }
 });
 
-// Route for anime statistics - specific path to avoid conflicts
+/**
+ * @swagger
+ * /anime/stats/{id}:
+ *   get:
+ *     tags:
+ *       - Anime
+ *     summary: Get anime statistics by ID
+ *     description: |
+ *       Retrieves detailed statistics for a specific anime including:
+ *       - Watch status distribution (watching, completed, on hold, dropped, plan to watch)
+ *       - Score distribution (votes and percentages for scores 1-10)
+ *       - Total users tracking the anime
+ *     operationId: getAnimeStatsById
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: MyAnimeList anime ID
+ *         example: "1"
+ *     responses:
+ *       200:
+ *         description: Anime statistics retrieved successfully
+ *       404:
+ *         description: Anime statistics not found
+ *       500:
+ *         description: Server error
+ */
 router.get('/stats/:id', async (req, res) => {
   try {
     const statsResponse = await axios.get(`${GATEWAY_URL}/stats/anime/${req.params.id}`);
@@ -379,7 +335,34 @@ router.get('/stats/:id', async (req, res) => {
   }
 });
 
-// Route for anime statistics - alternative pattern
+/**
+ * @swagger
+ * /anime/{id}/stats:
+ *   get:
+ *     tags:
+ *       - Anime
+ *     summary: Get anime statistics by ID (alternative pattern)
+ *     description: |
+ *       Alternative URL pattern for retrieving anime statistics.
+ *       Functionally identical to /anime/stats/{id}.
+ *       Returns detailed statistics including watch status and score distribution.
+ *     operationId: getAnimeStatsByIdAlt
+ *     parameters:
+ *       - name: id
+ *         in: path
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: MyAnimeList anime ID
+ *         example: "1"
+ *     responses:
+ *       200:
+ *         description: Anime statistics retrieved successfully
+ *       404:
+ *         description: Anime statistics not found
+ *       500:
+ *         description: Server error
+ */
 router.get('/:id/stats', async (req, res) => {
   try {
     const statsResponse = await axios.get(`${GATEWAY_URL}/stats/anime/${req.params.id}`);

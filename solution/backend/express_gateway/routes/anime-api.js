@@ -46,38 +46,6 @@ router.get('/search', async (req, res) => {
 
 /**
  * @swagger
- * /api/anime/top/all:
- *   get:
- *     summary: Get top rated anime (Spring Boot/PostgreSQL backend)
- *     tags: [Anime]
- *     parameters:
- *       - in: query
- *         name: limit
- *         schema:
- *           type: integer
- *           default: 20
- *         description: Maximum number of results
- *     responses:
- *       200:
- *         description: List of top anime
- *       500:
- *         description: Server error
- */
-router.get('/top/all', async (req, res) => {
-  try {
-    const limit = req.query.limit || 20;
-    const response = await axios.get(`${BACKEND_SPRING_URL}/anime/top`, { params: { limit } });
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ 
-      message: 'Error fetching top anime', 
-      error  : error.message 
-    });
-  }
-});
-
-/**
- * @swagger
  * /api/anime/genres:
  *   get:
  *     summary: Get all unique genres from the dataset
