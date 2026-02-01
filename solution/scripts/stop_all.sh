@@ -4,6 +4,7 @@
 SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PID_DIR="$SCRIPT_DIR/.pids"
 LOG_DIR="$SCRIPT_DIR/logs"
+BUILD_DIR="$SCRIPT_DIR/servers/backend/springboot_pgsql/build"
 
 # Port Definitions (sync with start_all.sh)
 PORT_UI=3000
@@ -48,6 +49,16 @@ if [ -d "$PID_DIR" ]; then
   rm -rf "$PID_DIR"
 fi
 
+echo ""
+read -p "Clear Gradle build directory? (y/N) " -n 1 -r
+echo ""
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  if [ -d "$BUILD_DIR" ]; then
+    rm -rf "$BUILD_DIR"
+    echo "   ✓ Gradle build directory removed"
+  fi
+fi
+sleep 1
 echo ""
 read -p "Clear log files? (y/N) " -n 1 -r
 echo ""
