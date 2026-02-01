@@ -759,6 +759,29 @@ h1, h2, h3, h4, h5, h6 {
   overflow-y: auto;
 }
 
+/* Genre dropdown selected items visual feedback */
+.dropdown-menu.genre-dropdown .dropdown-item:has(input:checked) {
+  background-color: #e0e7ff;
+}
+
+.dropdown-menu.genre-dropdown .dropdown-item:has(input:checked) .form-check-label {
+  color: #4f46e5;
+  font-weight: 600;
+}
+
+.dropdown-menu.genre-dropdown .dropdown-item:hover {
+  background-color: #f1f5f9;
+}
+
+.dropdown-menu.genre-dropdown .dropdown-item:has(input:checked):hover {
+  background-color: #c7d2fe;
+}
+
+.dropdown-menu.genre-dropdown .form-check-input:checked {
+  background-color: #6366f1;
+  border-color: #6366f1;
+}
+
 /* ----- Anime Detail Stats Badges ----- */
 .anime-stats-score {
   background-color: rgba(13, 110, 253, 0.1);
