@@ -1,8 +1,6 @@
 package com.example.springboot_pgsql.Character;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
@@ -20,10 +18,6 @@ public class CharacterService {
     @Autowired
     public CharacterService(CharacterRepository characterRepository) {
         this.characterRepository = characterRepository;
-    }
-
-    public Page<Character> getAllCharacters(Pageable pageable) {
-        return characterRepository.findAll(pageable);
     }
 
     public Optional<Character> getCharacterById(Integer id) {

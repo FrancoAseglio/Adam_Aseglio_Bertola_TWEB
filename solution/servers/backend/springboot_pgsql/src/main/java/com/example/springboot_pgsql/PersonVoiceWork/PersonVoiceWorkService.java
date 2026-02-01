@@ -20,10 +20,6 @@ public class PersonVoiceWorkService {
         this.repository = repository;
     }
 
-    public List<PersonVoiceWork> findAll() {
-        return repository.findAll();
-    }
-
     public List<Map<String, Object>> getTop20PeopleByAnime(Integer animeId) {
         List<Object[]> results = repository.findTop20PeopleByAnime(animeId);
         return results.stream()
@@ -37,10 +33,6 @@ public class PersonVoiceWorkService {
                 return map;
             })
             .collect(Collectors.toList());
-    }
-
-    public PersonVoiceWork save(PersonVoiceWork work) {
-        return repository.save(work);
     }
 
     public void saveAll(List<PersonVoiceWork> workList) {

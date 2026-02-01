@@ -24,7 +24,7 @@ public class HomeController {
             </head>
             <body>
                 <h1>🍃 Spring Boot PostgreSQL Backend</h1>
-                <p>This is the project's MongoDB backend server. You aren't supposed to be here.</p>
+                <p>This is the project's Spring Boot backend server. You aren't supposed to be here.</p>
                 <p><a href="http://localhost:3000">→ Go to Frontend (localhost:3000)</a></p>
             </body>
             </html>

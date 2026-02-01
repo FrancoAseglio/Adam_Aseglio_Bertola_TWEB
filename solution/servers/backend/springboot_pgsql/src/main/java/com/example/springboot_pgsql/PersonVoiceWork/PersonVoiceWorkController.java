@@ -28,15 +28,6 @@ public class PersonVoiceWorkController {
         this.personVoiceWorkService = personVoiceWorkService;
     }
 
-    @Operation(summary = "Get all voice works", description = "Retrieve all voice acting assignments.")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "List of all voice acting assignments returned successfully")
-    })
-    @GetMapping
-    public List<PersonVoiceWork> getAllVoiceWorks() {
-        return personVoiceWorkService.findAll();
-    }
-
     @Operation(summary = "Get top 20 people by anime ID", description = "Retrieve the top 20 people (voice actors) for a given anime ID.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "List of top 20 people for the anime returned successfully")
@@ -45,14 +36,5 @@ public class PersonVoiceWorkController {
     public List<Map<String, Object>> getTop20PeopleByAnime(
             @Parameter(description = "Anime ID", example = "1") @PathVariable Integer animeId) {
         return personVoiceWorkService.getTop20PeopleByAnime(animeId);
-    }
-
-    @Operation(summary = "Create a voice work", description = "Add a new voice acting assignment.")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "Voice work created successfully")
-    })
-    @PostMapping
-    public PersonVoiceWork createVoiceWork(@RequestBody PersonVoiceWork voiceWork) {
-        return personVoiceWorkService.save(voiceWork);
     }
 }

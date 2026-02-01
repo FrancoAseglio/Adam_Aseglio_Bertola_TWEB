@@ -1,8 +1,6 @@
 package com.example.springboot_pgsql.Character;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -49,17 +47,6 @@ public class CharacterController {
             return characterService.searchByName(name);
         }
         return characterService.searchWithFilters(null, null, null);
-    }
-
-    @Operation(summary = "Get all characters", description = "Retrieve a paginated list of all characters.")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "List of characters returned successfully")
-    })
-    @GetMapping
-    public Page<Character> getAllCharacters(
-            @Parameter(description = "Page number", example = "0") @RequestParam(defaultValue = "0") int page,
-            @Parameter(description = "Page size", example = "20") @RequestParam(defaultValue = "20") int size) {
-        return characterService.getAllCharacters(PageRequest.of(page, size));
     }
 
     @Operation(summary = "Get character by ID", description = "Retrieve a specific character by their ID.")
