@@ -30,7 +30,6 @@ taskkill /F /IM java.exe >nul 2>&1
 REM Clean up PID directory (always)
 if exist "%PID_DIR%\" (
     rmdir /s /q "%PID_DIR%"
-    echo    ✓ PID directory removed
 )
 
 echo.
