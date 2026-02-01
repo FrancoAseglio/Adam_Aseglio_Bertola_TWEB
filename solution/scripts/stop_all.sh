@@ -46,7 +46,6 @@ ps aux | grep "[g]radlew bootRun" | awk '{print $2}' | xargs kill -9 2>/dev/null
 
 if [ -d "$PID_DIR" ]; then
   rm -rf "$PID_DIR"
-  echo "   ✓ PID directory removed"
 fi
 
 echo ""
