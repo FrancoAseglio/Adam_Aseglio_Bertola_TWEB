@@ -31,14 +31,15 @@ The assignment required us to design and implement a full-stack web application 
 \begin{itemize}
   \item \textbf{solution}
   \begin{itemize}
-    \item \textbf{scripts}: containing Python-based ETL (Extract, Transform, Load) for populating the databases as well as automation scripts to easly launch and stop the app from CLI with one command;
-  \item \textbf{servers} structured as:
-  \begin{itemize}
-    \item \textbf{backend}: Express Gateway (aggregation layer), Express MongoDB service (user data), \\and Spring Boot PostgreSQL service (anime catalog data);
-    \item \textbf{frontend}: Express UI with Handlebars templates for server-side rendering.
+    \item \textbf{Makefile}: Build automation tool providing convenient targets for managing the entire application lifecycle (start, stop, restart, status checks, dependency installation, and cleanup operations);
+    \item \textbf{scripts}: containing Python-based ETL (Extract, Transform, Load) scripts for populating the databases as well as Bash automation scripts;
+    \item \textbf{servers} structured as:
+    \begin{itemize}
+      \item \textbf{backend}: Express Gateway (aggregation layer), Express MongoDB service (user data), and Spring Boot PostgreSQL service (anime catalog data);
+      \item \textbf{frontend}: Express UI with Handlebars templates for server-side rendering.
+    \end{itemize}
   \end{itemize}
-  \end{itemize}
-    \item \textbf{report}
+  \item \textbf{report}
 \end{itemize}
 
 
