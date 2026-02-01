@@ -60,7 +60,11 @@
                                 </ul>
                             </div>
                             <!-- Hidden inputs per form submission -->
-                            <div id="selectedGenresContainer"></div>
+                            <div id="selectedGenresContainer">
+                                {{#each selectedGenres}}
+                                <input type="hidden" name="genres" value="{{this}}">
+                                {{/each}}
+                            </div>
                         </div>
 
                         <!-- Filtro per score minimo -->
@@ -135,9 +139,9 @@
                         <div class="card anime-card clickable h-100" data-anime-id="{{this.mal_id}}">
                             {{#if this.imageUrl}}
                             <img src="{{this.imageUrl}}" alt="{{this.title}}" class="card-img-top anime-card-image" 
-                                 onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+                                 onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
                             {{else}}
-                            <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" 
+                            <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" 
                                  alt="{{this.title}}" class="card-img-top anime-card-image">
                             {{/if}}
                             <div class="card-body">

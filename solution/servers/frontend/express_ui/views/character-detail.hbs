@@ -32,9 +32,9 @@
             <div class="col-md-4">
                 <div class="character-detail-image">
                     {{#if character.image_url}}
-                        <img src="{{character.image_url}}" alt="{{character.name}}" onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+                        <img src="{{character.image_url}}" alt="{{character.name}}" onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
                     {{else}}
-                        <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" alt="No image available">
+                        <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" alt="No image available">
                     {{/if}}
                 </div>
 
@@ -99,9 +99,9 @@
                             {{#if this.image_url}}
                             <img src="{{this.image_url}}" alt="{{this.title}}" class="card-img-top" 
                                  style="height:280px;object-fit:cover" 
-                                 onerror="this.src='https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image'">
+                                 onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
                             {{else}}
-                            <img src="https://via.placeholder.com/225x350/667eea/ffffff?text=No+Image" 
+                            <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" 
                                  alt="{{this.title}}" class="card-img-top" style="height:280px;object-fit:cover">
                             {{/if}}
                             <div class="card-body">
@@ -134,7 +134,7 @@
         {{/if}}
 
         <div class="mt-4">
-            <a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary">← Back to Results</a>
+            <a href="#" onclick="history.back(); return false;" class="btn btn-outline-primary">← Go Back</a>
         </div>
     </div>
     {{else}}

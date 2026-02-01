@@ -43,10 +43,7 @@
             <div class="col-lg-4 col-md-5 mb-4">
                 {{#if anime.imageUrl}}
                 <img src="{{anime.imageUrl}}" alt="{{anime.title}}" class="img-fluid rounded shadow-lg w-100 mb-3 anime-detail-image" 
-                     onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="text-center p-5 border rounded bg-light shadow mb-3 anime-detail-image-fallback" style="display:none;">
-                    <div class="display-1">🎬</div>
-                </div>
+                     onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
                 {{else}}
                 <div class="text-center p-5 border rounded bg-light shadow mb-3 anime-detail-image-fallback">
                     <div class="display-1">🎬</div>
@@ -205,9 +202,9 @@
                             <div class="card anime-card clickable h-100" data-character-id="{{this.character_mal_id}}">
                                 {{#if this.image_url}}
                                 <img src="{{this.image_url}}" alt="{{this.name}}" class="card-img-top anime-card-image" 
-                                     onerror="this.src='https://via.placeholder.com/225x350/f093fb/ffffff?text=No+Image'">
+                                     onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
                                 {{else}}
-                                <img src="https://via.placeholder.com/225x350/f093fb/ffffff?text=No+Image" 
+                                <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" 
                                      alt="{{this.name}}" class="card-img-top anime-card-image">
                                 {{/if}}
                                 <div class="card-body">
@@ -246,9 +243,9 @@
                             <div class="card anime-card clickable h-100" data-person-id="{{this.person_mal_id}}">
                                 {{#if this.image_url}}
                                 <img src="{{this.image_url}}" alt="{{this.name}}" class="card-img-top anime-card-image" 
-                                     onerror="this.src='https://via.placeholder.com/225x350/9333ea/ffffff?text=No+Image'">
+                                     onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
                                 {{else}}
-                                <img src="https://via.placeholder.com/225x350/9333ea/ffffff?text=No+Image" 
+                                <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" 
                                      alt="{{this.name}}" class="card-img-top anime-card-image">
                                 {{/if}}
                                 <div class="card-body">

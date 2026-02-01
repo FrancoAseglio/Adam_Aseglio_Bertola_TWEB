@@ -84,8 +84,8 @@ document.addEventListener('DOMContentLoaded', function() {
   // GENRE DROPDOWN MANAGEMENT (anime-search.hbs)
   const genreCheckboxes = document.querySelectorAll('.genre-checkbox');
   const genreButtonText = document.getElementById('genreButtonText');
-  const genreInputsContainer = document.getElementById('selectedGenresContainer');
-  const genreBadgesContainer = document.getElementById('selectedGenresBadges');
+  const selectedGenresContainer = document.getElementById('selectedGenresContainer');
+  const selectedGenresBadges = document.getElementById('selectedGenresBadges');
 
   if (genreCheckboxes.length > 0 && genreButtonText) {
     // Update display whenever checkboxes change
@@ -97,45 +97,40 @@ document.addEventListener('DOMContentLoaded', function() {
       if (checkedCount === 0) {
         genreButtonText.textContent = 'Select...';
       } else if (checkedCount === 1) {
-        genreButtonText.textContent = checkedBoxes[0].nextElementSibling.textContent.trim();
+        genreButtonText.textContent = checkedBoxes[0].value;
       } else {
-        genreButtonText.textContent = `${checkedCount} genres selected`;
+        genreButtonText.textContent = `${checkedCount} genres`;
       }
       
       // Update hidden inputs for form submission
-      if (genreInputsContainer) {
-        genreInputsContainer.innerHTML = '';
+      if (selectedGenresContainer) {
+        // Clear existing hidden inputs except those from server
+        const existingInputs = selectedGenresContainer.querySelectorAll('input');
+        existingInputs.forEach(input => input.remove());
+        
+        // Add new hidden inputs for checked genres
         checkedBoxes.forEach(cb => {
           const input = document.createElement('input');
           input.type = 'hidden';
           input.name = 'genres';
           input.value = cb.value;
-          genreInputsContainer.appendChild(input);
+          selectedGenresContainer.appendChild(input);
         });
       }
       
       // Update badge display
-      if (genreBadgesContainer) {
-        genreBadgesContainer.innerHTML = '';
+      if (selectedGenresBadges) {
+        selectedGenresBadges.innerHTML = '';
+        
         if (checkedCount > 0) {
           checkedBoxes.forEach(cb => {
             const badge = document.createElement('span');
             badge.className = 'badge bg-primary me-1';
             badge.textContent = cb.value;
-            genreBadgesContainer.appendChild(badge);
+            selectedGenresBadges.appendChild(badge);
           });
         }
       }
-      
-      // Visual feedback for checked items
-      genreCheckboxes.forEach(cb => {
-        const parentDiv = cb.closest('.form-check');
-        if (cb.checked) {
-          parentDiv.style.backgroundColor = '#e7f3ff';
-        } else {
-          parentDiv.style.backgroundColor = '';
-        }
-      });
     }
     
     // Add change listeners to all checkboxes
