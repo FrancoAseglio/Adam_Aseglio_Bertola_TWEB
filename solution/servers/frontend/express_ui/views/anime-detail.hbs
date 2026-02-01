@@ -24,6 +24,11 @@
         <!-- Titles Section -->
         <div class="mb-4">
             <h1 class="text-primary mb-2">{{anime.title}}</h1>
+            {{#if anime.malId}}
+            <p class="text-muted mb-1"><small><strong>ID:</strong> {{anime.malId}}</small></p>
+            {{else if anime.mal_id}}
+            <p class="text-muted mb-1"><small><strong>ID:</strong> {{anime.mal_id}}</small></p>
+            {{/if}}
             {{#if anime.titleEnglish}}
             <p class="text-muted mb-1 subtitle-text">{{anime.titleEnglish}}</p>
             {{/if}}
@@ -39,7 +44,7 @@
                 {{#if anime.imageUrl}}
                 <img src="{{anime.imageUrl}}" alt="{{anime.title}}" class="img-fluid rounded shadow-lg w-100 mb-3 anime-detail-image" 
                      onerror="this.onerror=null; this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="text-center p-5 border rounded bg-light shadow mb-3 anime-detail-image-fallback">
+                <div class="text-center p-5 border rounded bg-light shadow mb-3 anime-detail-image-fallback" style="display:none;">
                     <div class="display-1">🎬</div>
                 </div>
                 {{else}}
@@ -78,6 +83,11 @@
                             </div>
                         </div>
                     </div>
+                </a>
+
+                <!-- Recommendations Button -->
+                <a href="/recommendations/{{#if anime.malId}}{{anime.malId}}{{else}}{{anime.mal_id}}{{/if}}" class="btn btn-primary w-100 mt-3">
+                    🎯 View Recommendations
                 </a>
             </div>
 

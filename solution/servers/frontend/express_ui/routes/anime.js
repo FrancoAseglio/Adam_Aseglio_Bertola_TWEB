@@ -132,11 +132,11 @@ router.get('/search', async (req, res) => {
           });
         }
         
-        return selectedGenres.some(selectedGenre => 
+        return selectedGenres.every(selectedGenre => 
           animeGenres.some(ag => ag.toLowerCase() === selectedGenre.toLowerCase())
         );
       });
-      console.log('Genre filter:', beforeFilter, '→', filteredResults.length);
+      console.log('Genre filter (AND logic):', beforeFilter, '→', filteredResults.length);
     }
 
     if (minScore) {

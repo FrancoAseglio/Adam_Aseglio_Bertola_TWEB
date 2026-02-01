@@ -125,7 +125,7 @@
                                             {{#if this.details.image_url}}
                                             <a href="/people/{{this.id}}">
                                                 <img src="{{this.details.image_url}}"
-                                                     alt="{{this.details.givenName}} {{this.details.familyName}}"
+                                                     alt="{{#if this.details.name}}{{this.details.name}}{{else}}{{this.details.givenName}} {{this.details.familyName}}{{/if}}"
                                                      class="card-img-top"
                                                      style="height: 280px; object-fit: cover;">
                                             </a>
@@ -134,7 +134,7 @@
                                             <div class="card-body">
                                                 <a href="/people/{{this.id}}" class="text-decoration-none">
                                                     <h6 class="card-title mb-2" style="color: var(--primary-color); min-height: 2.5em;">
-                                                        ⭐ {{this.details.givenName}} {{this.details.familyName}}
+                                                        {{#if this.details.name}}{{this.details.name}}{{else}}{{this.details.givenName}} {{this.details.familyName}}{{/if}}
                                                     </h6>
                                                 </a>
                                                 <p class="mb-1 text-muted small"><strong>Type:</strong> Person</p>

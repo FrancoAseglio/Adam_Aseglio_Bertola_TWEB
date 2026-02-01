@@ -37,13 +37,13 @@ public class CharacterController {
             return characterService.searchWithFilters(name, role, minFavorites);
         }
         
-        // Otherwise use simple name search
+        // If name is provided and not empty, use simple name search
         if (name != null && !name.isEmpty()) {
             return characterService.searchByName(name);
         }
         
-        // Return empty list if no parameters
-        return java.util.Collections.emptyList();
+        // If no parameters or empty name, return all characters
+        return characterService.searchWithFilters(null, null, null);
     }
 
     @GetMapping
