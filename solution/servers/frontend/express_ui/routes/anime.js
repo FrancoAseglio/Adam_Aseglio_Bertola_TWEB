@@ -78,7 +78,9 @@ router.get('/search', async (req, res) => {
 
   const selectedGenres = genres ? (Array.isArray(genres) ? genres : [genres]) : [];
   
-  if (!title && selectedGenres.length === 0 && !minScore && !limit) {
+  // Show empty form only if NO parameters provided at all
+  const hasAnyFilter = title || selectedGenres.length > 0 || minScore || limit;
+  if (!hasAnyFilter) {
     return res.render('anime-search', {
       layout         : false,
       title          : 'Search Anime',
@@ -103,9 +105,10 @@ router.get('/search', async (req, res) => {
       allResults = response.data;
       usedGenreAPI = true;
     } else {
+      // If no title or genre but has minScore or limit, get a large dataset
       let apiLimit = 100;
       if (minScore) apiLimit = 10000;
-      else if (limit) apiLimit = Math.max(parseInt(limit), 100);
+      else if (limit) apiLimit = Math.max(parseInt(limit) * 2, 100);
       const response = await axios.get(`${GATEWAY_URL}/anime/top/all`, { params: { limit: apiLimit } });
       allResults = response.data;
     }
@@ -144,7 +147,9 @@ router.get('/search', async (req, res) => {
       filteredResults = filteredResults.filter(anime => anime.score && anime.score >= minScoreNum);
     }
 
-    if (limit || minScore) filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
+    // Always sort by score descending
+    filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
+    
     if (limit) filteredResults = filteredResults.slice(0, parseInt(limit));
 
     filteredResults = filteredResults.map(anime => ({
