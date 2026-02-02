@@ -95,7 +95,6 @@ public class CharacterController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeCharacter(
             @Parameter(description = "Character ID", example = "1") @PathVariable Integer id) {
-        // ...existing code...
         try {
             characterService.removeCharacter(id);
             return ResponseEntity.ok(java.util.Map.of("message", "Character removed successfully"));
