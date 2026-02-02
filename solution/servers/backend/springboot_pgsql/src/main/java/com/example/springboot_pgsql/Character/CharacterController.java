@@ -38,14 +38,15 @@ public class CharacterController {
     public List<Character> searchByName(
             @Parameter(description = "Character name to search for", example = "Naruto Uzumaki") @RequestParam(required = false) String name,
             @Parameter(description = "Role of the character", example = "Main") @RequestParam(required = false) String role,
-            @Parameter(description = "Minimum number of favorites", example = "1000") @RequestParam(required = false) Integer minFavorites) {
-        if (role != null || minFavorites != null) {
-            return characterService.searchWithFilters(name, role, minFavorites);
+            @Parameter(description = "Minimum number of favorites", example = "1000") @RequestParam(required = false) Integer minFavorites,
+            @Parameter(description = "Maximum number of results to return", example = "50") @RequestParam(required = false) Integer limit) {
+        if (role != null || minFavorites != null || limit != null) {
+            return characterService.searchWithFilters(name, role, minFavorites, limit);
         }
         if (name != null && !name.isEmpty()) {
             return characterService.searchByName(name);
         }
-        return characterService.searchWithFilters(null, null, null);
+        return characterService.searchWithFilters(null, null, null, null);
     }
 
     @Operation(summary = "Get character by ID", description = "Retrieve a specific character by their ID.")

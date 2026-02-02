@@ -26,9 +26,11 @@ public interface CharacterRepository extends JpaRepository<Character, Integer> {
            "AND (:role IS NULL OR LOWER(caw.role) = LOWER(:role)) " +
            "AND (:minFavorites IS NULL OR c.favorites >= :minFavorites) " +
            "GROUP BY c.character_mal_id, c.name, c.name_kanji, c.nicknames, c.about, c.favorites, c.image " +
-           "ORDER BY c.favorites DESC",
+           "ORDER BY c.favorites DESC " +
+           "LIMIT CASE WHEN :limit IS NULL THEN 999999 ELSE :limit END",
            nativeQuery = true)
     List<Character> searchWithFilters(@Param("name") String name,
                                       @Param("role") String role,
-                                      @Param("minFavorites") Integer minFavorites);
+                                      @Param("minFavorites") Integer minFavorites,
+                                      @Param("limit") Integer limit);
 }

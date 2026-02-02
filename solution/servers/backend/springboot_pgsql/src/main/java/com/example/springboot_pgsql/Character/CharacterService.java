@@ -28,8 +28,8 @@ public class CharacterService {
         return characterRepository.findByNameContainingIgnoreCaseOrderByFavoritesDesc(name);
     }
     
-    public List<Character> searchWithFilters(String name, String role, Integer minFavorites) {
-        return characterRepository.searchWithFilters(name, role, minFavorites);
+    public List<Character> searchWithFilters(String name, String role, Integer minFavorites, Integer limit) {
+        return characterRepository.searchWithFilters(name, role, minFavorites, limit);
     }
 
     public Character saveCharacter(Character character) {

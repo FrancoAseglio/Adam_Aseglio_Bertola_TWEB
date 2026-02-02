@@ -27,6 +27,11 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
  *         schema:
  *           type: integer
  *         description: Minimum number of favorites
+ *       - in: query
+ *         name: limit
+ *         schema:
+ *           type: integer
+ *         description: Maximum number of results to return
  *     responses:
  *       200:
  *         description: List of matching characters
@@ -35,12 +40,13 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
  */
 router.get('/search', async (req, res) => {
   try {
-    const { name, role, minFavorites } = req.query;
+    const { name, role, minFavorites, limit } = req.query;
     const params = {};
     
     if (name) params.name = name;
     if (role) params.role = role;
     if (minFavorites) params.minFavorites = minFavorites;
+    if (limit) params.limit = limit;
     
     const response = await axios.get(`${BACKEND_SPRING_URL}/characters/search`, { params });
     res.json(response.data);

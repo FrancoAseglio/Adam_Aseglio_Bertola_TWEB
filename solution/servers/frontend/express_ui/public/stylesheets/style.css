@@ -213,32 +213,6 @@ h1, h2, h3, h4, h5, h6 {
   box-shadow: var(--shadow-sm);
 }
 
-.profile-stats-card .card-body {
-  padding: 1.5rem;
-}
-
-.profile-stats-card .row > div {
-  padding: 1rem;
-  border-right: 1px solid var(--border-color);
-}
-
-.profile-stats-card .row > div:last-child {
-  border-right: none;
-}
-
-.profile-stats-card p {
-  margin-bottom: 0.75rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.profile-stats-card strong {
-  color: var(--text-muted);
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
 .anime-card {
   background: white;
   border: 1px solid var(--border-color);
@@ -326,32 +300,6 @@ h1, h2, h3, h4, h5, h6 {
 .status-badge .status-count { font-size: 1.5rem; font-weight: 700; }
 .status-badge .status-label { font-size: 0.75rem; text-transform: uppercase; }
 
-.profile-stats-card .card-body {
-  padding: 1.5rem;
-}
-
-.profile-stats-card .row > div {
-  padding: 1rem;
-  border-right: 1px solid var(--border-color);
-}
-
-.profile-stats-card .row > div:last-child {
-  border-right: none;
-}
-
-.profile-stats-card p {
-  margin-bottom: 0.75rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.profile-stats-card strong {
-  color: var(--text-muted);
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-
 /* ----- Gradient Cards (Stats) ----- */
 .card-gradient {
   color: white;
@@ -401,34 +349,6 @@ h1, h2, h3, h4, h5, h6 {
 .favorite-card .anime-title {
   color: var(--primary-color);
   font-weight: 600;
-}
-
-.type-badge {
-  background: var(--border-color);
-  color: var(--text-muted);
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.anime-id-badge {
-  background: var(--primary-light);
-  color: var(--primary-color);
-  padding: 0.2rem 0.5rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
-  font-weight: 500;
-}
-
-.episodes-badge {
-  display: inline-block;
-  background: var(--gradient-cyan);
-  color: white;
-  padding: 0.35rem 0.75rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
-  font-weight: 500;
 }
 
 .anime-id {
@@ -746,12 +666,6 @@ h1, h2, h3, h4, h5, h6 {
 .anime-card-image {
   height: 300px;
   object-fit: cover;
-}
-
-.form-label-sm {
-  font-size: 0.875rem;
-  font-weight: 500;
-  color: var(--text-muted);
 }
 
 .dropdown-menu.genre-dropdown {
