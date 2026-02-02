@@ -972,3 +972,22 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: 1px;
   text-transform: uppercase;
 }
+
+/* ----- Footer Styles ----- */
+.footer {
+  width: 100%;
+  background: #e5e7eb;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 0;
+  border-top: 1px solid var(--border-color);
+  font-size: 0.875rem;
+  line-height: 1;
+}
+
+.footer p {
+  margin: 0;
+  padding: 0;
+}
