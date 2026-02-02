@@ -78,7 +78,6 @@ router.get('/search', async (req, res) => {
 
   const selectedGenres = genres ? (Array.isArray(genres) ? genres : [genres]) : [];
   
-  // Show empty form only if NO parameters provided at all
   const hasAnyFilter = title || selectedGenres.length > 0 || minScore || limit;
   if (!hasAnyFilter) {
     return res.render('anime-search', {
@@ -87,7 +86,7 @@ router.get('/search', async (req, res) => {
       filters        : {},
       availableGenres: availableGenres,
       selectedGenres : [],
-      showWarning    : true  // Flag to show validation warning
+      showWarning    : true
     });
   }
 
@@ -98,18 +97,13 @@ router.get('/search', async (req, res) => {
     let usedGenreAPI = false;
 
     if (title) {
-      // Search by title
       const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params: { title } });
       allResults = response.data;
     } else if (selectedGenres.length > 0) {
-      // Filter by first genre (will apply AND logic for multiple genres below)
       const response = await axios.get(`${GATEWAY_URL}/anime/genre/${selectedGenres[0]}`);
       allResults = response.data;
       usedGenreAPI = true;
     } else {
-      // No title or genre: fetch all anime using a broad search
-      // This happens when user only specifies minScore or limit
-      // Use common letters to get a large dataset (a, e, i, o, u are in most titles)
       console.log('Fetching all anime for filtering...');
       const commonSearchTerms = ['a', 'the', 'no', 'de'];
       const promises = commonSearchTerms.map(term => 
@@ -118,7 +112,6 @@ router.get('/search', async (req, res) => {
       );
       const results = await Promise.all(promises);
       
-      // Combine and deduplicate results by mal_id
       const combinedMap = new Map();
       results.forEach(result => {
         result.data.forEach(anime => {
@@ -165,7 +158,6 @@ router.get('/search', async (req, res) => {
       filteredResults = filteredResults.filter(anime => anime.score && anime.score >= minScoreNum);
     }
 
-    // Always sort by score descending
     filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
     
     if (limit) filteredResults = filteredResults.slice(0, parseInt(limit));
@@ -403,8 +395,12 @@ router.get('/:id/stats', async (req, res) => {
  *       - Anime
  *     summary: Get anime details by ID
  *     description: |
- *       Retrieves detailed information about a specific anime.
- *       Note: This route must be last as /:id catches all paths.
+ *       Retrieves detailed information about a specific anime including:
+ *       - Basic anime information (title, synopsis, score, episodes)
+ *       - Top characters appearing in the anime
+ *       - Voice actors and staff members
+ *       
+ *       Note: This route must be defined last as /:id catches all paths.
  *     operationId: getAnimeById
  *     parameters:
  *       - name: id
@@ -412,12 +408,26 @@ router.get('/:id/stats', async (req, res) => {
  *         required: true
  *         schema:
  *           type: string
+ *           pattern: '^\d+$'
  *         description: MyAnimeList anime ID
+ *         example: "1"
  *     responses:
  *       200:
- *         description: Anime details
+ *         description: Successfully retrieved anime details with characters and staff
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ *               description: Rendered HTML page with anime details
  *       404:
- *         description: Anime not found
+ *         description: Anime not found in database
+ *         content:
+ *           text/html:
+ *             schema:
+ *               type: string
+ *               description: Rendered error page
+ *       500:
+ *         description: Internal server error
  */
 router.get('/:id', async (req, res) => {
   try {

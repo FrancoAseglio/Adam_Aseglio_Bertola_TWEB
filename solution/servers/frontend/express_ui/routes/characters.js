@@ -10,45 +10,55 @@ const GATEWAY_URL = 'http://localhost:3001/api';
  *   get:
  *     tags:
  *       - Characters
- *     summary: Search characters by name
+ *     summary: Search and filter characters
  *     description: |
- *       Search for anime characters by name. If no name query parameter is provided,
- *       displays the search form. Otherwise, searches the gateway API and returns
- *       all matching characters.
+ *       Advanced character search with multiple filtering options:
+ *       - Search by character name (partial match)
+ *       - Filter by role (Main, Supporting)
+ *       - Filter by minimum favorites count
+ *       - Limit results to top N characters
+ *       - Pagination with 20 items per page
+ *       
+ *       Shows search form if no parameters provided.
  *     operationId: searchCharacters
  *     parameters:
  *       - name: name
  *         in: query
- *         required: false
- *         description: Character name to search for (if empty, shows search form)
  *         schema:
  *           type: string
- *           minLength: 1
+ *         description: Search by character name
  *         examples:
  *           simple:
  *             value: "Naruto"
- *             summary: Simple name search
  *           full_name:
  *             value: "Naruto Uzumaki"
- *             summary: Full name search
- *           partial:
- *             value: "Conan"
- *             summary: Partial name search
+ *       - name: role
+ *         in: query
+ *         schema:
+ *           type: string
+ *           enum: [Main, Supporting]
+ *         description: Filter by character role
+ *       - name: minFavorites
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           minimum: 0
+ *         description: Minimum number of favorites
+ *       - name: limit
+ *         in: query
+ *         schema:
+ *           type: integer
+ *         description: Limit to top N characters
+ *       - name: page
+ *         in: query
+ *         schema:
+ *           type: integer
+ *           default: 1
  *     responses:
  *       200:
- *         description: Successfully retrieved search results or displayed search form
- *         content:
- *           text/html:
- *             schema:
- *               type: string
- *               description: Rendered HTML page with search results or search form
+ *         description: Search results or search form
  *       500:
- *         description: Error during search
- *         content:
- *           text/html:
- *             schema:
- *               type: string
- *               description: Rendered error page with error details
+ *         description: Server error
  */
 router.get('/search', async (req, res) => {
   let { name, role, minFavorites, limit } = req.query;
@@ -58,7 +68,6 @@ router.get('/search', async (req, res) => {
   minFavorites = minFavorites && minFavorites.trim() !== '' ? minFavorites : undefined;
   limit = limit && limit.trim() !== '' ? limit : undefined;
   
-  // Check if user explicitly submitted the form (has query params) vs just loading the page
   const hasAnyQueryParam = Object.keys(req.query).length > 0;
   
   if (!hasAnyQueryParam) {
@@ -79,7 +88,6 @@ router.get('/search', async (req, res) => {
     if (role) params.role = role;
     if (minFavorites) params.minFavorites = minFavorites;
     
-    // If no search params, pass empty name to get all characters
     if (!name && !role && !minFavorites) {
       params.name = '';
     }
