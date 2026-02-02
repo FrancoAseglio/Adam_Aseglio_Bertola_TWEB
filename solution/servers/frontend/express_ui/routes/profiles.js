@@ -21,7 +21,6 @@ const GATEWAY_URL = 'http://localhost:3001/api';
  */
 router.get('/', async (req, res) => {
   res.render('profile-search', {
-    layout: false,
     title: 'Search User Profiles'
   });
 });
@@ -83,7 +82,6 @@ router.get('/:username', async (req, res) => {
     const data = profileResponse.data;
     
     res.render('profile', {
-      layout   : false,
       title    : `${req.params.username} - Profile`,
       profile  : data.profile,
       favorites: data.favorites,

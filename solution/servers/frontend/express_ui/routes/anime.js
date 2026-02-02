@@ -82,7 +82,6 @@ router.get('/search', async (req, res) => {
   const hasAnyFilter = title || selectedGenres.length > 0 || minScore || limit;
   if (!hasAnyFilter) {
     return res.render('anime-search', {
-      layout         : false,
       title          : 'Search Anime',
       results        : null,
       filters        : {},
@@ -189,7 +188,6 @@ router.get('/search', async (req, res) => {
     if (limit) params.append('limit', limit);
 
     res.render('anime-search', {
-      layout         : false,
       title          : 'Search Anime',
       results        : paginatedResults,
       filters        : { title, minScore, limit },
@@ -259,7 +257,6 @@ router.get('/genre/:genre', async (req, res) => {
     const paginatedResults = allResults.slice(startIndex, endIndex);
 
     res.render('anime-search', {
-      layout      : false,
       title       : `${req.params.genre} Anime`,
       results     : paginatedResults,
       query       : req.params.genre,
@@ -327,7 +324,6 @@ router.get('/stats/:id', async (req, res) => {
     };
     
     res.render('anime-stats', {
-      layout: false,
       title: `${animeDetails?.title || 'Anime'} - Statistics`,
       stats: combinedStats,
       animeId: req.params.id
@@ -335,7 +331,6 @@ router.get('/stats/:id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching anime stats:', error.message);
     res.status(404).render('error', {
-      layout : false,
       message: 'Anime statistics not found',
       error  : { 
         status: 404, 
@@ -384,7 +379,6 @@ router.get('/:id/stats', async (req, res) => {
     };
     
     res.render('anime-stats', {
-      layout: false,
       title: `${animeDetails?.title || 'Anime'} - Statistics`,
       stats: combinedStats,
       animeId: req.params.id
@@ -392,7 +386,6 @@ router.get('/:id/stats', async (req, res) => {
   } catch (error) {
     console.error('Error fetching anime stats:', error.message);
     res.status(404).render('error', {
-      layout : false,
       message: 'Anime statistics not found',
       error  : { 
         status: 404, 
@@ -482,7 +475,6 @@ router.get('/:id', async (req, res) => {
     }
     
     res.render('anime-detail', {
-      layout: false,
       title : anime.title || `Anime ${req.params.id}`,
       anime : anime,
       charactersList: charactersList,

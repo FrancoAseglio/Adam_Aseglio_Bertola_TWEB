@@ -70,7 +70,6 @@ router.get('/:id', async (req, res) => {
     const person = personResponse.data;
     
     res.render('person-details', {
-      layout: false,
       title : person.name || `Person ${req.params.id}`,
       person: person
     });

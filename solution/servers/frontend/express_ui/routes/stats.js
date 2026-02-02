@@ -89,7 +89,6 @@ router.get('/user/:username', async (req, res) => {
   try {
     const response = await axios.get(`${GATEWAY_URL}/stats/user/${req.params.username}`);
     res.render('user-stats', {
-      layout   : false,
       title    : `${req.params.username} - Statistics`,
       userStats: response.data,
       username : req.params.username
@@ -97,7 +96,6 @@ router.get('/user/:username', async (req, res) => {
   } catch (error) {
     if (error.response && error.response.status === 404) {
       res.render('user-stats', {
-        layout   : false,
         title    : 'User Not Found',
         userStats: null,
         username : req.params.username
@@ -153,7 +151,6 @@ router.get('/anime/:animeId', async (req, res) => {
     const { stats, animeDetails } = response.data;
 
     res.render('anime-stats', {
-      layout      : false,
       title       : animeDetails?.title ? `${animeDetails.title} - Statistics` : `Anime ${req.params.animeId} - Statistics`,
       stats       : stats,
       animeDetails: animeDetails,

@@ -63,7 +63,6 @@ router.get('/search', async (req, res) => {
   
   if (!hasAnyQueryParam) {
     return res.render('character-search', {
-      layout : false,
       title  : 'Search Characters',
       query  : '',
       filters: {},
@@ -102,7 +101,6 @@ router.get('/search', async (req, res) => {
     if (limit) queryParams.append('limit', limit);
     
     res.render('character-search', {
-      layout : false,
       title  : 'Search Results',
       query  : name || '',
       filters: { name, role, minFavorites, limit },
@@ -204,7 +202,6 @@ router.get('/:id', async (req, res) => {
     }
     
     res.render('character-detail', {
-      layout   : false,
       title    : `Character ${req.params.id}`,
       character: characterResponse.data,
       animeList: animeList

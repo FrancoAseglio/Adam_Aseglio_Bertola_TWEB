@@ -77,7 +77,6 @@ router.get('/:username', async (req, res) => {
     const paginatedFavorites = allFavorites.slice(startIndex, endIndex);
 
     res.render('favorites', {
-      layout           : false,
       title            : `${req.params.username} - Favorites`,
       favorites        : paginatedFavorites,
       username         : req.params.username,
