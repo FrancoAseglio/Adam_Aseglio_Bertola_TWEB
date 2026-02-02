@@ -54,8 +54,9 @@ public class AnimeController {
     })
     @GetMapping("/search")
     public List<Anime> searchByTitle(
-            @Parameter(description = "Anime title to search for", example = "Naruto") @RequestParam String title) {
-        return animeService.searchByTitle(title);
+            @Parameter(description = "Anime title to search for", example = "Naruto") @RequestParam String title,
+            @Parameter(description = "Maximum number of results", example = "50") @RequestParam(required = false) Integer limit) {
+        return animeService.searchByTitle(title, limit);
     }
 
     @Operation(summary = "Get all genres", description = "Retrieve a list of all available anime genres.")
@@ -73,8 +74,9 @@ public class AnimeController {
     })
     @GetMapping("/genre/{genre}")
     public List<Anime> getByGenre(
-            @Parameter(description = "Genre name", example = "Action") @PathVariable String genre) {
-        return animeService.getByGenre(genre);
+            @Parameter(description = "Genre name", example = "Action") @PathVariable String genre,
+            @Parameter(description = "Maximum number of results", example = "50") @RequestParam(required = false) Integer limit) {
+        return animeService.getByGenre(genre, limit);
     }
 
     @Operation(summary = "Get anime count", description = "Retrieve the total number of anime in the database.")

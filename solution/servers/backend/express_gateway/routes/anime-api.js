@@ -30,10 +30,12 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
  */
 router.get('/search', async (req, res) => {
   try {
-    const title = req.query.title || '';
-    const response = await axios.get(`${BACKEND_SPRING_URL}/anime/search`, {
-      params: { title }
-    });
+    const { title, limit } = req.query;
+    const params = {};
+    if (title) params.title = title;
+    if (limit) params.limit = limit;
+    
+    const response = await axios.get(`${BACKEND_SPRING_URL}/anime/search`, { params });
     res.json(response.data);
   } catch (error) {
     res.status(500).json({ 
@@ -88,7 +90,10 @@ router.get('/genres', async (req, res) => {
  */
 router.get('/genre/:genre', async (req, res) => {
   try {
-    const response = await axios.get(`${BACKEND_SPRING_URL}/anime/genre/${req.params.genre}`);
+    const params = {};
+    if (req.query.limit) params.limit = req.query.limit;
+    
+    const response = await axios.get(`${BACKEND_SPRING_URL}/anime/genre/${req.params.genre}`, { params });
     res.json(response.data);
   } catch (error) {
     res.status(500).json({ 

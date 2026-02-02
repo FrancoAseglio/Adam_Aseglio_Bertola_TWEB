@@ -93,14 +93,29 @@ router.get('/search', async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = 20;
+    
+    if (limit && parseInt(limit) > 10000) {
+      return res.render('anime-search', {
+        title          : 'Search Anime',
+        results        : null,
+        filters        : { title, minScore, limit },
+        availableGenres: availableGenres,
+        selectedGenres : selectedGenres,
+        error          : 'Top Limit cannot exceed 10000'
+      });
+    }
     let allResults = [];
     let usedGenreAPI = false;
 
     if (title) {
-      const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params: { title } });
+      const params = { title };
+      if (limit) params.limit = limit;
+      const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params });
       allResults = response.data;
     } else if (selectedGenres.length > 0) {
-      const response = await axios.get(`${GATEWAY_URL}/anime/genre/${selectedGenres[0]}`);
+      const params = {};
+      if (limit) params.limit = limit;
+      const response = await axios.get(`${GATEWAY_URL}/anime/genre/${selectedGenres[0]}`, { params });
       allResults = response.data;
       usedGenreAPI = true;
     } else {
@@ -160,8 +175,6 @@ router.get('/search', async (req, res) => {
 
     filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
     
-    if (limit) filteredResults = filteredResults.slice(0, parseInt(limit));
-
     filteredResults = filteredResults.map(anime => ({
       ...anime,
       imageUrl: anime.image_url

@@ -13,7 +13,9 @@ import java.util.List;
 @Repository
 public interface AnimeRepository extends JpaRepository<Anime, Integer> {
     List<Anime> findByTitleContainingIgnoreCase(String title);
+    List<Anime> findByTitleContainingIgnoreCase(String title, Pageable pageable);
     List<Anime> findByGenresContainingIgnoreCase(String genre);
+    List<Anime> findByGenresContainingIgnoreCase(String genre, Pageable pageable);
     List<Anime> findByType(String type);
     List<Anime> findAllByScoreIsNotNullOrderByScoreDesc(Pageable pageable);
     List<Anime> findAllByMembersIsNotNullOrderByMembersDesc(Pageable pageable);

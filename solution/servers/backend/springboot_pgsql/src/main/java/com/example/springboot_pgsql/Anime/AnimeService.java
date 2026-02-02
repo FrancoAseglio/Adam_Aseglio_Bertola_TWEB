@@ -1,6 +1,8 @@
 package com.example.springboot_pgsql.Anime;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Arrays;
@@ -24,7 +26,11 @@ public class AnimeService {
         return animeRepository.findById(id).orElse(null);
     }
 
-    public List<Anime> searchByTitle(String title) {
+    public List<Anime> searchByTitle(String title, Integer limit) {
+        if (limit != null && limit > 0) {
+            Pageable pageable = PageRequest.of(0, limit);
+            return animeRepository.findByTitleContainingIgnoreCase(title, pageable);
+        }
         return animeRepository.findByTitleContainingIgnoreCase(title);
     }
 
@@ -37,7 +43,11 @@ public class AnimeService {
         );
     }
 
-    public List<Anime> getByGenre(String genre) {
+    public List<Anime> getByGenre(String genre, Integer limit) {
+        if (limit != null && limit > 0) {
+            Pageable pageable = PageRequest.of(0, limit);
+            return animeRepository.findByGenresContainingIgnoreCase(genre, pageable);
+        }
         return animeRepository.findByGenresContainingIgnoreCase(genre);
     }
 
