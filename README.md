@@ -186,6 +186,9 @@ python data_load_mongo.py
 ```
 
 ## Running the Application
+
+### 6.a Automated CLI command
+
 The project includes automation scripts for managing all services via Makefile. 
 Navigate back into the solution dir and fireup the app accordingly:  
 ```bash
@@ -198,7 +201,7 @@ make clean   # removes builds and logs
 make help    # shows available commands
 ```
 
-### 6. IDE startup (Optional)
+### 6.b IDE startup (Optional)
 
 **Note:** This step is only required if you plan to run services individually from an IDE.
 The automated start scripts handles dependencies automatically.
