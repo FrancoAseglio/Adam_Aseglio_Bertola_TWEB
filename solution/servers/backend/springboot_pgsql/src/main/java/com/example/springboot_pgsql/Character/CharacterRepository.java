@@ -29,7 +29,7 @@ public interface CharacterRepository extends JpaRepository<Character, Integer> {
            "    AND LOWER(caw.role) = LOWER(:role) " +
            ")) " +
            "ORDER BY c.favorites DESC " +
-           "LIMIT CASE WHEN :limit IS NULL THEN 99999 ELSE :limit END",
+           "LIMIT CASE WHEN :limit IS NULL THEN 999999 ELSE :limit END",
            nativeQuery = true)
     List<Character> searchWithFilters(@Param("name") String name,
                                       @Param("role") String role,

@@ -93,7 +93,7 @@ router.get('/search', async (req, res) => {
       });
     }
     
-    if (limit && parseInt(limit) > 100000) {
+    if (limit && parseInt(limit) > 500000) {
       return res.render('character-search', {
         title  : 'Search Characters',
         query  : name || '',
