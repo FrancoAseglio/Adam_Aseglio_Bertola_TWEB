@@ -12,22 +12,24 @@ import java.util.List;
  */
 @Repository
 public interface CharacterRepository extends JpaRepository<Character, Integer> {
-    List<Character> findByNameContainingIgnoreCaseOrderByFavoritesDesc(String name);
+    
+    @Query("SELECT DISTINCT c FROM Character c WHERE LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%')) ORDER BY c.favorites DESC")
+    List<Character> findByNameContainingIgnoreCaseOrderByFavoritesDesc(@Param("name") String name);
     
     @Query("SELECT MAX(c.characterMalId) FROM Character c")
     Integer findMaxCharacterId();
     
-    @Query(value = "SELECT c.character_mal_id, c.name, c.name_kanji, c.nicknames, c.about, " +
-           "c.favorites, c.image, " +
-           "CASE WHEN :role IS NOT NULL THEN :role ELSE MAX(caw.role) END as role " +
+    @Query(value = "SELECT DISTINCT c.character_mal_id, c.name, c.name_kanji, c.nicknames, c.about, c.favorites, c.image, c.url " +
            "FROM characters c " +
-           "JOIN character_anime_works caw ON c.character_mal_id = caw.character_mal_id " +
-           "WHERE (:name IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%'))) " +
-           "AND (:role IS NULL OR LOWER(caw.role) = LOWER(:role)) " +
+           "WHERE (:name IS NULL OR LOWER(c.name) LIKE LOWER(CONCAT('%', :name, '%')) OR LOWER(c.nicknames) LIKE LOWER(CONCAT('%', :name, '%'))) " +
            "AND (:minFavorites IS NULL OR c.favorites >= :minFavorites) " +
-           "GROUP BY c.character_mal_id, c.name, c.name_kanji, c.nicknames, c.about, c.favorites, c.image " +
+           "AND (:role IS NULL OR EXISTS ( " +
+           "    SELECT 1 FROM character_anime_works caw " +
+           "    WHERE caw.character_mal_id = c.character_mal_id " +
+           "    AND LOWER(caw.role) = LOWER(:role) " +
+           ")) " +
            "ORDER BY c.favorites DESC " +
-           "LIMIT CASE WHEN :limit IS NULL THEN 999999 ELSE :limit END",
+           "LIMIT CASE WHEN :limit IS NULL THEN 99999 ELSE :limit END",
            nativeQuery = true)
     List<Character> searchWithFilters(@Param("name") String name,
                                       @Param("role") String role,

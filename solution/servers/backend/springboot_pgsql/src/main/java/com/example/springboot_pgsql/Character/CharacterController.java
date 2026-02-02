@@ -40,13 +40,7 @@ public class CharacterController {
             @Parameter(description = "Role of the character", example = "Main") @RequestParam(required = false) String role,
             @Parameter(description = "Minimum number of favorites", example = "1000") @RequestParam(required = false) Integer minFavorites,
             @Parameter(description = "Maximum number of results to return", example = "50") @RequestParam(required = false) Integer limit) {
-        if (role != null || minFavorites != null || limit != null) {
-            return characterService.searchWithFilters(name, role, minFavorites, limit);
-        }
-        if (name != null && !name.isEmpty()) {
-            return characterService.searchByName(name);
-        }
-        return characterService.searchWithFilters(null, null, null, null);
+        return characterService.searchWithFilters(name, role, minFavorites, limit);
     }
 
     @Operation(summary = "Get character by ID", description = "Retrieve a specific character by their ID.")

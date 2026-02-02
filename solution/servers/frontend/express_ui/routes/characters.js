@@ -65,7 +65,7 @@ router.get('/search', async (req, res) => {
   
   name = name && name.trim() !== '' ? name.trim() : undefined;
   role = role && role.trim() !== '' ? role.trim() : undefined;
-  minFavorites = minFavorites && minFavorites.trim() !== '' ? minFavorites : undefined;
+  minFavorites = minFavorites !== undefined && minFavorites.trim() !== '' ? minFavorites.trim() : undefined;
   limit = limit && limit.trim() !== '' ? limit : undefined;
   
   const hasAnyQueryParam = Object.keys(req.query).length > 0;
@@ -83,7 +83,7 @@ router.get('/search', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = 20;
     
-    if (!name && !role && !minFavorites && !limit) {
+    if (!name && !role && minFavorites === undefined && !limit) {
       return res.render('character-search', {
         title  : 'Search Characters',
         query  : '',
@@ -93,17 +93,7 @@ router.get('/search', async (req, res) => {
       });
     }
     
-    if (minFavorites && parseInt(minFavorites) < 0) {
-      return res.render('character-search', {
-        title  : 'Search Characters',
-        query  : name || '',
-        filters: { name, role, minFavorites, limit },
-        results: null,
-        error  : 'Minimum Favorites must be at least 100 to prevent performance issues'
-      });
-    }
-    
-    if (limit && parseInt(limit) > 10000) {
+    if (limit && parseInt(limit) > 100000) {
       return res.render('character-search', {
         title  : 'Search Characters',
         query  : name || '',
@@ -116,17 +106,19 @@ router.get('/search', async (req, res) => {
     const params = {};
     if (name) params.name = name;
     if (role) params.role = role;
-    if (minFavorites) params.minFavorites = minFavorites;
+    if (minFavorites !== undefined) params.minFavorites = minFavorites;
     if (limit) params.limit = limit;
     
     const response = await axios.get(`${GATEWAY_URL}/characters/search`, { params });
     let allResults = response.data;
     
-    if (limit && allResults.length > 0) {
-      allResults = allResults.slice(0, parseInt(limit));
-    }
+    const totalItems = allResults.length;
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex   = startIndex + itemsPerPage;
+    const paginatedResults = allResults.slice(startIndex, endIndex);
     
-    const resultsWithRoles = await Promise.all(allResults.map(async (character) => {
+    const resultsWithRoles = await Promise.all(paginatedResults.map(async (character) => {
       try {
         const worksResponse = await axios.get(`${GATEWAY_URL}/character-anime/character/${character.character_mal_id}`);
         if (worksResponse.data && worksResponse.data.length > 0) {
@@ -145,14 +137,6 @@ router.get('/search', async (req, res) => {
       return character;
     }));
     
-    allResults = resultsWithRoles;
-    
-    const totalItems = allResults.length;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const startIndex = (page - 1) * itemsPerPage;
-    const endIndex   = startIndex + itemsPerPage;
-    const paginatedResults = allResults.slice(startIndex, endIndex);
-    
     const queryParams = new URLSearchParams();
     if (name) queryParams.append('name', name);
     if (role) queryParams.append('role', role);
@@ -163,7 +147,7 @@ router.get('/search', async (req, res) => {
       title  : 'Search Results',
       query  : name || '',
       filters: { name, role, minFavorites, limit },
-      results: paginatedResults,
+      results: resultsWithRoles,
       baseUrl: `/characters/search?${queryParams.toString()}`,
       urlSeparator: '&',
       pagination: {

@@ -94,14 +94,14 @@ router.get('/search', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = 20;
     
-    if (limit && parseInt(limit) > 10000) {
+    if (limit && parseInt(limit) > 50000) {
       return res.render('anime-search', {
         title          : 'Search Anime',
         results        : null,
         filters        : { title, minScore, limit },
         availableGenres: availableGenres,
         selectedGenres : selectedGenres,
-        error          : 'Top Limit cannot exceed 10000'
+        error          : 'Top Limit cannot exceed 50000'
       });
     }
     let allResults = [];

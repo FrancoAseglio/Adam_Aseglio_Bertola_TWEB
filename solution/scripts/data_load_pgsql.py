@@ -21,6 +21,7 @@ CHUNK_SIZE = 10_000
 FILES = {
     "character_anime_works_clean.csv": "character_anime_works",
     "characters_clean.csv"           : "characters",
+    "character_nicknames_clean.csv"  : "character_nicknames",
     "details_clean.csv"              : "details",
     "person_details_clean.csv"       : "person_details",
     "person_voice_works_clean.csv"   : "person_voice_works",
@@ -82,6 +83,7 @@ class PostgreSQLLoader:
             url TEXT,
             name TEXT,
             name_kanji TEXT,
+            nicknames TEXT,
             image TEXT,
             favorites INTEGER,
             about TEXT
@@ -143,6 +145,12 @@ class PostgreSQLLoader:
             language VARCHAR(50),
             PRIMARY KEY (person_mal_id, character_mal_id, anime_mal_id)
         );
+
+        DROP TABLE IF EXISTS character_nicknames CASCADE;
+        CREATE TABLE character_nicknames (
+            character_mal_id INTEGER NOT NULL,
+            nickname TEXT NOT NULL
+        );
         """
 
         self.cursor.execute(create_tables_sql)
@@ -179,6 +187,8 @@ class PostgreSQLLoader:
                     on_conflict = "ON CONFLICT (character_mal_id, anime_mal_id) DO NOTHING"
                 elif table_name == "characters":
                     on_conflict = "ON CONFLICT (character_mal_id) DO NOTHING"
+                elif table_name == "character_nicknames":
+                    on_conflict = ""
                 elif table_name == "details":
                     on_conflict = "ON CONFLICT (mal_id) DO NOTHING"
                 elif table_name == "person_details":
@@ -211,6 +221,7 @@ class PostgreSQLLoader:
             ("character_anime_works", [("role",)],             {}),
             ("characters",            [("name",)],             {}),
             ("characters",            [("favorites",)],        {}),
+            ("character_nicknames",   [("character_mal_id",)], {}),
             ("details",               [("title",)],            {}),
             ("details",               [("type",)],             {}),
             ("details",               [("score",)],            {}),
@@ -237,6 +248,36 @@ class PostgreSQLLoader:
         print("  ✅ Indexing complete")
 
 
+    def aggregate_nicknames(self):
+        """Aggregate nicknames from character_nicknames table into characters table."""
+        print("\n🔗 Aggregating nicknames into characters table...")
+        
+        try:
+            update_query = """
+            UPDATE characters c
+            SET nicknames = (
+                SELECT STRING_AGG(nickname, ', ' ORDER BY nickname)
+                FROM character_nicknames cn
+                WHERE cn.character_mal_id = c.character_mal_id
+            )
+            WHERE EXISTS (
+                SELECT 1 FROM character_nicknames cn 
+                WHERE cn.character_mal_id = c.character_mal_id
+            )
+            """
+            
+            self.cursor.execute(update_query)
+            self.conn.commit()
+            
+            self.cursor.execute("SELECT COUNT(*) FROM characters WHERE nicknames IS NOT NULL")
+            count = self.cursor.fetchone()[0]
+            print(f"  ✅ Updated {count:,} characters with nicknames")
+            
+        except Exception as e:
+            print(f"  ❌ Error aggregating nicknames: {e}")
+            self.conn.rollback()
+
+
     def close(self):
         self.cursor.close()
         self.conn.close()
@@ -250,6 +291,7 @@ def main():
         for csv_file, table in FILES.items():
             loader.load_csv(csv_file, table)
 
+        loader.aggregate_nicknames()
         loader.create_indexes()
 
     finally:
