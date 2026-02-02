@@ -81,19 +81,21 @@ async function getCharacterDetail() {
  * Sets up genre dropdown management and clickable anime cards
  */
 document.addEventListener('DOMContentLoaded', function() {
-  // GENRE DROPDOWN MANAGEMENT (anime-search.hbs)
   const genreCheckboxes = document.querySelectorAll('.genre-checkbox');
   const genreButtonText = document.getElementById('genreButtonText');
   const selectedGenresContainer = document.getElementById('selectedGenresContainer');
   const selectedGenresBadges = document.getElementById('selectedGenresBadges');
 
   if (genreCheckboxes.length > 0 && genreButtonText) {
-    // Update display whenever checkboxes change
+    /**
+     * Updates genre dropdown button text, hidden form inputs, and badge display
+     * based on currently selected genre checkboxes.
+     * @private
+     */
     function updateGenreDisplay() {
       const checkedBoxes = Array.from(genreCheckboxes).filter(cb => cb.checked);
       const checkedCount = checkedBoxes.length;
       
-      // Update button text
       if (checkedCount === 0) {
         genreButtonText.textContent = 'Select...';
       } else if (checkedCount === 1) {
@@ -102,13 +104,10 @@ document.addEventListener('DOMContentLoaded', function() {
         genreButtonText.textContent = `${checkedCount} genres`;
       }
       
-      // Update hidden inputs for form submission
       if (selectedGenresContainer) {
-        // Clear existing hidden inputs except those from server
         const existingInputs = selectedGenresContainer.querySelectorAll('input');
         existingInputs.forEach(input => input.remove());
         
-        // Add new hidden inputs for checked genres
         checkedBoxes.forEach(cb => {
           const input = document.createElement('input');
           input.type = 'hidden';
@@ -118,7 +117,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
       
-      // Update badge display
       if (selectedGenresBadges) {
         selectedGenresBadges.innerHTML = '';
         
@@ -133,12 +131,10 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     }
     
-    // Add change listeners to all checkboxes
     genreCheckboxes.forEach(checkbox => {
       checkbox.addEventListener('change', function() {
         updateGenreDisplay();
         
-        // Update visual feedback for selected items
         const dropdownItem = this.closest('.dropdown-item');
         if (this.checked) {
           dropdownItem.classList.add('selected');
@@ -147,20 +143,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
       });
       
-      // Set initial state for pre-selected items
       if (checkbox.checked) {
         checkbox.closest('.dropdown-item').classList.add('selected');
       }
     });
     
-    // Prevent dropdown from closing when clicking checkboxes
     document.querySelectorAll('.genre-dropdown .dropdown-item').forEach(item => {
       item.addEventListener('click', function(e) {
         e.stopPropagation();
       });
     });
     
-    // Initialize display
     updateGenreDisplay();
   }
 
@@ -182,7 +175,6 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
 
-    // Auto-focus on title field if page loaded without parameters
     const showWarning = searchForm.dataset.showWarning === 'true';
     if (showWarning) {
       const urlParams = new URLSearchParams(window.location.search);
@@ -195,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // CLICKABLE ANIME CARDS (anime-search.hbs, anime-genre.hbs)
+  // CLICKABLE ANIME CARDS
   document.querySelectorAll('.anime-card[data-anime-id]').forEach(card => {
     card.addEventListener('click', function() {
       const animeId = this.getAttribute('data-anime-id');
@@ -205,7 +197,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // CLICKABLE CHARACTER CARDS (anime-detail.hbs)
+  // CLICKABLE CHARACTER CARDS
   document.querySelectorAll('[data-character-id]').forEach(card => {
     card.addEventListener('click', function() {
       const characterId = this.getAttribute('data-character-id');
@@ -215,7 +207,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // CLICKABLE PEOPLE CARDS (anime-detail.hbs)
+  // CLICKABLE PEOPLE CARDS
   document.querySelectorAll('[data-person-id]').forEach(card => {
     card.addEventListener('click', function() {
       const personId = this.getAttribute('data-person-id');
@@ -225,7 +217,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 
-  // CLICKABLE STATS CARD (anime-detail.hbs)
+  // CLICKABLE STATS CARD
   const statsCard = document.querySelector('[data-anime-stats-id]');
   if (statsCard) {
     statsCard.addEventListener('click', function() {

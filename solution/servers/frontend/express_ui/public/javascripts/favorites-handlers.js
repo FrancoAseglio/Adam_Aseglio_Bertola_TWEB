@@ -38,7 +38,6 @@ async function addFavorite(username, itemId) {
   }
 
   try {
-    // Step 1: Check if user profile exists
     try {
       await handle(() => api.get(`/profiles/${username.trim()}/stats`));
     } catch (userError) {
@@ -47,7 +46,6 @@ async function addFavorite(username, itemId) {
       return;
     }
 
-    // Step 2: Check if the anime exists
     let animeName = null;
     try {
       const animeData = await handle(() => api.get(`/anime/${parseInt(itemId)}`));
@@ -58,7 +56,6 @@ async function addFavorite(username, itemId) {
       return;
     }
 
-    // Step 3: Add the favorite
     const response = await handle(() =>
       api.post('/favorites', {
         username: username.trim(),
@@ -114,7 +111,6 @@ async function removeFavorite(username, itemId) {
   }
 
   try {
-    // Step 1: Check if user profile exists
     try {
       await handle(() => api.get(`/profiles/${username.trim()}/stats`));
     } catch (userError) {
@@ -123,7 +119,6 @@ async function removeFavorite(username, itemId) {
       return;
     }
 
-    // Step 2: Remove the favorite
     await handle(() =>api.delete(`/favorites/${username.trim()}/${parseInt(itemId)}`));
 
     alert(`✅ Successfully removed anime #${itemId} from ${username}'s favorites!`);

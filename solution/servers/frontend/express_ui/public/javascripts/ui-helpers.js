@@ -60,22 +60,6 @@ function init() {
 }
 
 /**
- * Load and display specific section (anime, user)
- * Automatically scrolls to the newly displayed section
- * @param {string} section - The section to display
- */
-function loadSection(section) {
-  document.querySelectorAll('[id$="-section"]').forEach(el => el.style.display = 'none');
-  const sectionElement = document.getElementById(section + '-section');
-  sectionElement.style.display = 'flex';
-  clearResults();
-
-  setTimeout(() => {
-    sectionElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
-}
-
-/**
  * Show result in the results div
  * @param {Object} data - The data to display
  */

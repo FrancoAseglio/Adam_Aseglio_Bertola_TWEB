@@ -83,18 +83,69 @@ router.get('/search', async (req, res) => {
     const page = parseInt(req.query.page) || 1;
     const itemsPerPage = 20;
     
+    if (!name && !role && !minFavorites && !limit) {
+      return res.render('character-search', {
+        title  : 'Search Characters',
+        query  : '',
+        filters: {},
+        results: null,
+        error  : 'Please provide at least one search filter: Name, Role, Minimum Favorites, or Top Limit'
+      });
+    }
+    
+    if (minFavorites && parseInt(minFavorites) < 0) {
+      return res.render('character-search', {
+        title  : 'Search Characters',
+        query  : name || '',
+        filters: { name, role, minFavorites, limit },
+        results: null,
+        error  : 'Minimum Favorites must be at least 100 to prevent performance issues'
+      });
+    }
+    
+    if (limit && parseInt(limit) > 10000) {
+      return res.render('character-search', {
+        title  : 'Search Characters',
+        query  : name || '',
+        filters: { name, role, minFavorites, limit },
+        results: null,
+        error  : 'Top Limit cannot exceed 50000'
+      });
+    }
+    
     const params = {};
     if (name) params.name = name;
     if (role) params.role = role;
     if (minFavorites) params.minFavorites = minFavorites;
-    
-    if (!name && !role && !minFavorites) {
-      params.name = '';
-    }
+    if (limit) params.limit = limit;
     
     const response = await axios.get(`${GATEWAY_URL}/characters/search`, { params });
     let allResults = response.data;
-    if (limit && allResults.length > 0) allResults = allResults.slice(0, parseInt(limit));
+    
+    if (limit && allResults.length > 0) {
+      allResults = allResults.slice(0, parseInt(limit));
+    }
+    
+    const resultsWithRoles = await Promise.all(allResults.map(async (character) => {
+      try {
+        const worksResponse = await axios.get(`${GATEWAY_URL}/character-anime/character/${character.character_mal_id}`);
+        if (worksResponse.data && worksResponse.data.length > 0) {
+          const roles = worksResponse.data.map(work => work.role).filter(r => r);
+          character.roles = [...new Set(roles)].sort((a, b) => {
+            if (a === 'Main') return -1;
+            if (b === 'Main') return 1;
+            return 0;
+          });
+        } else {
+          character.roles = [];
+        }
+      } catch (err) {
+        character.roles = [];
+      }
+      return character;
+    }));
+    
+    allResults = resultsWithRoles;
     
     const totalItems = allResults.length;
     const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -191,11 +242,21 @@ router.get('/search', async (req, res) => {
 router.get('/:id', async (req, res) => {
   try {
     const characterResponse = await axios.get(`${GATEWAY_URL}/characters/${req.params.id}`);
+    const character = characterResponse.data;
     let animeList = [];
+    let characterRoles = [];
+    
     try {
       const animeWorksResponse = await axios.get(`${GATEWAY_URL}/character-anime/character/${req.params.id}`);
       
       if (animeWorksResponse.data && animeWorksResponse.data.length > 0) {
+        const roles = animeWorksResponse.data.map(work => work.role).filter(r => r);
+        characterRoles = [...new Set(roles)].sort((a, b) => {
+          if (a === 'Main') return -1;
+          if (b === 'Main') return 1;
+          return 0;
+        });
+        
         const animePromises = animeWorksResponse.data.map(work => 
           axios.get(`${GATEWAY_URL}/anime/${work.animeMalId}`)
             .then(response => ({...response.data, role: work.role}))
@@ -209,9 +270,11 @@ router.get('/:id', async (req, res) => {
       console.error('Error fetching anime for character:', animeError.message);
     }
     
+    character.roles = characterRoles;
+    
     res.render('character-detail', {
       title    : `Character ${req.params.id}`,
-      character: characterResponse.data,
+      character: character,
       animeList: animeList
     });
   } catch (error) {

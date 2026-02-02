@@ -12,6 +12,7 @@ var peopleRouter          = require('./routes/people');
 var ratingsRouter         = require('./routes/ratings');
 var favoritesRouter       = require('./routes/favorites');
 var profilesRouter        = require('./routes/profiles');
+var statsRouter           = require('./routes/stats');
 var recommendationsRouter = require('./routes/recommendations');
 
 var app = express();
@@ -63,6 +64,7 @@ app.use('/people', peopleRouter);
 app.use('/ratings', ratingsRouter);
 app.use('/favorites', favoritesRouter);
 app.use('/profile', profilesRouter);
+app.use('/stats', statsRouter);
 app.use('/recommendations', recommendationsRouter);
 
 // catch 404 and forward to error handler

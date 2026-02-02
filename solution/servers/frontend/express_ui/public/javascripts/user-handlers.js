@@ -49,6 +49,18 @@ async function getUserRatings() {
 }
 
 /**
+ * Get statistics for a specific user
+ * Reads from: statsUsername input field
+ * Redirects to: /stats/user/:username
+ * @returns {void} Redirects to user statistics page
+ */
+async function getUserStats() {
+  const username = value('statsUsername');
+  if (!username) return alert("❌ Please enter a username");
+  window.location.href = `/stats/user/${encodeURIComponent(username)}`;
+}
+
+/**
  * Get statistics for a specific user (ratings count, favorites count, etc.)
  * Reads from: statsUsername input field
  * Redirects to: /stats/user/:username

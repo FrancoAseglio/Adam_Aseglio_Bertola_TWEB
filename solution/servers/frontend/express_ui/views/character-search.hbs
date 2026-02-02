@@ -37,7 +37,7 @@
                         <div class="col-md-2">
                             <label for="minFavorites" class="form-label form-label-sm mb-1">Min Favorites</label>
                             <input type="number" name="minFavorites" id="minFavorites" class="form-control form-control-sm" 
-                                   placeholder="e.g. 1000" min="0"
+                                   placeholder="Min 0" min="0"
                                    value="{{filters.minFavorites}}">
                         </div>
 
@@ -45,7 +45,7 @@
                         <div class="col-md-2">
                             <label for="limit" class="form-label form-label-sm mb-1">Top Limit</label>
                             <input type="number" name="limit" id="limit" class="form-control form-control-sm" 
-                                   placeholder="e.g. 50" min="1"
+                                   placeholder="Max 10000" min="1" max="10000"
                                    value="{{filters.limit}}">
                         </div>
 
@@ -65,6 +65,13 @@
                 </form>
             </div>
         </div>
+
+        <!-- Error Message -->
+        {{#if error}}
+        <div class="alert alert-warning" role="alert">
+            <strong>⚠️ Search Required:</strong> {{error}}
+        </div>
+        {{/if}}
 
         <!-- Results -->
         {{#if results}}
@@ -108,8 +115,17 @@
                                 {{#if this.name_kanji}}
                                 <p class="card-text small text-muted mb-1"><strong>Kanji:</strong> {{this.name_kanji}}</p>
                                 {{/if}}
-                                {{#if this.role}}
-                                <p class="card-text small text-muted mb-1"><strong>Role:</strong> {{this.role}}</p>
+                                {{#if this.roles}}
+                                {{#if this.roles.length}}
+                                <p class="card-text small text-muted mb-1">
+                                    <strong>Role(s):</strong> 
+                                    {{#each this.roles}}
+                                    <span class="badge {{#if (eq this 'Main')}}bg-warning text-dark{{else}}bg-info{{/if}} me-1">
+                                        {{this}}
+                                    </span>
+                                    {{/each}}
+                                </p>
+                                {{/if}}
                                 {{/if}}
                                 {{#if this.favorites}}
                                 <p class="card-text small text-muted mb-1">

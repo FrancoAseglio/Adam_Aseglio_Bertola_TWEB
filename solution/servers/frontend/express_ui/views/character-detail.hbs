@@ -48,6 +48,19 @@
                         <div class="info-label">Name:</div>
                         <div class="info-value">{{character.name}}</div>
 
+                        {{#if character.roles}}
+                        {{#if character.roles.length}}
+                        <div class="info-label">Role(s):</div>
+                        <div class="info-value">
+                            {{#each character.roles}}
+                            <span class="badge {{#if (eq this 'Main')}}bg-warning text-dark{{else}}bg-info{{/if}} me-1">
+                                {{this}}
+                            </span>
+                            {{/each}}
+                        </div>
+                        {{/if}}
+                        {{/if}}
+
                         {{#if character.name_kanji}}
                         <div class="info-label">Name Kanji:</div>
                         <div class="info-value">{{character.name_kanji}}</div>
@@ -93,7 +106,12 @@
                             <div class="card-body">
                                 <h6 class="card-title text-primary">{{this.title}}</h6>
                                 {{#if this.role}}
-                                <p class="card-text small text-muted mb-1"><strong>Role:</strong> {{this.role}}</p>
+                                <p class="card-text small text-muted mb-1">
+                                    <strong>Role:</strong> 
+                                    <span class="badge {{#if (eq this.role 'Main')}}bg-warning text-dark{{else}}bg-info{{/if}}">
+                                        {{this.role}}
+                                    </span>
+                                </p>
                                 {{/if}}
                                 {{#if this.type}}
                                 <p class="card-text small text-muted mb-1"><strong>Type:</strong> {{this.type}}</p>

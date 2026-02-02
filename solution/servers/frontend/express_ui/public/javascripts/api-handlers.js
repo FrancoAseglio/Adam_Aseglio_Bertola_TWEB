@@ -29,10 +29,15 @@ const api = axios.create({
 
 /**
  * Error handling wrapper for API calls
- * Extracts response data on success, formats errors on failure
+ * Extracts response data on success and formats errors with detailed messages.
+ * Automatically handles axios error responses and extracts meaningful error information.
+ * 
  * @param {Function} fn - Async function that returns an axios promise
  * @returns {Promise<any>} The response data from the API
- * @throws {string} Formatted error message
+ * @throws {string} Formatted error message from API or generic error message
+ * 
+ * @example
+ * const data = await handle(() => api.get('/anime/1'));
  */
 async function handle(fn) {
   try {
@@ -65,32 +70,31 @@ async function resolveAnimeId(input) {
 
 /**
  * Setup Enter key listeners for all input fields
- * Maps input field IDs to their corresponding action functions
- * Allows users to press Enter to trigger form actions
+ * Maps input field IDs to their corresponding action functions.
+ * Allows users to press Enter to trigger form actions without clicking buttons.
+ * Automatically prevents default form submission and handles errors gracefully.
+ * 
  * @returns {void}
+ * 
+ * @example
+ * // Called automatically when DOM is ready
+ * setupEnterKeyListeners();
  */
 function setupEnterKeyListeners() {
   const map = {
-    // Anime
     searchQuery:           typeof searchAnime     !== 'undefined' ? searchAnime : null,
     animeId:               typeof getAnimeDetails !== 'undefined' ? getAnimeDetails : null,
-    topAnimeLimit:         typeof getTopAnime     !== 'undefined' ? getTopAnime : null,
     genreInput:            typeof getAnimeByGenre !== 'undefined' ? getAnimeByGenre : null,
     characterSearchQuery:  typeof searchCharacter !== 'undefined' ? searchCharacter : null,
     characterId:           typeof getCharacterDetail !== 'undefined' ? getCharacterDetail : null,
-    // User
     username:              typeof getUserProfile   !== 'undefined' ? getUserProfile : null,
     favUsername:           typeof getUserFavorites !== 'undefined' ? getUserFavorites : null,
     ratingUsername:        typeof getUserRatings   !== 'undefined' ? getUserRatings : null,
-    // Favorites
+    statsUsername:         typeof getUserStats     !== 'undefined' ? getUserStats : null,
     addFavItemId:          typeof addFavoriteFromForm    !== 'undefined' ? addFavoriteFromForm : null,
     addFavUsername:        typeof addFavoriteFromForm    !== 'undefined' ? addFavoriteFromForm : null,
     removeFavItemId:       typeof removeFavoriteFromForm !== 'undefined' ? removeFavoriteFromForm : null,
     removeFavUsername:     typeof removeFavoriteFromForm !== 'undefined' ? removeFavoriteFromForm : null,
-    // Stats
-    statsUsername:         typeof getUserStats  !== 'undefined' ? getUserStats : null,
-    statsAnimeId:          typeof getAnimeStats !== 'undefined' ? getAnimeStats : null,
-    // Character
     addCharName:           typeof addCharacterFromForm    !== 'undefined' ? addCharacterFromForm : null,
     addCharImage:          typeof addCharacterFromForm    !== 'undefined' ? addCharacterFromForm : null,
     addCharAbout:          typeof addCharacterFromForm    !== 'undefined' ? addCharacterFromForm : null,
@@ -129,10 +133,15 @@ const value = id => document.getElementById(id)?.value.trim();
 
 /**
  * Execute a user-based API action
- * Validates username input, executes API call, displays result
+ * Validates username input, executes API call, and displays result.
+ * Provides user-friendly alerts for validation errors.
+ * 
  * @param {string} id - Input field ID containing username
- * @param {Function} fn - Function that takes username and returns API call
+ * @param {Function} fn - Function that takes username and returns API call promise
  * @returns {Promise<void>}
+ * 
+ * @example
+ * await userAction('username', (user) => api.get(`/profiles/${user}`));
  */
 async function userAction(id, fn) {
   const user = value(id);
@@ -143,10 +152,16 @@ async function userAction(id, fn) {
 
 /**
  * Execute an anime-based API action
- * Validates input, resolves anime ID if needed, executes API call, displays result
- * @param {string} id - Input field ID containing anime title or ID
- * @param {Function} fn - Function that takes MAL ID and returns API call
+ * Validates input, resolves anime ID if title is provided, executes API call, and displays result.
+ * Accepts either numeric MAL ID or anime title string. If title is provided, performs search first.
+ * 
+ * @param {string} id - Input field ID containing anime title or MAL ID
+ * @param {Function} fn - Function that takes MAL ID and returns API call promise
  * @returns {Promise<void>}
+ * 
+ * @example
+ * // Works with both ID and title
+ * await animeAction('animeId', (malId) => api.get(`/anime/${malId}`));
  */
 async function animeAction(id, fn) {
   const input = value(id);

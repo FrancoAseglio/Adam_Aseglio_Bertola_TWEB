@@ -27,7 +27,6 @@
  * await addCharacter('Monkey D. Luffy', 'https://cdn.myanimelist.net/images/characters/9/310307.jpg', 'Luffy is the captain...');
  */
 async function addCharacter(name, image, about) {
-  // A new character needs at least 'name' and 'about' fileds
   if (!name || typeof name !== 'string' || name.trim() === ''){
     alert('❌ Please enter a character name');
     return;
@@ -86,7 +85,6 @@ async function removeCharacter(characterId) {
   }
 
   try {
-    // Step 1: Check if character exists
     let characterName = null;
     try {
       const characterData = await handle(() => api.get(`/characters/${parseInt(characterId)}`));
@@ -97,7 +95,6 @@ async function removeCharacter(characterId) {
       return;
     }
 
-    // Step 2: Remove the character
     await handle(() =>api.delete(`/characters/${parseInt(characterId)}`));
 
     alert(`✅ Successfully removed character "${characterName}" (ID: ${characterId})!`);
