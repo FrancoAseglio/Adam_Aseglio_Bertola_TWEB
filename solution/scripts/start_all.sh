@@ -80,6 +80,13 @@ echo "   ✓ URL: http://localhost:$PORT_GATEWAY/api-docs" && sleep 2
 start_service "Express Mongo" "servers/backend/express_mongo" "mongo" "npm start"
 echo "   ✓ URL: http://localhost:$PORT_MONGO/api-docs" && sleep 2
 
+cd "$SCRIPT_DIR/servers/backend/springboot_pgsql"
+./gradlew clean build > /dev/null 2>&1
+if [ $? -ne 0 ]; then
+  echo "❌ Spring Boot build failed!"
+  exit 1
+fi
+
 start_service "Spring Boot" "servers/backend/springboot_pgsql" "pgsql" "./gradlew bootRun"
 echo "   ✓ URL: http://localhost:$PORT_PGSQL/api-docs" && sleep 4
 

@@ -77,7 +77,6 @@ router.get('/:username', async (req, res) => {
     const paginatedRatings = allRatings.slice(startIndex, endIndex);
 
     res.render('ratings', {
-      layout         : false,
       title          : `${req.params.username} - Ratings`,
       ratings        : paginatedRatings,
       username       : req.params.username,

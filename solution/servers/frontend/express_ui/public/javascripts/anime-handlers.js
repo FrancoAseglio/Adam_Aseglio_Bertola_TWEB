@@ -135,11 +135,26 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add change listeners to all checkboxes
     genreCheckboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', updateGenreDisplay);
+      checkbox.addEventListener('change', function() {
+        updateGenreDisplay();
+        
+        // Update visual feedback for selected items
+        const dropdownItem = this.closest('.dropdown-item');
+        if (this.checked) {
+          dropdownItem.classList.add('selected');
+        } else {
+          dropdownItem.classList.remove('selected');
+        }
+      });
+      
+      // Set initial state for pre-selected items
+      if (checkbox.checked) {
+        checkbox.closest('.dropdown-item').classList.add('selected');
+      }
     });
     
     // Prevent dropdown from closing when clicking checkboxes
-    document.querySelectorAll('.dropdown-item').forEach(item => {
+    document.querySelectorAll('.genre-dropdown .dropdown-item').forEach(item => {
       item.addEventListener('click', function(e) {
         e.stopPropagation();
       });
@@ -147,6 +162,37 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Initialize display
     updateGenreDisplay();
+  }
+
+  // FORM VALIDATION: Require at least one search field
+  const searchForm = document.getElementById('searchForm');
+  if (searchForm) {
+    searchForm.addEventListener('submit', function(e) {
+      const title = document.getElementById('title')?.value.trim() || '';
+      const minScore = document.getElementById('minScore')?.value.trim() || '';
+      const limit = document.getElementById('limit')?.value.trim() || '';
+      const selectedGenres = document.querySelectorAll('.genre-checkbox:checked');
+      
+      const hasInput = title || minScore || limit || selectedGenres.length > 0;
+      
+      if (!hasInput) {
+        e.preventDefault();
+        alert('⚠️ Please fill in at least one search field:\n\n• Title\n• Genre(s)\n• Minimum Score\n• Top Limit');
+        return false;
+      }
+    });
+
+    // Auto-focus on title field if page loaded without parameters
+    const showWarning = searchForm.dataset.showWarning === 'true';
+    if (showWarning) {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.toString() === '') {
+        const titleField = document.getElementById('title');
+        if (titleField) {
+          titleField.focus();
+        }
+      }
+    }
   }
 
   // CLICKABLE ANIME CARDS (anime-search.hbs, anime-genre.hbs)

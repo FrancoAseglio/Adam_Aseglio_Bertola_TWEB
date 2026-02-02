@@ -88,7 +88,6 @@ router.get('/:malId', async (req, res) => {
     const paginatedRecommendations = allRecommendations.slice(startIndex, endIndex);
 
     res.render('recommendations', {
-      layout         : false,
       title          : `Recommendations for ${anime.title}`,
       anime          : anime,
       recommendations: paginatedRecommendations,

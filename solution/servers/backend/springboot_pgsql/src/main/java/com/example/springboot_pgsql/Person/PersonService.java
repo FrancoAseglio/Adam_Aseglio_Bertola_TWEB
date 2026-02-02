@@ -1,11 +1,9 @@
 package com.example.springboot_pgsql.Person;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import java.util.List;
 import java.util.Optional;
+import java.util.List;
 
 /**
  * Service layer for Person business logic.
@@ -20,16 +18,8 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
-    public Page<Person> getAllPeople(Pageable pageable) {
-        return personRepository.findAll(pageable);
-    }
-
     public Optional<Person> getPersonById(Integer id) {
         return personRepository.findById(id);
-    }
-
-    public List<Person> searchByName(String name) {
-        return personRepository.findByGivenNameContainingIgnoreCaseOrFamilyNameContainingIgnoreCase(name, name);
     }
 
     public Person savePerson(Person person) {

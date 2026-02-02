@@ -1,0 +1,253 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[left=1.5cm, right=1.5cm, top=1.5cm, bottom=1.5cm]{geometry}
+\usepackage{setspace}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{enumitem}
+% --------------------------------------------------
+\setlist[itemize]{noitemsep, topsep=2pt}
+% --------------------------------------------------
+\title{UNIVERSITY OF TURIN \\TWEB: Full-Stack Anime Application Report}
+\author{Adam Lorenzo, Aseglio Politro Franco, Bertola Diego}
+\date{January 2026}
+
+
+
+
+% -------------------------------------------------- pg.0
+\begin{document}
+%\maketitle
+\thispagestyle{empty}
+\vspace*{4cm}
+\tableofcontents
+\newpage
+\pagenumbering{arabic}
+
+
+
+% -------------------------------------------------- pg.1
+\section{Introduction}
+The assignment required us to design and implement a full-stack web application for browsing, managing, and tracking anime content. The app provides comprehensive features and is organized in such directories:
+\begin{itemize}
+  \item \textbf{solution}
+  \begin{itemize}
+    \item \textbf{Makefile}: Build automation tool providing convenient targets for managing the entire application lifecycle (start, stop, restart, status checks, dependency installation, and cleanup operations);
+    \item \textbf{scripts}: containing Python-based ETL (Extract, Transform, Load) scripts for populating the databases as well as Bash automation scripts;
+    \item \textbf{servers} structured as:
+    \begin{itemize}
+      \item \textbf{backend}: Express Gateway (aggregation layer), Express MongoDB service (user data), and Spring Boot PostgreSQL service (anime catalog data);
+      \item \textbf{frontend}: Express UI with Handlebars templates for server-side rendering.
+    \end{itemize}
+  \end{itemize}
+  \item \textbf{report}
+\end{itemize}
+
+
+
+
+
+% -------------------------------------------------- pg.1
+\section{Task Breakdown}
+\subsection{Step 1: Architecture Design and System Planning}
+
+\subsubsection{Design and its motivations}
+The architecture has been designed around a \textbf{microservices constellation pattern}, so to ensure a clear separation of concerns enabling independent development of different components:
+\begin{itemize}
+    \item \textbf{Polyglot Technology}: Separating services allowed us to leverage the strengths of Express.js for rapid API development, SpringBoot for JPA-based data access, and MongoDB for flexible user-data storage;
+    \item \textbf{Gateway Pattern}: The Express Gateway acts as a unified entry point, aggregating requests from the frontend and routing them to appropriate backend services;
+    \item \textbf{Databases Persistences}: We adopted PostgreSQL for structured anime catalog data (anime, characters, people) and MongoDB for user-generated content (profiles, favorites, ratings, recommendations) that benefits from schema flexibility;
+\end{itemize}
+
+\subsubsection{Issues}
+\begin{itemize}
+    \item \textbf{Team alignment}: Differing architectural views initially slowed decisions;
+    \item \textbf{Design simplicity vs. feature distribution}: Clearly defining service boundaries required careful design to avoid redundancy, requiring a balance between simplicity and maintainability;
+    \item \textbf{CORS configuration}: Correctly configuring CORS policies across frontend, gateway, and services required explicit alignment following the development needs.
+\end{itemize}
+
+\subsubsection{Requirements}
+The architecture successfully fulfills the assignment requirements by:
+\begin{itemize}
+    \item \textbf{Full-Stack Coverage}: Complete implementation from database layer to presentation layer, including data persistence, business logic, API layer, and user interface;
+    \item \textbf{RESTful API Design}: All services expose documented REST endpoints, with Swagger/OpenAPI documentation available for developer reference;
+    \item \textbf{Separation of Concerns}: Each service has a single, well-defined responsibility, making the codebase maintainable and testable.
+\end{itemize}
+
+\subsubsection{Limitations}
+\begin{itemize}
+    \item The gateway acts as a central dependency, potentially limiting horizontal scalability;
+    \item CORS policies are simplified and tailored to dev environment;
+    \item Configuration and orchestration are static and manually managed.
+\end{itemize}
+
+
+
+
+
+% -------------------------------------------------- pg.2
+\newpage
+\subsection{Step 2: Backend Services Implementation}
+
+\subsubsection{Design and its motivations}
+The backend implementation is structured around three independent services:
+\begin{itemize}
+    \item \textbf{Spring Boot PostgreSQL Service}: Implemented using JPA, this service manages the anime catalog domain and exposes RESTful endpoints for anime, characters, and people entities;
+    \item \textbf{Express MongoDB Service}: Built with Express.js and Mongoose, it handles user-centric data. MongoDB's document-oriented model was chosen for its flexibility in managing possible large scaling;
+    \item \textbf{Express Gateway}: Acting as the API aggregation layer. It follows the \texttt{Backend for Frontend} pattern, consolidating backend calls, transforming responses and exposing a unified API to the UI.
+\end{itemize}
+
+\subsubsection{Issues}
+The main issues encountered during backend implementation include:
+\begin{itemize}
+    \item \textbf{Error handling}: Standardizing error responses across heterogeneous services (Spring Boot and Express) proved non-trivial.
+    \item \textbf{Asynchronous control flow}: Managing asynchronous operations in Express services required careful use of async/await to avoid race conditions and unhandled errors.
+\end{itemize}
+
+\subsubsection{Requirements}
+The backend implementation satisfies the core functional requirements:
+\begin{itemize}
+    \item \textbf{Dependencies}: Axios has been used as for HTTP communication while endpoints are documented through Swagger.
+    \item \textbf{API Documentation}: All services expose documented APIs using Swagger UI for Spring Boot and swagger-jsdoc for Express-based services.
+    \item \textbf{CRUD Operations}: Full Create, Read, Update, and Delete support for all core entities, including anime, characters, user profiles, and favorites.
+\end{itemize}
+
+\subsubsection{Limitations}
+At this stage, the backend presents the following limitations:
+\begin{itemize}
+    \item No caching layer is implemented for frequently accessed catalog data;
+    \item Business rule validation is limited and primarily delegated to the application logic;
+    \item User actions are handled imperatively, without event sourcing or asynchronous processing mechanisms.
+\end{itemize}
+
+
+
+
+
+% -------------------------------------------------- pg.3
+\newpage
+\subsection{Step 3: Frontend Implementation and User Experience}
+
+\subsubsection{Design and its motivations}
+Implemented as a server-side rendered application using Express.js with Handlebars templating. \\This design choice was motivated by several factors:
+\begin{itemize}
+    \item \textbf{Server-Side Rendering}: Provides faster initial page loads and improved SEO capabilities, which are important for content discovery applications;
+    \item \textbf{Handlebars Templating}: Allows for clean separation of presentation logic from business logic, with custom helpers for formatting dates, numbers, and conditional rendering;
+    \item \textbf{Progressive Enhancement}: The UI is built with a foundation of functional HTML forms, progressively enhanced with JavaScript for dynamic interactions ensuring graceful degradation;
+    \item \textbf{Responsive Design}: CSS styling ensures the application works across desktop and mobile viewports.
+\end{itemize}
+
+\subsubsection{Issues}
+The main challenges encountered during frontend development include:
+\begin{itemize}
+    \item \textbf{Error handling}: Implementing comprehensive error boundaries and user-friendly feedback;
+    \item \textbf{Performance optimization}: Managing large result sets efficiently, particularly through pagination and partial rendering;
+    \item \textbf{State consistency}: Ensuring consistent UI state across server-rendered views and client-side enhanced interactions.
+\end{itemize}
+
+
+\subsubsection{Requirements}
+The frontend implementation fulfills the assignment requirements by providing:
+\begin{itemize}
+    \item \textbf{Complete User Workflows}: All core features are accessible through intuitive navigation with clear call-to-action buttons.
+    \item \textbf{Data Visualization}: User statistics presented through charts; anime ratings displayed with visual score indicators.
+    \item \textbf{CRUD Interfaces}: Forms for managing user favorites and for the creation/removal of characters.
+\end{itemize}
+
+\subsubsection{Limitations}
+\begin{itemize}
+    \item \textbf{Server-side validation}: Form validation is primarily handled on the server, resulting in limited immediate client-side feedback.
+    \item \textbf{Pagination dependency}: Handling large result sets relies on backend-driven pagination, which limits client-side interaction flexibility.
+    \item \textbf{No offline support}: The application does not implement service workers or caching mechanisms for offline or low-connectivity usage.
+\end{itemize}
+
+
+
+
+
+% -------------------------------------------------- pg.4
+\newpage
+\subsection{Step 4: Data Integration and ETL Pipeline}
+
+\subsubsection{Design and its motivations}
+The data integration layer bridges cleaned MyAnimeList datasets from a previously developed data analysis project with the application databases.\\This layer was implemented using Python scripts to perform ETL operations:
+
+\begin{itemize}
+    \item \textbf{PostgreSQL Loading}: The \texttt{data\_load\_pgsql.py} script handles bulk insertion of anime catalog data (anime, characters, people, and their relationships) using psycopg2 with batch insert optimization;
+    \item \textbf{MongoDB Loading}: The \texttt{data\_load\_mongo.py} script implements chunked insertions for user-related data (profiles, favorites, ratings, recommendations, statistics) using pymongo with configurable batch sizes to manage memory consumption;
+    \item \textbf{Data Transformation}: The scripts include transformation logic to convert CSV data types to appropriate database types, handle null values, and establish proper foreign key references;
+    \item \textbf{Idempotency}: Both scripts support clearing existing collections/tables before loading, enabling repeatable development workflows without manual database cleanup.
+\end{itemize}
+
+\subsubsection{Issues}
+\begin{itemize}
+    \item \textbf{Large data volumes}: Managing high-volume datasets required chunked processing to control memory usage and execution time at loading time;
+    \item \textbf{Foreign key dependencies}: Preserving referential integrity in PostgreSQL required carefully ordered insertions across related tables;
+    \item \textbf{Character encoding}: Ensuring consistent UTF-8 encoding was necessary to correctly store Japanese characters and special symbols.
+\end{itemize}
+
+\subsubsection{Requirements}
+The ETL pipeline fulfills the data integration requirements:
+\begin{itemize}
+    \item \textbf{Complete Data Transfer}: All cleaned datasets from the data analysis project are successfully loaded into the application databases without data loss;
+    \item \textbf{Data Integrity}: Referential integrity is maintained across related entities, with validation checks;
+    \item \textbf{Error Handling}: Comprehensive error messages and logging enable troubleshooting of data quality issues or database connectivity problems.
+\end{itemize}
+
+\subsubsection{Limitations}
+\begin{itemize}
+    \item \textbf{Full data reloads}: The pipeline replaces entire datasets rather than supporting incremental or delta-based updates;
+    \item \textbf{Schema coupling}: Data transformations are tightly coupled to the current database schemas, reducing flexibility to schema evolution;
+    \item \textbf{Limited validation}: Business rule validation during loading is minimal and focuses primarily on structural integrity;
+    \item \textbf{No transactional rollback}: Failed batch operations do not trigger automated rollback mechanisms across the full dataset.
+\end{itemize}
+
+
+
+
+
+% -------------------------------------------------- pg.5
+\newpage
+\section{Conclusions}
+The design and implementation of this full-stack application provided valuable insights into the development of production-oriented web systems based on a microservices architecture.
+\begin{itemize}
+    \item \textbf{Microservices Benefits and Complexity}: The separation of concerns across multiple services enabled parallel development and technology heterogeneity, but also introduced operational complexity;
+    \item \textbf{Polyglot Persistence}: The combined use of PostgreSQL for structured catalog data and MongoDB for flexible user data, proved effective and efficient;
+    \item \textbf{API Gateway Pattern}: The Express Gateway successfully abstracted backend complexity from the frontend, exposing a unified API surface. This enabled backend refactoring without impacting the UI, demonstrating the benefits of loose coupling;
+    \item \textbf{Full-Stack Integration}: Integrating the data analysis pipeline with the web application highlighted the importance of robust ETL processes and clearly defined data transformation layers.
+\end{itemize}
+
+\section{Division of Work}
+The project followed a \textbf{branch-based parallel development} strategy. The team collaboratively defined the initial architecture, including database selection and API contracts. \\Development was then divided into focused workstreams:
+\begin{itemize}
+    \item \textbf{Backend Services}: Spring Boot (PostgreSQL) and Express (MongoDB) services,\\ including data models and APIs;
+    \item \textbf{Gateway}: Initial mock endpoints followed by full integration with backend services;
+    \item \textbf{Frontend}: Server-side rendered UI using Handlebars, enhanced with client-side interactions.
+\end{itemize}
+Regular synchronization and occasional pair programming ensured knowledge sharing and reduced development silos during development, testing and refactoring phases.
+
+\section{Technical Details}
+The application builds upon cleaned datasets produced within an external project of ours \cite{DataAnalysisProject} . \\The data cleaning Jupyter notebook must be executed first to generate the directory \texttt{\textasciitilde/datasets/cleaned/}. Subsequently, the ETL scripts can be run to populate the application databases.
+
+\subsection{Future Work}
+Potential extensions of the project include:
+\begin{itemize}
+    \item Docker Compose-based containerization and deployment
+    \item JWT authentication with role-based access control
+    \item Redis caching layer for frequently accessed data
+    \item API rate limiting and monitoring
+\end{itemize}
+
+\section{Bibliography}
+In accordance with the project guidelines, the primary reference materials were the official course resources. Additional tools were used to support development and documentation.
+\begin{itemize}
+    \item \textbf{Generative AI Tools}: Used to explore pagination strategies and assist in refining technical writing and formatting across the project;
+    \item \textbf{Course Materials}: TWEB course (University of Turin, 2025/2026), covering microservices architecture, RESTful API design and full-stack web development;
+    \item \textbf{Data Foundation}: HCI Data Analysis project repository \cite{DataAnalysisProject}.
+\end{itemize}
+
+\begin{thebibliography}{9}
+    \bibitem{DataAnalysisProject} Adam, Aseglio, Bertola. \textbf{Data Analysis Project}. Available at: \\
+    \texttt{git@github.com:FrancoAseglio/Adam\_Aseglio\_Bertola\_HCI.git}
+\end{thebibliography}
+
+\end{document}

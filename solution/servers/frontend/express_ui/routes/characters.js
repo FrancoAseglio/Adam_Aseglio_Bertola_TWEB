@@ -58,9 +58,11 @@ router.get('/search', async (req, res) => {
   minFavorites = minFavorites && minFavorites.trim() !== '' ? minFavorites : undefined;
   limit = limit && limit.trim() !== '' ? limit : undefined;
   
-  if (!name && !role && !minFavorites && !limit) {
+  // Check if user explicitly submitted the form (has query params) vs just loading the page
+  const hasAnyQueryParam = Object.keys(req.query).length > 0;
+  
+  if (!hasAnyQueryParam) {
     return res.render('character-search', {
-      layout : false,
       title  : 'Search Characters',
       query  : '',
       filters: {},
@@ -76,6 +78,11 @@ router.get('/search', async (req, res) => {
     if (name) params.name = name;
     if (role) params.role = role;
     if (minFavorites) params.minFavorites = minFavorites;
+    
+    // If no search params, pass empty name to get all characters
+    if (!name && !role && !minFavorites) {
+      params.name = '';
+    }
     
     const response = await axios.get(`${GATEWAY_URL}/characters/search`, { params });
     let allResults = response.data;
@@ -94,7 +101,6 @@ router.get('/search', async (req, res) => {
     if (limit) queryParams.append('limit', limit);
     
     res.render('character-search', {
-      layout : false,
       title  : 'Search Results',
       query  : name || '',
       filters: { name, role, minFavorites, limit },
@@ -196,7 +202,6 @@ router.get('/:id', async (req, res) => {
     }
     
     res.render('character-detail', {
-      layout   : false,
       title    : `Character ${req.params.id}`,
       character: characterResponse.data,
       animeList: animeList

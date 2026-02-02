@@ -1,11 +1,13 @@
 package com.example.springboot_pgsql.Person;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 /**
  * REST Controller for Person endpoints.
@@ -15,6 +17,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/people")
 @CrossOrigin(origins = "http://localhost:3001")
+@Tag(name = "Person", description = "Operations related to people (voice actors, staff)")
 public class PersonController {
 
     private final PersonService personService;
@@ -24,22 +27,16 @@ public class PersonController {
         this.personService = personService;
     }
 
-    @GetMapping
-    public Page<Person> getAllPeople(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "20") int size) {
-        return personService.getAllPeople(PageRequest.of(page, size));
-    }
-
+    @Operation(summary = "Get person by ID", description = "Retrieve a specific person by their ID.")
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Person found and returned"),
+        @ApiResponse(responseCode = "404", description = "Person not found")
+    })
     @GetMapping("/{id}")
-    public ResponseEntity<Person> getPersonById(@PathVariable Integer id) {
+    public ResponseEntity<Person> getPersonById(
+            @Parameter(description = "Person ID", example = "1") @PathVariable Integer id) {
         return personService.getPersonById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/search")
-    public List<Person> searchByName(@RequestParam String name) {
-        return personService.searchByName(name);
     }
 }

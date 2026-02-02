@@ -2,7 +2,6 @@ const express = require('express');
 const router  = express.Router();
 const axios   = require('axios');
 
-const BACKEND_MONGO_URL  = 'http://localhost:3002/api';
 const BACKEND_SPRING_URL = 'http://localhost:8080/api';
 
 /**
@@ -95,76 +94,6 @@ router.get('/genre/:genre', async (req, res) => {
     res.status(500).json({ 
       message: 'Error fetching anime by genre', 
       error  : error.message 
-    });
-  }
-});
-
-/**
- * @swagger
- * /api/anime:
- *   get:
- *     summary: Get all anime with pagination
- *     tags: [Anime]
- *     parameters:
- *       - in: query
- *         name: page
- *         schema:
- *           type: integer
- *           default: 0
- *         description: Page number
- *       - in: query
- *         name: size
- *         schema:
- *           type: integer
- *           default: 20
- *         description: Number of items per page
- *     responses:
- *       200:
- *         description: List of anime
- *       500:
- *         description: Server error
- */
-router.get('/', async (req, res) => {
-  try {
-    const response = await axios.get(`${BACKEND_MONGO_URL}/anime`, { params: req.query });
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ 
-      message: 'Error fetching anime list', 
-      error  : error.message 
-    });
-  }
-});
-
-/**
- * @swagger
- * /api/anime/mongo/{id}:
- *   get:
- *     summary: Get anime by ID (MongoDB backend)
- *     tags: [Anime]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: string
- *         required: true
- *         description: Anime ID
- *     responses:
- *       200:
- *         description: Anime details
- *       404:
- *         description: Anime not found
- *       500:
- *         description: Server error
- */
-router.get('/mongo/:id', async (req, res) => {
-  try {
-    const response = await axios.get(`${BACKEND_MONGO_URL}/anime/${req.params.id}`);
-    res.json(response.data);
-  } catch (error) {
-    res.status(error.response?.status || 500).json({
-      message: 'Error fetching anime from MongoDB',
-      error  : error.message
     });
   }
 });

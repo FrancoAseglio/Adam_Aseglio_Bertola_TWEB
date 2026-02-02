@@ -1,16 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-<body class="bg-light">
     {{> navbar}}
     
     {{#if character}}
@@ -42,8 +29,8 @@
                     <div class="card mt-3 text-center border-0 shadow-sm">
                         <div class="card-body">
                             <div class="fs-1">❤️</div>
-                            <div class="stat-value" style="font-size: 2rem; color: black !important;">{{character.favorites}}</div>
-                            <div class="stat-label" style="font-size: 0.9rem; color: black !important;">Favorites</div>
+                            <div class="stat-value character-favorites-value">{{character.favorites}}</div>
+                            <div class="stat-label character-favorites-label">Favorites</div>
                         </div>
                     </div>
                 {{/if}}
@@ -95,14 +82,13 @@
                 <div class="anime-scroll-wrapper">
                     {{#each animeList}}
                     <div class="anime-scroll-card">
-                        <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/anime/{{this.mal_id}}'">
+                        <div class="card anime-card h-100 clickable" onclick="window.location.href='/anime/{{this.mal_id}}'">
                             {{#if this.image_url}}
-                            <img src="{{this.image_url}}" alt="{{this.title}}" class="card-img-top" 
-                                 style="height:280px;object-fit:cover" 
+                            <img src="{{this.image_url}}" alt="{{this.title}}" class="card-img-top character-card-image-280" 
                                  onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
                             {{else}}
                             <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" 
-                                 alt="{{this.title}}" class="card-img-top" style="height:280px;object-fit:cover">
+                                 alt="{{this.title}}" class="card-img-top character-card-image-280">
                             {{/if}}
                             <div class="card-body">
                                 <h6 class="card-title text-primary">{{this.title}}</h6>
@@ -148,7 +134,3 @@
         </div>
     </div>
     {{/if}}
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>

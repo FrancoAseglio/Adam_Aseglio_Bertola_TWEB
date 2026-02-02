@@ -82,12 +82,12 @@ router.get('/search', async (req, res) => {
   const hasAnyFilter = title || selectedGenres.length > 0 || minScore || limit;
   if (!hasAnyFilter) {
     return res.render('anime-search', {
-      layout         : false,
       title          : 'Search Anime',
       results        : null,
       filters        : {},
       availableGenres: availableGenres,
-      selectedGenres : []
+      selectedGenres : [],
+      showWarning    : true  // Flag to show validation warning
     });
   }
 
@@ -98,19 +98,37 @@ router.get('/search', async (req, res) => {
     let usedGenreAPI = false;
 
     if (title) {
+      // Search by title
       const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params: { title } });
       allResults = response.data;
     } else if (selectedGenres.length > 0) {
+      // Filter by first genre (will apply AND logic for multiple genres below)
       const response = await axios.get(`${GATEWAY_URL}/anime/genre/${selectedGenres[0]}`);
       allResults = response.data;
       usedGenreAPI = true;
     } else {
-      // If no title or genre but has minScore or limit, get a large dataset
-      let apiLimit = 100;
-      if (minScore) apiLimit = 10000;
-      else if (limit) apiLimit = Math.max(parseInt(limit) * 2, 100);
-      const response = await axios.get(`${GATEWAY_URL}/anime/top/all`, { params: { limit: apiLimit } });
-      allResults = response.data;
+      // No title or genre: fetch all anime using a broad search
+      // This happens when user only specifies minScore or limit
+      // Use common letters to get a large dataset (a, e, i, o, u are in most titles)
+      console.log('Fetching all anime for filtering...');
+      const commonSearchTerms = ['a', 'the', 'no', 'de'];
+      const promises = commonSearchTerms.map(term => 
+        axios.get(`${GATEWAY_URL}/anime/search`, { params: { title: term } })
+          .catch(err => ({ data: [] }))
+      );
+      const results = await Promise.all(promises);
+      
+      // Combine and deduplicate results by mal_id
+      const combinedMap = new Map();
+      results.forEach(result => {
+        result.data.forEach(anime => {
+          if (!combinedMap.has(anime.mal_id)) {
+            combinedMap.set(anime.mal_id, anime);
+          }
+        });
+      });
+      allResults = Array.from(combinedMap.values());
+      console.log(`Fetched ${allResults.length} unique anime for filtering`);
     }
 
     let filteredResults = allResults;
@@ -135,11 +153,11 @@ router.get('/search', async (req, res) => {
           });
         }
         
-        return selectedGenres.some(selectedGenre => 
+        return selectedGenres.every(selectedGenre => 
           animeGenres.some(ag => ag.toLowerCase() === selectedGenre.toLowerCase())
         );
       });
-      console.log('Genre filter:', beforeFilter, '→', filteredResults.length);
+      console.log('Genre filter (AND logic):', beforeFilter, '→', filteredResults.length);
     }
 
     if (minScore) {
@@ -170,7 +188,6 @@ router.get('/search', async (req, res) => {
     if (limit) params.append('limit', limit);
 
     res.render('anime-search', {
-      layout         : false,
       title          : 'Search Anime',
       results        : paginatedResults,
       filters        : { title, minScore, limit },
@@ -240,7 +257,6 @@ router.get('/genre/:genre', async (req, res) => {
     const paginatedResults = allResults.slice(startIndex, endIndex);
 
     res.render('anime-search', {
-      layout      : false,
       title       : `${req.params.genre} Anime`,
       results     : paginatedResults,
       query       : req.params.genre,
@@ -308,7 +324,6 @@ router.get('/stats/:id', async (req, res) => {
     };
     
     res.render('anime-stats', {
-      layout: false,
       title: `${animeDetails?.title || 'Anime'} - Statistics`,
       stats: combinedStats,
       animeId: req.params.id
@@ -316,7 +331,6 @@ router.get('/stats/:id', async (req, res) => {
   } catch (error) {
     console.error('Error fetching anime stats:', error.message);
     res.status(404).render('error', {
-      layout : false,
       message: 'Anime statistics not found',
       error  : { 
         status: 404, 
@@ -365,7 +379,6 @@ router.get('/:id/stats', async (req, res) => {
     };
     
     res.render('anime-stats', {
-      layout: false,
       title: `${animeDetails?.title || 'Anime'} - Statistics`,
       stats: combinedStats,
       animeId: req.params.id
@@ -373,7 +386,6 @@ router.get('/:id/stats', async (req, res) => {
   } catch (error) {
     console.error('Error fetching anime stats:', error.message);
     res.status(404).render('error', {
-      layout : false,
       message: 'Anime statistics not found',
       error  : { 
         status: 404, 
@@ -463,7 +475,6 @@ router.get('/:id', async (req, res) => {
     }
     
     res.render('anime-detail', {
-      layout: false,
       title : anime.title || `Anime ${req.params.id}`,
       anime : anime,
       charactersList: charactersList,

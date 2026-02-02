@@ -43,7 +43,13 @@ Adam_Aseglio_Bertola_TWEB/
   ├── report
   │    └── report.pdf                   # Documentation
   └── solution
+       ├── Makefile                     # Automation
+       │
        ├── scripts/                     # Data processing and orchestration
+       │    ├── data_load_mongo.py
+       │    ├── data_load_pgsql.py
+       │    ├── start_all.sh
+       │    └── stop_all.sh
        │
        ├── servers/
        │    ├── backend/
@@ -180,27 +186,16 @@ python data_load_mongo.py
 ```
 
 ## Running the Application
-The project includes automation scripts for managing all services. 
-Navigate back into the solution dir and make them executable:
+The project includes automation scripts for managing all services via Makefile. 
+Navigate back into the solution dir and fireup the app accordingly:  
 ```bash
-chmod +x ./scripts/*.sh
-```
-
-### Start All Services in one go from the CLI
-```bash
-./scripts/start_all.sh
-```
-
-This will start all services in the background:
-- **Frontend UI**: http://localhost:3000
-- **API Gateway**: http://localhost:3001
-- **MongoDB Service**: http://localhost:3002
-- **Spring Boot Service**: http://localhost:8080
-
-### Stop All Services at once
-From within the same solution directory:
-```bash
-./scripts/stop_all.sh
+make start   # starts all services
+make stop    # stops all services
+make restart # stops then starts
+make status  # shows which ports are active
+make install # installs npm dependencies
+make clean   # removes builds and logs
+make help    # shows available commands
 ```
 
 ### 6. IDE startup (Optional)

@@ -129,43 +129,4 @@ router.get('/:username/stats', async (req, res) => {
   }
 });
 
-/**
- * @swagger
- * /api/profiles/{username}/preferences:
- *   put:
- *     summary: Update user profile preferences
- *     tags: [Profiles]
- *     parameters:
- *       - in: path
- *         name: username
- *         required: true
- *         schema:
- *           type: string
- *         description: Username
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             type: object
- *             description: User preferences to update
- *     responses:
- *       200:
- *         description: Updated profile preferences
- *       500:
- *         description: Server error
- */
-router.put('/:username/preferences', async (req, res) => {
-  try {
-    const response = await axios.put(`${BACKEND_MONGO_URL}/profiles/${req.params.username}/preferences`, req.body);
-    
-    res.json(response.data);
-  } catch (error) {
-    res.status(500).json({ 
-      message: 'Error updating preferences', 
-      error  : error.message 
-    });
-  }
-});
-
 module.exports = router;

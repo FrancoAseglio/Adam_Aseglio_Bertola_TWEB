@@ -1,16 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{title}}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/stylesheets/style.css">
-</head>
-<body class="bg-light">
     {{> navbar}}
     
     <div class="header-gradient pink">
@@ -39,14 +26,13 @@
                     {{#if this.details}}
                         {{#if (eq this.fav_type "anime")}}
                             <!-- Anime Card -->
-                            <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/anime/{{this.id}}'">
+                            <div class="card anime-card h-100 clickable" onclick="window.location.href='/anime/{{this.id}}'">
                                 {{#if this.details.image_url}}
-                                <img src="{{this.details.image_url}}" alt="{{this.details.title}}" class="card-img-top" 
-                                     style="height:300px;object-fit:cover" 
+                                <img src="{{this.details.image_url}}" alt="{{this.details.title}}" class="card-img-top character-card-image-300" 
                                      onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
                                 {{else}}
                                 <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" 
-                                     alt="{{this.details.title}}" class="card-img-top" style="height:300px;object-fit:cover">
+                                     alt="{{this.details.title}}" class="card-img-top character-card-image-300">
                                 {{/if}}
                                 <div class="card-body">
                                     <h6 class="card-title text-primary">{{this.details.title}}</h6>
@@ -71,14 +57,13 @@
                             </div>
                         {{else if (eq this.fav_type "character")}}
                             <!-- Character Card -->
-                            <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/characters/{{this.id}}'">
+                            <div class="card anime-card h-100 clickable" onclick="window.location.href='/characters/{{this.id}}'">
                                 {{#if this.details.image_url}}
-                                <img src="{{this.details.image_url}}" alt="{{this.details.name}}" class="card-img-top" 
-                                     style="height:300px;object-fit:cover" 
+                                <img src="{{this.details.image_url}}" alt="{{this.details.name}}" class="card-img-top character-card-image-300" 
                                      onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
                                 {{else}}
                                 <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" 
-                                     alt="{{this.details.name}}" class="card-img-top" style="height:300px;object-fit:cover">
+                                     alt="{{this.details.name}}" class="card-img-top character-card-image-300">
                                 {{/if}}
                                 <div class="card-body">
                                     <h6 class="card-title text-primary">{{this.details.name}}</h6>
@@ -96,14 +81,13 @@
                             </div>
                         {{else if (eq this.fav_type "people")}}
                             <!-- People Card -->
-                            <div class="card anime-card h-100" style="cursor: pointer;" onclick="window.location.href='/people/{{this.id}}'">
+                            <div class="card anime-card h-100 clickable" onclick="window.location.href='/people/{{this.id}}'">
                                 {{#if this.details.image_url}}
-                                <img src="{{this.details.image_url}}" alt="{{this.details.given_name}} {{this.details.family_name}}" class="card-img-top" 
-                                     style="height:300px;object-fit:cover" 
+                                <img src="{{this.details.image_url}}" alt="{{this.details.given_name}} {{this.details.family_name}}" class="card-img-top character-card-image-300" 
                                      onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
                                 {{else}}
                                 <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" 
-                                     alt="{{this.details.given_name}} {{this.details.family_name}}" class="card-img-top" style="height:300px;object-fit:cover">
+                                     alt="{{this.details.given_name}} {{this.details.family_name}}" class="card-img-top character-card-image-300">
                                 {{/if}}
                                 <div class="card-body">
                                     <h6 class="card-title text-primary">{{this.details.given_name}} {{this.details.family_name}}</h6>
@@ -124,7 +108,7 @@
                         <!-- Fallback Card -->
                         <div class="card anime-card h-100">
                             <img src="https://via.placeholder.com/225x350/6c757d/ffffff?text=No+Details" 
-                                 alt="Unknown" class="card-img-top" style="height:300px;object-fit:cover">
+                                 alt="Unknown" class="card-img-top character-card-image-300">
                             <div class="card-body">
                                 <h6 class="card-title text-muted">ID: {{this.id}}</h6>
                                 <p class="card-text small text-muted mb-1"><strong>Type:</strong> {{this.fav_type}}</p>
@@ -149,7 +133,3 @@
             <a href="/profile/{{username}}" class="btn btn-outline-primary">👤 View Full Profile</a>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
