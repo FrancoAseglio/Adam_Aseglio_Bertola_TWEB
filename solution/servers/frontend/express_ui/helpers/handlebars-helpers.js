@@ -127,9 +127,31 @@ function registerHelpers() {
    * @example {{concat "/favorites/" username}} => "/favorites/john"
    */
   hbs.registerHelper('concat', function(...args) {
-    // Remove the last argument which is the options object from Handlebars
     args.pop();
     return args.join('');
+  });
+
+  /**
+   * Format About section: bold any 'Label:' at start of line or after newline, insert <br> before each except first.
+   * Usage: {{{aboutBold character.about}}}
+   */
+  hbs.registerHelper('aboutBold', function(aboutText) {
+    if (!aboutText) return '';
+    const lines = aboutText.split(/\r?\n/);
+    let formatted = '';
+    let fieldPattern = /^([A-Z][A-Za-z0-9 .\-()]+:)/;
+    let firstField = true;
+    lines.forEach(line => {
+      if (fieldPattern.test(line.trim())) {
+        if (!firstField) formatted += '<br>';
+        firstField = false;
+        formatted += line.replace(fieldPattern, '<strong>$1</strong>');
+      } else {
+        if (formatted) formatted += '<br>';
+        formatted += line;
+      }
+    });
+    return new hbs.handlebars.SafeString(formatted);
   });
 }
 

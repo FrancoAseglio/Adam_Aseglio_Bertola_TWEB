@@ -1,4 +1,5 @@
 [project]
+packages = [{include = "scripts"}]
 name = "scripts"
 version = "0.1.0"
 description = ""
