@@ -76,8 +76,6 @@ public class CharacterService {
         }
         
         Character character = new Character();
-        
-        // Get next available ID
         Integer maxId = characterRepository.findMaxCharacterId();
         System.out.println("DEBUG - MAX ID from database: " + maxId);
         Integer nextId = (maxId != null) ? maxId + 1 : 1;
@@ -100,7 +98,6 @@ public class CharacterService {
      * @throws ResponseStatusException if character not found or ID is below minimum
      */
     public void removeCharacter(Integer characterId) {
-        // Prevent deletion of original characters (IDs < 282285)
         if (characterId < 282285) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, 
                 "Cannot remove original characters (ID < 282285). Only custom added characters can be deleted.");

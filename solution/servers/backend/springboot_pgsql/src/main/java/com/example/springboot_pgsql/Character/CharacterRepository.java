@@ -17,7 +17,6 @@ public interface CharacterRepository extends JpaRepository<Character, Integer> {
     @Query("SELECT MAX(c.characterMalId) FROM Character c")
     Integer findMaxCharacterId();
     
-    // Query for filtering by role - join with character_anime_works table
     @Query(value = "SELECT c.character_mal_id, c.name, c.name_kanji, c.nicknames, c.about, " +
            "c.favorites, c.image, " +
            "CASE WHEN :role IS NOT NULL THEN :role ELSE MAX(caw.role) END as role " +

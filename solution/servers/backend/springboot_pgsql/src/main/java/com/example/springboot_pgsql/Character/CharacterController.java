@@ -39,7 +39,6 @@ public class CharacterController {
             @Parameter(description = "Character name to search for", example = "Naruto Uzumaki") @RequestParam(required = false) String name,
             @Parameter(description = "Role of the character", example = "Main") @RequestParam(required = false) String role,
             @Parameter(description = "Minimum number of favorites", example = "1000") @RequestParam(required = false) Integer minFavorites) {
-        // ...existing code...
         if (role != null || minFavorites != null) {
             return characterService.searchWithFilters(name, role, minFavorites);
         }
@@ -70,7 +69,6 @@ public class CharacterController {
     })
     @PostMapping
     public ResponseEntity<?> addCharacter(@RequestBody java.util.Map<String, String> characterData) {
-        // ...existing code...
         try {
             String name = characterData.get("name");
             String image = characterData.get("image");

@@ -29,7 +29,6 @@ public class AnimeService {
     }
 
     public List<String> getAllGenres() {
-        // Lista statica di tutti i generi nel dataset (ordine alfabetico)
         return Arrays.asList(
             "Action", "Adventure", "Avant Garde", "Award Winning", "Boys Love",
             "Comedy", "Drama", "Ecchi", "Erotica", "Fantasy", "Girls Love",

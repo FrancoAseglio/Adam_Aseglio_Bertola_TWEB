@@ -34,7 +34,7 @@ const swaggerOptions = {
       description: 'API Gateway for routing requests to MongoDB and Spring Boot backends',
     },
     servers: [
-      { url: 'http://localhost:3001', description: 'Development server' }
+      { url: 'http://localhost:3001', description: 'API Gateway Server' }
     ],
   },
   apis: [path.join(__dirname, 'routes/*.js')],
@@ -63,15 +63,15 @@ app.use(cookieParser());
 app.use('/', indexRouter);
 
 // API Routes
-app.use('/api/characters',       charactersApiRouter);
-app.use('/api/people',           peopleApiRouter);
-app.use('/api/anime',            animeApiRouter);
-app.use('/api/favorites',        favoritesApiRouter);
-app.use('/api/ratings',          ratingsApiRouter);
-app.use('/api/stats',            statsApiRouter);
-app.use('/api/profiles',         profilesApiRouter);
-app.use('/api/recommendations',  recommendationsApiRouter);
-app.use('/api/character-anime',  characterAnimeApiRouter);
+app.use('/api/characters',        charactersApiRouter);
+app.use('/api/people',            peopleApiRouter);
+app.use('/api/anime',             animeApiRouter);
+app.use('/api/favorites',         favoritesApiRouter);
+app.use('/api/ratings',           ratingsApiRouter);
+app.use('/api/stats',             statsApiRouter);
+app.use('/api/profiles',          profilesApiRouter);
+app.use('/api/recommendations',   recommendationsApiRouter);
+app.use('/api/character-anime',   characterAnimeApiRouter);
 app.use('/api/person-voice-work', personVoiceApiRouter);
 
 // Catch 404 and forward to error handler

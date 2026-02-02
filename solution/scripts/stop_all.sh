@@ -68,6 +68,6 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "   ✓ Logs directory removed"
   fi
 fi
-
+sleep 1
 echo ""
 echo "✅ Done"

@@ -10,12 +10,12 @@ import io.swagger.v3.oas.annotations.servers.Server;
 @OpenAPIDefinition(
     info = @Info(
         title = "Springboot Anime API Server",
-        description = "API documentation for the Spring Boot Anime server."
+        description = "API documentation for Spring Boot Anime server."
     ),
     servers = {
         @Server(
             url = "http://localhost:8080",
-            description = "Springboot Anime API Server"
+            description = "Springboot Server"
         )
     }
 )
