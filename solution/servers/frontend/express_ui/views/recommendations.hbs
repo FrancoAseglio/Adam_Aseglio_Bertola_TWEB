@@ -22,12 +22,11 @@
           {{#if this.details}}
           <a href="/anime/{{this.details.mal_id}}">
             {{#if this.details.image_url}}
-            <img src="{{this.details.image_url}}" alt="{{this.details.title}}" class="card-img-top"
-              style="height:300px;object-fit:cover"
+            <img src="{{this.details.image_url}}" alt="{{this.details.title}}" class="card-img-top recommendation-card-image"
               onerror="this.src='https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png'">
             {{else}}
             <img src="https://cdn.myanimelist.net/img/sp/icon/apple-touch-icon-256.png" alt="{{this.details.title}}"
-              class="card-img-top" style="height:300px;object-fit:cover">
+              class="card-img-top recommendation-card-image">
             {{/if}}
             <div class="card-body">
               <h6 class="card-title text-primary">{{this.details.title}}</h6>

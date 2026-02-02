@@ -23,11 +23,11 @@
                 </div>
 
                 {{#if person.favorites}}
-                    <div class="card mt-3 text-center border-0 shadow-lg" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                    <div class="card mt-3 text-center border-0 shadow-lg person-favorites-card">
                         <div class="card-body py-4">
-                            <div style="font-size: 3rem;">❤️</div>
-                            <div class="stat-value fw-bold" style="font-size: 2.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">{{person.favorites}}</div>
-                            <div class="stat-label fw-semibold" style="font-size: 1.1rem; letter-spacing: 1px; text-transform: uppercase;">users</div>
+                            <div class="person-favorites-icon">❤️</div>
+                            <div class="stat-value fw-bold person-favorites-value">{{person.favorites}}</div>
+                            <div class="stat-label fw-semibold person-favorites-label">users</div>
                         </div>
                     </div>
                 {{/if}}

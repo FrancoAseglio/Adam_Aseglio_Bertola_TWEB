@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-6 col-lg-3">
-                                <div class="stat-card" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);">
+                                <div class="stat-card purple-teal">
                                     <div class="stat-value">{{profile.userFavorites}}</div>
                                     <div class="stat-label">❤ Favorites</div>
                                 </div>
@@ -69,14 +69,13 @@
                                             <a href="/anime/{{this.id}}">
                                                 <img src="{{this.details.image_url}}"
                                                      alt="{{this.details.title}}"
-                                                     class="card-img-top"
-                                                     style="height: 280px; object-fit: cover;">
+                                                     class="card-img-top profile-card-image">
                                             </a>
                                             {{/if}}
 
                                             <div class="card-body">
                                                 <a href="/anime/{{this.id}}" class="text-decoration-none">
-                                                    <h6 class="card-title mb-2" style="color: var(--primary-color); min-height: 2.5em;">
+                                                    <h6 class="card-title mb-2 profile-card-title">
                                                         🎬 {{this.details.title}}
                                                     </h6>
                                                 </a>
@@ -91,14 +90,13 @@
                                             <a href="/characters/{{this.id}}">
                                                 <img src="{{this.details.image_url}}"
                                                      alt="{{this.details.name}}"
-                                                     class="card-img-top"
-                                                     style="height: 280px; object-fit: cover;">
+                                                     class="card-img-top profile-card-image">
                                             </a>
                                             {{/if}}
 
                                             <div class="card-body">
                                                 <a href="/characters/{{this.id}}" class="text-decoration-none">
-                                                    <h6 class="card-title mb-2" style="color: var(--primary-color); min-height: 2.5em;">
+                                                    <h6 class="card-title mb-2 profile-card-title">
                                                         👤 {{this.details.name}}
                                                     </h6>
                                                 </a>
@@ -113,14 +111,13 @@
                                             <a href="/people/{{this.id}}">
                                                 <img src="{{this.details.image_url}}"
                                                      alt="{{#if this.details.name}}{{this.details.name}}{{else}}{{this.details.givenName}} {{this.details.familyName}}{{/if}}"
-                                                     class="card-img-top"
-                                                     style="height: 280px; object-fit: cover;">
+                                                     class="card-img-top profile-card-image">
                                             </a>
                                             {{/if}}
 
                                             <div class="card-body">
                                                 <a href="/people/{{this.id}}" class="text-decoration-none">
-                                                    <h6 class="card-title mb-2" style="color: var(--primary-color); min-height: 2.5em;">
+                                                    <h6 class="card-title mb-2 profile-card-title">
                                                         {{#if this.details.name}}{{this.details.name}}{{else}}{{this.details.givenName}} {{this.details.familyName}}{{/if}}
                                                     </h6>
                                                 </a>
@@ -156,8 +153,8 @@
         <div class="row mb-4">
             <div class="col-12">
                 <div class="card shadow-sm">
-                    <div class="card-header bg-warning">
-                        <h5 class="mb-0" style="color: white !important;">⭐ Recent Ratings (Last {{ratings.length}})</h5>
+                    <div class="card-header bg-warning card-header-white-text">
+                        <h5 class="mb-0">⭐ Recent Ratings (Last {{ratings.length}})</h5>
                     </div>
                     <div class="card-body">
                         <div class="row g-3">
@@ -170,22 +167,21 @@
                                         <a href="/anime/{{this.anime_id}}">
                                             <img src="{{this.animeDetails.image_url}}"
                                                  alt="{{this.animeDetails.title}}"
-                                                 class="card-img-top"
-                                                 style="height: 280px; object-fit: cover;">
+                                                 class="card-img-top profile-card-image">
                                         </a>
                                         {{/if}}
 
                                         <div class="card-body">
                                             <!-- Clickable Anime Title -->
                                             <a href="/anime/{{this.anime_id}}" class="text-decoration-none">
-                                                <h6 class="card-title mb-2" style="color: var(--primary-color); min-height: 2.5em;">
+                                                <h6 class="card-title mb-2 profile-card-title">
                                                     {{this.animeDetails.title}}
                                                 </h6>
                                             </a>
 
                                             <!-- Rating Score -->
                                             <div class="mb-2 d-flex justify-content-between align-items-center">
-                                                <span class="badge" style="background: var(--gradient-orange); font-size: 0.9rem; padding: 0.4rem 0.8rem;">
+                                                <span class="badge rating-badge-large">
                                                     ⭐ {{this.score}}/10
                                                 </span>
                                                 {{#if this.animeDetails.type}}
@@ -205,7 +201,7 @@
                                         <div class="card-body">
                                             <h6 class="mb-2">Anime ID: {{this.anime_id}}</h6>
                                             <div class="mb-0">
-                                                <span class="badge" style="background: var(--gradient-orange);">⭐ {{this.score}}/10</span>
+                                                <span class="badge rating-badge-small">⭐ {{this.score}}/10</span>
                                             </div>
                                         </div>
                                     {{/if}}

@@ -12,20 +12,18 @@
             <div class="col-md-6">
                 <div class="card border-0 shadow-lg">
                     <div class="card-body p-5 text-center">
-                        <div class="mb-4" style="font-size: 4rem;">🔍</div>
+                        <div class="mb-4 search-icon-large">🔍</div>
                         <h3 class="mb-4">Search User Profile</h3>
                         <p class="text-muted mb-4">Enter a username to view their anime profile, favorites, and ratings</p>
                         
                         <div class="mb-4">
                             <input type="text" 
-                                   class="form-control form-control-lg text-center" 
+                                   class="form-control form-control-lg text-center search-input-rounded" 
                                    id="username" 
-                                   placeholder="Enter username (e.g., CKK2)"
-                                   style="border-radius: 50px; font-size: 1.1rem;">
+                                   placeholder="Enter username (e.g., CKK2)">
                         </div>
                         
-                        <button class="btn btn-success btn-lg w-100" 
-                                style="border-radius: 50px; padding: 0.75rem 2rem;"
+                        <button class="btn btn-success btn-lg w-100 search-button-rounded" 
                                 onclick="getUserProfile()">
                             <i class="bi bi-search me-2"></i>
                             View Profile
@@ -40,20 +38,3 @@
             </div>
         </div>
     </div>
-    <script>
-        function getUserProfile() {
-            const username = document.getElementById('username').value.trim();
-            if (!username) {
-                alert('Please enter a username');
-                return;
-            }
-            window.location.href = `/profile/${username}`;
-        }
-        
-        // Allow Enter key to submit
-        document.getElementById('username').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                getUserProfile();
-            }
-        });
-    </script>

@@ -155,3 +155,25 @@ async function removeCharacterFromForm() {
   }
 }
 
+/**
+ * Initialize Enter key listener for profile search
+ * Sets up event listener on username input field for Enter key submission
+ */
+function initializeProfileSearchEnterKey() {
+  const usernameInput = document.getElementById('username');
+  if (usernameInput) {
+    usernameInput.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') {
+        getUserProfile();
+      }
+    });
+  }
+}
+
+// Auto-initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initializeProfileSearchEnterKey);
+} else {
+  initializeProfileSearchEnterKey();
+}
+
