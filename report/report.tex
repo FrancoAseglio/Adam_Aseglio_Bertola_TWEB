@@ -89,34 +89,38 @@ The architecture successfully fulfills the assignment requirements by:
 \subsection{Step 2: Backend Services Implementation}
 
 \subsubsection{Design and its motivations}
-The backend implementation is structured around three independent services:
+The backend implementation is structured around three independent services, each serving a distinct purpose within the microservices architecture:
 \begin{itemize}
-    \item \textbf{Spring Boot PostgreSQL Service}: Implemented using JPA, this service manages the anime catalog domain and exposes RESTful endpoints for anime, characters, and people entities;
-    \item \textbf{Express MongoDB Service}: Built with Express.js and Mongoose, it handles user-centric data. MongoDB's document-oriented model was chosen for its flexibility in managing possible large scaling;
-    \item \textbf{Express Gateway}: Acting as the API aggregation layer. It follows the \texttt{Backend for Frontend} pattern, consolidating backend calls, transforming responses and exposing a unified API to the UI.
+    \item \textbf{Spring Boot PostgreSQL Service}: Implemented using Spring Data JPA, this service manages the anime catalog domain model. It exposes RESTful endpoints for anime, characters, and people entities, leveraging JPA repositories for declarative query construction and automatic CRUD operations;
+
+    \item \textbf{Express MongoDB Service}: Built with Express.js and Mongoose ODM, it handles user-centric data including profiles, favorites, ratings, and recommendations. MongoDB's document-oriented model was chosen for its flexibility in managing schema evolution and its ability to handle potentially large-scale user-generated content without rigid structural constraints;
+
+    \item \textbf{Express Gateway}: Acting as the API aggregation layer and single entry point for client requests, the gateway follows the \texttt{Backend for Frontend} (BFF) pattern. It consolidates multiple backend calls into unified endpoints, performs response transformation and data aggregation, and exposes a simplified, frontend-optimized API to the UI layer. This abstraction shields the frontend from backend complexity and enables independent evolution of backend services.
 \end{itemize}
 
 \subsubsection{Issues}
 The main issues encountered during backend implementation include:
 \begin{itemize}
-    \item \textbf{Error handling}: Standardizing error responses across heterogeneous services (Spring Boot and Express) proved non-trivial.
-    \item \textbf{Asynchronous control flow}: Managing asynchronous operations in Express services required careful use of async/await to avoid race conditions and unhandled errors.
+    \item \textbf{Error handling}: Standardizing error responses across heterogeneous services proved non-trivial. Spring Boot's default exception handling produces different response structures compared to Express middleware-based error handlers. We ensured consistent HTTP status codes, error message formats, and response structures across all services;
+
+    \item \textbf{Asynchronous control flow}: Managing asynchronous operations in Express services required careful use of async/await patterns to avoid race conditions, callback hell, and unhandled promise rejections;
+
+    \item \textbf{Cross-service communication}: Establishing reliable HTTP communication between the gateway and backend services required handling network failures, implementing appropriate timeout configurations, and managing connection pooling in Axios.
 \end{itemize}
 
 \subsubsection{Requirements}
 The backend implementation satisfies the core functional requirements:
 \begin{itemize}
-    \item \textbf{Dependencies}: Axios has been used as for HTTP communication while endpoints are documented through Swagger.
-    \item \textbf{API Documentation}: All services expose documented APIs using Swagger UI for Spring Boot and swagger-jsdoc for Express-based services.
-    \item \textbf{CRUD Operations}: Full Create, Read, Update, and Delete support for all core entities, including anime, characters, user profiles, and favorites.
+    \item \textbf{Dependencies and Communication}: Axios has been adopted as the primary HTTP client for inter-service communication, providing promise-based request handling and interceptor support for centralized request/response transformation;
+    \item \textbf{API Documentation}: All services expose interactive API documentation accessible through dedicated Swagger UI endpoints. The documentation includes comprehensive request/response schemas, requirements, example payloads and error response specifications;
+    \item \textbf{CRUD Operations}: The implementation follows RESTful conventions with appropriate HTTP methods and returns standard HTTP status codes for operation outcomes;
 \end{itemize}
 
 \subsubsection{Limitations}
 At this stage, the backend presents the following limitations:
 \begin{itemize}
-    \item No caching layer is implemented for frequently accessed catalog data;
-    \item Business rule validation is limited and primarily delegated to the application logic;
-    \item User actions are handled imperatively, without event sourcing or asynchronous processing mechanisms.
+    \item \textbf{Caching}: No caching layer is implemented for frequently accessed catalog data, resulting in repeated database queries for popular anime or character information;
+    \item \textbf{Validation scope}: Business rule validation is limited and primarily delegated to application logic rather than being enforced at the database level through constraints or triggers;
 \end{itemize}
 
 
@@ -128,38 +132,36 @@ At this stage, the backend presents the following limitations:
 \subsection{Step 3: Frontend Implementation and User Experience}
 
 \subsubsection{Design and its motivations}
-Implemented as a server-side rendered application using Express.js with Handlebars templating. \\This design choice was motivated by several factors:
+The frontend is implemented as a server-side rendered application using Express.js with Handlebars templating engine, serving dynamic HTML pages generated on the server. This design choice was motivated by several factors:
 \begin{itemize}
-    \item \textbf{Server-Side Rendering}: Provides faster initial page loads and improved SEO capabilities, which are important for content discovery applications;
-    \item \textbf{Handlebars Templating}: Allows for clean separation of presentation logic from business logic, with custom helpers for formatting dates, numbers, and conditional rendering;
-    \item \textbf{Progressive Enhancement}: The UI is built with a foundation of functional HTML forms, progressively enhanced with JavaScript for dynamic interactions ensuring graceful degradation;
-    \item \textbf{Responsive Design}: CSS styling ensures the application works across desktop and mobile viewports.
+    \item \textbf{Server-Side Rendering}: Provides faster initial page loads by delivering fully-rendered HTML to the browser, eliminating the need for client-side framework initialization and API calls before content appears. This approach also improves SEO capabilities, which is particularly important for content discovery applications where users may find anime through search engines;
+    \item \textbf{Handlebars Templating}: Allows for clean separation of presentation logic from business logic through a logic-less templating approach. Partials enable component reusability across different views, promoting consistency in UI elements;
+    \item \textbf{Responsive Design}: CSS styling with media queries and flexible layouts ensures the application adapts to different viewport sizes, providing optimal user experience across desktop monitors, tablets, and mobile devices. The layout employs a mobile-first approach with breakpoints at standard device widths, utilizing flexbox and grid layouts for responsive component arrangement.
 \end{itemize}
 
 \subsubsection{Issues}
 The main challenges encountered during frontend development include:
 \begin{itemize}
-    \item \textbf{Error handling}: Implementing comprehensive error boundaries and user-friendly feedback;
-    \item \textbf{Performance optimization}: Managing large result sets efficiently, particularly through pagination and partial rendering;
-    \item \textbf{State consistency}: Ensuring consistent UI state across server-rendered views and client-side enhanced interactions.
+    \item \textbf{Error handling}: Implementing comprehensive error boundaries to catch and display user-friendly error messages when backend services fail or return unexpected responses;
+    \item \textbf{Performance optimization}: Managing large result sets efficiently, particularly when displaying extensive anime catalogs or user collections. This was addressed through pagination with configurable page sizes, loading of images to reduce initial payload, and partial rendering techniques that only update modified portions of the page;
+    \item \textbf{Template organization}: Managing growing template complexity as features expanded required establishing clear conventions for partial usage, helper organization, and data preprocessing in route handlers to keep templates focused on presentation rather than logic.
 \end{itemize}
-
 
 \subsubsection{Requirements}
 The frontend implementation fulfills the assignment requirements by providing:
 \begin{itemize}
-    \item \textbf{Complete User Workflows}: All core features are accessible through intuitive navigation with clear call-to-action buttons.
-    \item \textbf{Data Visualization}: User statistics presented through charts; anime ratings displayed with visual score indicators.
-    \item \textbf{CRUD Interfaces}: Forms for managing user favorites and for the creation/removal of characters.
+    \item \textbf{Complete User Workflows}: All core features including anime browsing, character exploration, user profile management, favorites tracking, and rating submission are accessible through intuitive navigation structures;
+    \item \textbf{Data Visualization}: User and animes' statistics are displayed with visual score indicators including star ratings, numerical scores, and color-coded badges that provide immediate visual feedback on content quality. Aggregate statistics show popularity metrics and ranking information;
+    \item \textbf{CRUD Interfaces}: Comprehensive forms enable managing user favorites with add/remove functionality accessible from both anime detail pages and dedicated collection views. Character creation interface provide multi-field forms with validation feedback, while character removal includes confirmation dialogs to prevent accidental deletions. All forms implement CSRF protection and provide clear success/error feedback;
+    \item \textbf{Search and Filtering}: Advanced search capabilities allow users to find anime by title, genre, or release year, with filter controls that combine multiple criteria.
 \end{itemize}
 
 \subsubsection{Limitations}
 \begin{itemize}
-    \item \textbf{Server-side validation}: Form validation is primarily handled on the server, resulting in limited immediate client-side feedback.
-    \item \textbf{Pagination dependency}: Handling large result sets relies on backend-driven pagination, which limits client-side interaction flexibility.
-    \item \textbf{No offline support}: The application does not implement service workers or caching mechanisms for offline or low-connectivity usage.
+    \item \textbf{Client-side validation}: Form validation is primarily handled on the server side through Express middleware and backend service validation, resulting in limited immediate client-side feedback;
+    \item \textbf{Pagination dependency}: Handling large result sets relies entirely on backend-driven pagination with server-controlled page sizes and navigation, which limits client-side interaction flexibility;
+    \item \textbf{No offline support}: The application does not implement service workers, application caching, or offline-first strategies, making it completely dependent on network connectivity.
 \end{itemize}
-
 
 
 
@@ -181,7 +183,6 @@ The data integration layer bridges cleaned MyAnimeList datasets from a previousl
 \subsubsection{Issues}
 \begin{itemize}
     \item \textbf{Large data volumes}: Managing high-volume datasets required chunked processing to control memory usage and execution time at loading time;
-    \item \textbf{Foreign key dependencies}: Preserving referential integrity in PostgreSQL required carefully ordered insertions across related tables;
     \item \textbf{Character encoding}: Ensuring consistent UTF-8 encoding was necessary to correctly store Japanese characters and special symbols.
 \end{itemize}
 
