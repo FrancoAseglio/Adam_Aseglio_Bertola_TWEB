@@ -11,11 +11,6 @@
         <!-- Titles Section -->
         <div class="mb-4">
             <h1 class="text-primary mb-2">{{anime.title}}</h1>
-            {{#if anime.malId}}
-            <p class="text-muted mb-1"><small><strong>ID:</strong> {{anime.malId}}</small></p>
-            {{else if anime.mal_id}}
-            <p class="text-muted mb-1"><small><strong>ID:</strong> {{anime.mal_id}}</small></p>
-            {{/if}}
             {{#if anime.titleEnglish}}
             <p class="text-muted mb-1 subtitle-text">{{anime.titleEnglish}}</p>
             {{/if}}
@@ -89,6 +84,11 @@
                         <div class="mb-4">
                             <h4 class="border-bottom pb-2">Information</h4>
                             <div class="row">
+                                {{#if anime.malId}}
+                                <div class="col-md-6 mb-2">
+                                    <strong>Anime ID:</strong> {{anime.malId}}
+                                </div>
+                                {{/if}}
                                 {{#if anime.type}}
                                 <div class="col-md-6 mb-2">
                                     <strong>Type:</strong> {{anime.type}}
