@@ -109,13 +109,12 @@ router.get('/search', async (req, res) => {
 
     if (title) {
       const params = { title };
-      if (limit) params.limit = limit;
+      const onlyTitleSearch = !minScore && selectedGenres.length === 0;
+      if (limit && onlyTitleSearch) params.limit = limit;
       const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params });
       allResults = response.data;
     } else if (selectedGenres.length > 0) {
-      const params = {};
-      if (limit) params.limit = limit;
-      const response = await axios.get(`${GATEWAY_URL}/anime/genre/${selectedGenres[0]}`, { params });
+      const response = await axios.get(`${GATEWAY_URL}/anime/genre/${selectedGenres[0]}`);
       allResults = response.data;
       usedGenreAPI = true;
     } else {
@@ -130,9 +129,7 @@ router.get('/search', async (req, res) => {
       const combinedMap = new Map();
       results.forEach(result => {
         result.data.forEach(anime => {
-          if (!combinedMap.has(anime.mal_id)) {
-            combinedMap.set(anime.mal_id, anime);
-          }
+          if (!combinedMap.has(anime.mal_id)) combinedMap.set(anime.mal_id, anime);
         });
       });
       allResults = Array.from(combinedMap.values());
@@ -174,6 +171,11 @@ router.get('/search', async (req, res) => {
     }
 
     filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
+    
+    if (limit) {
+      const limitNum = parseInt(limit);
+      filteredResults = filteredResults.slice(0, limitNum);
+    }
     
     filteredResults = filteredResults.map(anime => ({
       ...anime,
