@@ -25,11 +25,4 @@ public class CharacterAnimeWorkService {
         return repository.findByCharacterMalId(characterId);
     }
 
-    public CharacterAnimeWork save(CharacterAnimeWork work) {
-        return repository.save(work);
-    }
-
-    public void saveAll(List<CharacterAnimeWork> workList) {
-        repository.saveAll(workList);
-    }
 }

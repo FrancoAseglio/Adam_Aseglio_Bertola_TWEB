@@ -54,8 +54,4 @@ public class AnimeService {
     public long count() {
         return animeRepository.count();
     }
-
-    public void saveAll(List<Anime> animeList) {
-        animeRepository.saveAll(animeList);
-    }
 }

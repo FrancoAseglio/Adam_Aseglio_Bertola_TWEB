@@ -35,7 +35,4 @@ public class PersonVoiceWorkService {
             .collect(Collectors.toList());
     }
 
-    public void saveAll(List<PersonVoiceWork> workList) {
-        repository.saveAll(workList);
-    }
 }

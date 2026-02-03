@@ -32,19 +32,6 @@ public class CharacterService {
         return characterRepository.searchWithFilters(name, role, minFavorites, limit);
     }
 
-    public Character saveCharacter(Character character) {
-        return characterRepository.save(character);
-    }
-
-    public void saveAll(List<Character> characters) {
-        characterRepository.saveAll(characters);
-    }
-
-    public void deleteCharacter(Integer id) {
-        characterRepository.deleteById(id);
-    }
-    
-
     /**
      * Add a new character to the database.
      * 
