@@ -181,7 +181,7 @@
             {{#if charactersList}}
             {{#if charactersList.length}}
             <div class="mt-5">
-                <h3 class="mb-3">Characters (Top 20 by Favorites)</h3>
+                <h3 class="mb-3">Characters ({{charactersList.length}} total, sorted by Favorites)</h3>
                 <div class="anime-scroll-container">
                     <div class="anime-scroll-wrapper">
                         {{#each charactersList}}
@@ -222,7 +222,7 @@
             {{#if peopleList}}
             {{#if peopleList.length}}
             <div class="mt-5">
-                <h3 class="mb-3">Staff & Voice Actors (Top 20 by Favorites)</h3>
+                <h3 class="mb-3">Staff & Voice Actors ({{peopleList.length}} total, sorted by Favorites)</h3>
                 <div class="anime-scroll-container">
                     <div class="anime-scroll-wrapper">
                         {{#each peopleList}}
@@ -237,6 +237,13 @@
                                 {{/if}}
                                 <div class="card-body">
                                     <h6 class="card-title text-primary">{{this.name}}</h6>
+                                    {{#if this.voicedCharacter}}
+                                    <p class="card-text small text-muted mb-1"><strong>Character:</strong> {{this.voicedCharacter.name}}</p>
+                                    {{else}}
+                                    <p class="card-text small mb-1">
+                                        <span class="badge bg-info">👥 Staff</span>
+                                    </p>
+                                    {{/if}}
                                     {{#if this.language}}
                                     <p class="card-text small text-muted mb-1"><strong>Language:</strong> {{this.language}}</p>
                                     {{/if}}

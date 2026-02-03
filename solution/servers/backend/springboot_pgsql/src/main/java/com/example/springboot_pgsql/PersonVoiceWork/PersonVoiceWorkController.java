@@ -28,13 +28,13 @@ public class PersonVoiceWorkController {
         this.personVoiceWorkService = personVoiceWorkService;
     }
 
-    @Operation(summary = "Get top 20 people by anime ID", description = "Retrieve the top 20 people (voice actors) for a given anime ID.")
+    @Operation(summary = "Get all people by anime ID", description = "Retrieve all people (voice actors and staff) for a given anime ID, sorted by favorites.")
     @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "List of top 20 people for the anime returned successfully")
+        @ApiResponse(responseCode = "200", description = "List of all people for the anime returned successfully")
     })
-    @GetMapping("/anime/{animeId}/top")
-    public List<Map<String, Object>> getTop20PeopleByAnime(
+    @GetMapping("/anime/{animeId}")
+    public List<Map<String, Object>> getAllPeopleByAnime(
             @Parameter(description = "Anime ID", example = "1") @PathVariable Integer animeId) {
-        return personVoiceWorkService.getTop20PeopleByAnime(animeId);
+        return personVoiceWorkService.getAllPeopleByAnime(animeId);
     }
 }

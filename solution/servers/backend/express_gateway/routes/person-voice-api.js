@@ -6,9 +6,9 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
 
 /**
  * @swagger
- * /api/person-voice-work/anime/{animeId}/top:
+ * /api/person-voice-work/anime/{animeId}:
  *   get:
- *     summary: Get top 20 people for a specific anime ordered by favorites (Spring Boot/PostgreSQL backend)
+ *     summary: Get all people for a specific anime (Spring Boot/PostgreSQL backend)
  *     tags: [Person-Voice-Work]
  *     parameters:
  *       - in: path
@@ -19,17 +19,17 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
  *         description: Anime ID
  *     responses:
  *       200:
- *         description: List of top 20 people for the anime
+ *         description: List of all people for the anime
  *       500:
  *         description: Server error
  */
-router.get('/anime/:animeId/top', async (req, res) => {
+router.get('/anime/:animeId', async (req, res) => {
   try {
-    const response = await axios.get(`${BACKEND_SPRING_URL}/person-voice-work/anime/${req.params.animeId}/top`);
+    const response = await axios.get(`${BACKEND_SPRING_URL}/person-voice-work/anime/${req.params.animeId}`);
     res.json(response.data);
   } catch (error) {
     res.status(500).json({ 
-      message: 'Error fetching top people for anime', 
+      message: 'Error fetching people for anime', 
       error  : error.message 
     });
   }

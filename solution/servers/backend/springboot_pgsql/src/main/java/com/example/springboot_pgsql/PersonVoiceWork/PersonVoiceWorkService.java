@@ -20,8 +20,8 @@ public class PersonVoiceWorkService {
         this.repository = repository;
     }
 
-    public List<Map<String, Object>> getTop20PeopleByAnime(Integer animeId) {
-        List<Object[]> results = repository.findTop20PeopleByAnime(animeId);
+    public List<Map<String, Object>> getAllPeopleByAnime(Integer animeId) {
+        List<Object[]> results = repository.findAllPeopleByAnime(animeId);
         return results.stream()
             .map(row -> {
                 Map<String, Object> map = new HashMap<>();

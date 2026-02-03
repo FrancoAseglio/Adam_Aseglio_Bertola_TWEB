@@ -452,7 +452,7 @@ router.get('/:id', async (req, res) => {
     
     let charactersList = [];
     try {
-      const charactersResponse = await axios.get(`${GATEWAY_URL}/character-anime/anime/${req.params.id}/top`);
+      const charactersResponse = await axios.get(`${GATEWAY_URL}/character-anime/anime/${req.params.id}`);
       const characterWorks = charactersResponse.data;
       
       const characterDetailsPromises = characterWorks.map(work => 
@@ -468,23 +468,36 @@ router.get('/:id', async (req, res) => {
       );
       
       const characterDetails = await Promise.all(characterDetailsPromises);
-      charactersList = characterDetails.filter(char => char !== null);
+      charactersList = characterDetails.filter(char => char !== null)
+        .sort((a, b) => (b.favorites || 0) - (a.favorites || 0));
     } catch (error) {
       console.error('Error fetching characters for anime:', error.message);
     }
     
     let peopleList = [];
     try {
-      const peopleResponse = await axios.get(`${GATEWAY_URL}/person-voice-work/anime/${req.params.id}/top`);
+      const peopleResponse = await axios.get(`${GATEWAY_URL}/person-voice-work/anime/${req.params.id}`);
       const peopleWorks = peopleResponse.data;
       
       const peopleDetailsPromises = peopleWorks.map(work => 
         axios.get(`${GATEWAY_URL}/people/${work.personMalId}`)
-          .then(response => ({
-            ...response.data,
-            role: work.role,
-            language: work.language
-          }))
+          .then(async response => {
+            let voicedCharacter = null;
+            if (work.characterMalId) {
+              try {
+                const charResponse = await axios.get(`${GATEWAY_URL}/characters/${work.characterMalId}`);
+                voicedCharacter = charResponse.data;
+              } catch (err) {
+                console.error(`Error fetching voiced character ${work.characterMalId}:`, err.message);
+              }
+            }
+            return {
+              ...response.data,
+              role: work.role,
+              language: work.language,
+              voicedCharacter: voicedCharacter
+            };
+          })
           .catch(err => {
             console.error(`Error fetching person ${work.personMalId}:`, err.message);
             return null;
@@ -492,7 +505,8 @@ router.get('/:id', async (req, res) => {
       );
       
       const peopleDetails = await Promise.all(peopleDetailsPromises);
-      peopleList = peopleDetails.filter(person => person !== null);
+      peopleList = peopleDetails.filter(person => person !== null)
+        .sort((a, b) => (b.favorites || 0) - (a.favorites || 0));
     } catch (error) {
       console.error('Error fetching people for anime:', error.message);
     }

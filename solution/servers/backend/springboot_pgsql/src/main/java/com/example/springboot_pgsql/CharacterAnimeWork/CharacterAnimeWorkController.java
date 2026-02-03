@@ -37,16 +37,6 @@ public class CharacterAnimeWorkController {
         return characterAnimeWorkService.getCharactersByAnime(animeId);
     }
 
-    @Operation(summary = "Get top 20 characters by anime ID", description = "Retrieve the top 20 characters for a given anime ID.")
-    @ApiResponses(value = {
-        @ApiResponse(responseCode = "200", description = "List of top 20 characters for the anime returned successfully")
-    })
-    @GetMapping("/anime/{animeId}/top")
-    public List<CharacterAnimeWork> getTop20CharactersByAnime(
-            @Parameter(description = "Anime ID", example = "1") @PathVariable Integer animeId) {
-        return characterAnimeWorkService.getTop20CharactersByAnime(animeId);
-    }
-
     @Operation(summary = "Get anime by character ID", description = "Retrieve all anime for a given character ID.")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "200", description = "List of anime for the character returned successfully")

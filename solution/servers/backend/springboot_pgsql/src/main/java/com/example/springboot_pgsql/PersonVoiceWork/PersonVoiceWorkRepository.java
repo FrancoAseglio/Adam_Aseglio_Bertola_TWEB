@@ -21,7 +21,6 @@ public interface PersonVoiceWorkRepository extends JpaRepository<PersonVoiceWork
                    "    INNER JOIN person_details p ON pvw.person_mal_id = p.person_mal_id " +
                    "    WHERE pvw.anime_mal_id = :animeId " +
                    ") temp " +
-                   "ORDER BY temp.favorites DESC NULLS LAST " +
-                   "LIMIT 20", nativeQuery = true)
-    List<Object[]> findTop20PeopleByAnime(@Param("animeId") Integer animeId);
+                   "ORDER BY temp.favorites DESC NULLS LAST", nativeQuery = true)
+    List<Object[]> findAllPeopleByAnime(@Param("animeId") Integer animeId);
 }
