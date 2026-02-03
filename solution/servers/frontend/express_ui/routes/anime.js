@@ -109,13 +109,18 @@ router.get('/search', async (req, res) => {
 
     if (title) {
       const params = { title };
-      if (limit) params.limit = limit;
+      // Only pass limit to backend if we have ONLY title search (no other filters)
+      // If there are additional filters (minScore, genres), we need all results first
+      const onlyTitleSearch = !minScore && selectedGenres.length === 0;
+      if (limit && onlyTitleSearch) {
+        params.limit = limit;
+      }
       const response = await axios.get(`${GATEWAY_URL}/anime/search`, { params });
       allResults = response.data;
     } else if (selectedGenres.length > 0) {
-      const params = {};
-      if (limit) params.limit = limit;
-      const response = await axios.get(`${GATEWAY_URL}/anime/genre/${selectedGenres[0]}`, { params });
+      // Don't pass limit to backend when searching by genre
+      // We need all results to filter properly, then apply limit
+      const response = await axios.get(`${GATEWAY_URL}/anime/genre/${selectedGenres[0]}`);
       allResults = response.data;
       usedGenreAPI = true;
     } else {
@@ -174,6 +179,12 @@ router.get('/search', async (req, res) => {
     }
 
     filteredResults.sort((a, b) => (b.score || 0) - (a.score || 0));
+    
+    // Apply limit AFTER all filters (genres, minScore) have been applied
+    if (limit) {
+      const limitNum = parseInt(limit);
+      filteredResults = filteredResults.slice(0, limitNum);
+    }
     
     filteredResults = filteredResults.map(anime => ({
       ...anime,
