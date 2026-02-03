@@ -57,7 +57,7 @@ public class CharacterController {
     }
 
 
-    @Operation(summary = "Add a new character", description = "Add a new character to the database.")
+    @Operation(summary = "Add a new character", description = "Add a new character to the database(requires name and description).")
     @ApiResponses(value = {
         @ApiResponse(responseCode = "201", description = "Character created successfully"),
         @ApiResponse(responseCode = "500", description = "Internal server error")
@@ -89,7 +89,7 @@ public class CharacterController {
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<?> removeCharacter(
-            @Parameter(description = "Character ID", example = "1") @PathVariable Integer id) {
+            @Parameter(description = "Character ID", example = "12") @PathVariable Integer id) {
         try {
             characterService.removeCharacter(id);
             return ResponseEntity.ok(java.util.Map.of("message", "Character removed successfully"));

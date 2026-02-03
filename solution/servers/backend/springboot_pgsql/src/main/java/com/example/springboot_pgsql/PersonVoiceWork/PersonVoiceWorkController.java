@@ -34,7 +34,7 @@ public class PersonVoiceWorkController {
     })
     @GetMapping("/anime/{animeId}")
     public List<Map<String, Object>> getAllPeopleByAnime(
-            @Parameter(description = "Anime ID", example = "1") @PathVariable Integer animeId) {
+            @Parameter(description = "Anime ID", example = "21") @PathVariable Integer animeId) {
         return personVoiceWorkService.getAllPeopleByAnime(animeId);
     }
 }

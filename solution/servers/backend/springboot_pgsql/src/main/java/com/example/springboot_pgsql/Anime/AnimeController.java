@@ -35,7 +35,7 @@ public class AnimeController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<Anime> getAnimeById(
-            @Parameter(description = "Anime ID", example = "1") @PathVariable Integer id) {
+            @Parameter(description = "Anime ID", example = "21") @PathVariable Integer id) {
         try {
             Anime anime = animeService.getAnimeById(id);
             if (anime != null) {

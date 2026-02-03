@@ -33,7 +33,7 @@ public class CharacterAnimeWorkController {
     })
     @GetMapping("/anime/{animeId}")
     public List<CharacterAnimeWork> getCharactersByAnime(
-            @Parameter(description = "Anime ID", example = "1") @PathVariable Integer animeId) {
+            @Parameter(description = "Anime ID", example = "21") @PathVariable Integer animeId) {
         return characterAnimeWorkService.getCharactersByAnime(animeId);
     }
 
@@ -43,7 +43,7 @@ public class CharacterAnimeWorkController {
     })
     @GetMapping("/character/{characterId}")
     public List<CharacterAnimeWork> getAnimeByCharacter(
-            @Parameter(description = "Character ID", example = "1") @PathVariable Integer characterId) {
+            @Parameter(description = "Character ID", example = "12") @PathVariable Integer characterId) {
         return characterAnimeWorkService.getAnimeByCharacter(characterId);
     }
 }
