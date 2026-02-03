@@ -17,7 +17,7 @@ This section allows users to tap into a vast database of anime information, prov
 - **Multi-Criteria Search:** Search for anime by specific titles, browse by genres, or dive into character-specific data.
 - **Intelligent Recommendations:** Identify similar titles triggering personalised recommendations for related series.
 - **Global Community Stats:** Live data distributions for any anime, including user-specific classifications and a detailed percentage-based score.
-- **Top-Rated Archives:** A quick-access tool to pull the top $N$ rated anime to help users discover high-quality content.
+- **Top-Rated Archives:** A quick-access tool to pull the top N rated anime to help users discover high-quality content.
 - **Characters Management:** Built-in functionality to easily add a new character to the pool and even remove an exisiting one.
 
 *User Management & Personal Analytics*
@@ -142,16 +142,18 @@ Before running the application, ensure you have the following installed and prop
 - Required database: `anime_db`
 
 ## Set Up
-> ⚠️ **Important**: This application requires running a data cleaning pipeline from an external repository.
+> ⚠️ **IMPORTANT**: This application requires running a data cleaning pipeline from an external repository.
 
 ## PART 1: the data cleaning pipeline
 ### 1 Clone the Data Cleaning Related Repository
+
 ```bash
 git clone git@github.com:FrancoAseglio/Adam_Aseglio_Bertola_HCI.git
 cd Adam_Aseglio_Bertola_HCI
 ```
 
 ### 2. Install Python Dependencies
+
 ```bash
 cd solution/
 pip install -r requirements.txt
@@ -159,8 +161,8 @@ pip install -r requirements.txt
 
 ### 3. Run the data_cleaning.ipynb
 
-You'll find the necessary notebook in the namesake dir.
-Once done, a new dir with the cleand dataset will be found self contained at: `~/datasets/cleaned/`
+You'll find the necessary notebook in the namesake dir.  
+Once done, a new dir with the cleand dataset will be found self contained at: `~/datasets/cleaned/`  
 This will be the source reference for the anime app data loading scripts.
 
 ## PART 2: the anime app setting
@@ -174,7 +176,7 @@ pip install -r requirements.txt
 
 ### 5. Data Loading
 
-Databases connections needs to be active in order to allow the scripts to properly operate the loading.
+> ⚠️ **REQUIRED**: Databases connections needs to be active in order to allow the scripts to properly operate the loading.  
 Ensure both PostgreSQL and MongoDB to be available.
 
 ```bash
@@ -189,8 +191,10 @@ python data_load_mongo.py
 
 ### 6.a Automated CLI command
 
-The project includes automation scripts for managing all services via Makefile. 
+The project includes automation scripts for managing all services via Makefile.   
+_Remember to leave databases connections active._  
 Navigate back into the solution dir and fireup the app accordingly:  
+
 ```bash
 make start   # starts all services
 make stop    # stops all services
@@ -203,8 +207,9 @@ make help    # shows available commands
 
 ### 6.b IDE startup (Optional)
 
-**Note:** This step is only required if you plan to run services individually from an IDE.
-The automated start scripts handles dependencies automatically.
+**NOTE:** This step is only required if you plan to run services individually from an IDE.  
+The automated start scripts handles dependencies automatically.  
+
 ```bash
 cd servers/frontend/express_ui && npm install
 cd ../../backend/express_gateway && npm install
@@ -213,11 +218,11 @@ cd ../express_mongo && npm install
 
 ## API Documentation
 
-Once the services are running, access the interactive API documentation:
-- **Frontend UI Swagger**: http://localhost:3000/api-docs
-- **API Gateway Swagger**: http://localhost:3001/api-docs
-- **MongoDB Service Swagger**: http://localhost:3002/api-docs
-- **Spring Boot OpenAPI**: http://localhost:8080/api-docs
+Once the services are running, access the interactive API documentation:  
+- **Frontend UI Swagger**: http://localhost:3000/api-docs  
+- **API Gateway Swagger**: http://localhost:3001/api-docs  
+- **MongoDB Service Swagger**: http://localhost:3002/api-docs  
+- **Spring Boot OpenAPI**: http://localhost:8080/api-docs  
 
 ## References
 
