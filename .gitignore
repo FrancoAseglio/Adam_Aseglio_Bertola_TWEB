@@ -76,6 +76,7 @@ $RECYCLE.BIN/
 outputs/
 logs/
 *.log
+*.pids
 
 # pytest
 .pytest_cache/
