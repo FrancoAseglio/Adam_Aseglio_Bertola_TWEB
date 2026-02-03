@@ -17,6 +17,7 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
  *           type: integer
  *         required: true
  *         description: Anime ID
+ *         example: 21
  *     responses:
  *       200:
  *         description: List of all people for the anime

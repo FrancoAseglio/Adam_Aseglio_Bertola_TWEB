@@ -18,6 +18,7 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
  *           type: string
  *         required: true
  *         description: Username
+ *         example: CKK2
  *     responses:
  *       200:
  *         description: List of ratings with anime details

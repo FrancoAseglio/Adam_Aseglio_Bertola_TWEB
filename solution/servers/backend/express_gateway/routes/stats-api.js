@@ -51,6 +51,7 @@ router.get('/global', async (req, res) => {
  *         schema:
  *           type: string
  *           description: The username to retrieve stats for
+ *           example: "CKK2"
  *     responses:
  *       200:
  *         description: User statistics retrieved
@@ -85,6 +86,7 @@ router.get('/user/:username', async (req, res) => {
  *         schema:
  *           type: string
  *         description: Unique ID of the anime
+ *         example: 21
  *     responses:
  *       200:
  *         description: Anime stats and details (details may be null if Spring Boot is unreachable)

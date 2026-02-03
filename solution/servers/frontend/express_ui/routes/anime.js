@@ -309,7 +309,7 @@ router.get('/genre/:genre', async (req, res) => {
  *         schema:
  *           type: string
  *         description: MyAnimeList anime ID
- *         example: "1"
+ *         example: "21"
  *     responses:
  *       200:
  *         description: Anime statistics retrieved successfully
@@ -364,7 +364,7 @@ router.get('/stats/:id', async (req, res) => {
  *         schema:
  *           type: string
  *         description: MyAnimeList anime ID
- *         example: "1"
+ *         example: "21"
  *     responses:
  *       200:
  *         description: Anime statistics retrieved successfully
@@ -423,7 +423,7 @@ router.get('/:id/stats', async (req, res) => {
  *           type: string
  *           pattern: '^\d+$'
  *         description: MyAnimeList anime ID
- *         example: "1"
+ *         example: "21"
  *     responses:
  *       200:
  *         description: Successfully retrieved anime details with characters and staff

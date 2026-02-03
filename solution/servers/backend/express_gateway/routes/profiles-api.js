@@ -18,6 +18,7 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
  *         schema:
  *           type: string
  *         description: Username
+ *         example: "CKK2"
  *     responses:
  *       200:
  *         description: Complete profile data
@@ -110,6 +111,7 @@ router.get('/:username/full', async (req, res) => {
  *         schema:
  *           type: string
  *         description: Username
+ *         example: "CKK2"
  *     responses:
  *       200:
  *         description: Profile data with statistics

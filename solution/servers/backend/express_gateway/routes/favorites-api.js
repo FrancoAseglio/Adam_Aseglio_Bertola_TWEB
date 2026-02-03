@@ -18,6 +18,7 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
  *           type: string
  *         required: true
  *         description: Username
+ *         example: "CKK2"
  *     responses:
  *       200:
  *         description: List of anime favorites with details
@@ -91,6 +92,7 @@ router.get('/:username', async (req, res) => {
  *             properties:
  *               username:
  *                 type: string
+ *                 description: Username
  *                 example: "CKK2"
  *               id:
  *                 type: integer
@@ -175,12 +177,15 @@ router.post('/', async (req, res) => {
  *         required: true
  *         schema:
  *           type: string
+ *         description: Username
+ *         example: "CKK2"
  *       - in: path
  *         name: id
  *         required: true
  *         schema:
  *           type: integer
  *         description: Anime MAL ID
+ *         example: 21
  *     responses:
  *       200:
  *         description: Favorite removed successfully

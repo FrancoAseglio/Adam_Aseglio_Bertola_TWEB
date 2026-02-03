@@ -49,10 +49,7 @@ router.get('/', async (req, res) => {
  *         schema:
  *           type: string
  *           pattern: '^[a-zA-Z0-9_-]+$'
- *         examples:
- *           simple:
- *             value: "CKK2"
- *             summary: Simple username
+ *         example: "CKK2"
  *     responses:
  *       200:
  *         description: Successfully retrieved complete user profile

@@ -17,6 +17,7 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
  *           type: string
  *         required: true
  *         description: Person ID
+ *         example: 12
  *     responses:
  *       200:
  *         description: Person details

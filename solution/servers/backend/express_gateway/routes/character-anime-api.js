@@ -17,6 +17,7 @@ const BACKEND_SPRING_URL = 'http://localhost:8080/api';
  *           type: integer
  *         required: true
  *         description: Character ID
+ *         example: 21
  *     responses:
  *       200:
  *         description: List of anime works for the character
@@ -48,6 +49,7 @@ router.get('/character/:characterId', async (req, res) => {
  *           type: integer
  *         required: true
  *         description: Anime ID
+ *         example: 21
  *     responses:
  *       200:
  *         description: List of characters for the anime

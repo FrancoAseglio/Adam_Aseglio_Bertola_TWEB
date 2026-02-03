@@ -26,10 +26,7 @@ const GATEWAY_URL = 'http://localhost:3001/api';
  *         schema:
  *           type: string
  *           pattern: '^[a-zA-Z0-9_-]+$'
- *         examples:
- *           simple:
- *             value: "CKK2"
- *             summary: Simple username
+ *         example: "CKK2"
  *       - name: page
  *         in: query
  *         required: false

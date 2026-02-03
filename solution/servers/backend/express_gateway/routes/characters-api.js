@@ -71,6 +71,7 @@ router.get('/search', async (req, res) => {
  *           type: string
  *         required: true
  *         description: Character ID
+ *         example: 12
  *     responses:
  *       200:
  *         description: Character details
@@ -169,6 +170,7 @@ router.post('/', async (req, res) => {
  *           type: integer
  *         required: true
  *         description: Character ID
+ *         example: 12
  *     responses:
  *       200:
  *         description: Character removed successfully

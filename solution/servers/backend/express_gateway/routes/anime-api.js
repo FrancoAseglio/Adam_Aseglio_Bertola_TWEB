@@ -82,6 +82,7 @@ router.get('/genres', async (req, res) => {
  *           type: string
  *         required: true
  *         description: Genre name
+ *         example: Boys Love
  *     responses:
  *       200:
  *         description: List of anime in the genre
@@ -116,6 +117,7 @@ router.get('/genre/:genre', async (req, res) => {
  *           type: string
  *         required: true
  *         description: Anime ID
+ *         example: 21
  *     responses:
  *       200:
  *         description: Anime details
